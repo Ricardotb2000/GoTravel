@@ -13,67 +13,68 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="index/Index.css">
+
 </head>
 <body>
-      <!-- Barra de Navegación -->
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" 
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-          </button>
-      
-          <a class="navbar-brand mx-auto d-lg-block d-none" href="#">
-              <img src="imagenes/Gotravel_logo.PNG" class="brand-img" alt="Gotravel_logo_transp" style="width: 75px; height: 75px; border-radius: 100px;">
-              <span class="brand-txt"></span>
-          </a>
-      
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-              <!-- Menú principal a la izquierda -->
-              <ul class="navbar-nav me-auto ms-4">
-                  <li class="nav-item">
-                      <a class="nav-link" href="#home">
-                          <i class="fas fa-home"></i> Home
-                      </a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="#about-us">
-                          <i class="fas fa-info-circle"></i> Sobre Nosotros
-                      </a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="#packs">
-                          <i class="fas fa-box"></i> Packs
-                          <span class="sr-only">(current)</span>
-                      </a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="#contact">
-                          <i class="fas fa-envelope"></i> Contacto
-                      </a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="vuelo_hotel/Vuelo_hotel.php">
-                          <i class="fas fa-plane"></i> Vuelo + Hotel
-                      </a>
-                  </li>
-              </ul>
-              
-                <!-- Enlaces de Sign In y Carrito -->
-                <ul class="navbar-nav ms-auto me-2">
-                    <li class="nav-item">
-                        <a class="nav-link" href="login_signin/Login.php">
-                            <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="carrito/Carrito.php">
-                            <i class="fas fa-shopping-cart"></i> Carrito
-                        </a>
-                    </li>
-                </ul>
-          </div>
-      </nav>
+    <!-- Barra de Navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand mx-auto d-lg-block d-none" href="#">
+            <img src="imagenes/Gotravel_logo.PNG" class="brand-img" alt="Gotravel_logo_transp" style="width: 75px; height: 75px; border-radius: 100px;">
+            <span class="brand-txt"></span>
+        </a>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- Menú principal a la izquierda -->
+            <ul class="navbar-nav me-auto ms-4">
+                <li class="nav-item">
+                    <a class="nav-link" href="#home">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about-us">
+                        <i class="fas fa-info-circle"></i> Sobre Nosotros
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#packs">
+                        <i class="fas fa-box"></i> Packs
+                        <span class="visually-hidden">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">
+                        <i class="fas fa-envelope"></i> Contacto
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="vuelo_hotel/Vuelo_hotel.php">
+                        <i class="fas fa-plane"></i> Vuelo + Hotel
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Enlaces de Sign In y Carrito -->
+            <ul class="navbar-nav ms-auto me-2">
+                <li class="nav-item">
+                    <a class="nav-link" href="login_signin/Login.php">
+                        <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="carrito/Carrito.php">
+                        <i class="fas fa-shopping-cart"></i> Carrito
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
         <!-- Contador de reservas -->
         <a class="nav-link" id="cartIcon" href="#" onclick="incrementCounter(event)">
@@ -231,9 +232,9 @@
                             <img class="img-fluid" src="imagenes/Bulgaria.jpg" alt="Imagen">
                             <div class="p-4">
                                 <div class="d-flex justify-content-between mb-3">
-                                    <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>Bulgaria</small>
-                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>3 días</small>
-                                    <small class="m-0"><i class="fa fa-user text-primary mr-2"></i>2 Personas</small>
+                                    <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>Bulgaria</small>
+                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>3 días</small>
+                                    <small class="m-0"><i class="fa fa-user text-primary me-2"></i>2 Personas</small>
                                 </div>
                                 <a class="h5 text-decoration-none" href="">Descubre El país de los montañeros - Bulgaria</a>
                                 <div class="border-top mt-4 pt-4">
@@ -252,11 +253,11 @@
                             <img class="img-fluid" src="imagenes/Italia.jpg" alt="Imagen">
                             <div class="p-4">
                                 <div class="d-flex justify-content-between mb-3">
-                                    <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>Italia</small>
-                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>2 dias</small>
-                                    <small class="m-0"><i class="fa fa-user text-primary mr-2"></i>1 Persona</small>
+                                    <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>Italia</small>
+                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>2 dias</small>
+                                    <small class="m-0"><i class="fa fa-user text-primary me-2"></i>1 Persona</small>
                                 </div>
-                                <a class="h5 text-decoration-none" href="">Sumérgete en la belleza eterna - Italia</a>
+                                <a class="h5 text-decoration-none" href="">Sumérgete en la belleza eterna de un Imperio- Italia</a>
                                 <div class="border-top mt-4 pt-4">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <h5 class="m-0">345€</h5>
@@ -273,9 +274,9 @@
                             <img class="img-fluid" src="imagenes/Marruecos.jpg" alt="Imagen">
                             <div class="p-4">
                                 <div class="d-flex justify-content-between mb-3">
-                                    <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>Marruecos</small>
-                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>4 dias</small>
-                                    <small class="m-0"><i class="fa fa-user text-primary mr-2"></i>2 Personas</small>
+                                    <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>Marruecos</small>
+                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>4 dias</small>
+                                    <small class="m-0"><i class="fa fa-user text-primary me-2"></i>2 Personas</small>
                                 </div>
                                 <a class="h5 text-decoration-none" href="">Vibrante mezcla de culturas, colores y sabores - Marruecos</a>
                                 <div class="border-top mt-4 pt-4">
@@ -294,9 +295,9 @@
                             <img class="img-fluid" src="imagenes/Turquia.jpg" alt="Imagen">
                             <div class="p-4">
                                 <div class="d-flex justify-content-between mb-3">
-                                    <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>Turquía</small>
-                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>7 dias</small>
-                                    <small class="m-0"><i class="fa fa-user text-primary mr-2"></i>2 Personas</small>
+                                    <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>Turquía</small>
+                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>7 dias</small>
+                                    <small class="m-0"><i class="fa fa-user text-primary me-2"></i>2 Personas</small>
                                 </div>
                                 <a class="h5 text-decoration-none" href="">Embárcate en un viaje a través de los siglos - Turquía</a>
                                 <div class="border-top mt-4 pt-4">
@@ -315,9 +316,9 @@
                             <img class="img-fluid" src="imagenes/China.jpg" alt="Imagen">
                             <div class="p-4">
                                 <div class="d-flex justify-content-between mb-3">
-                                    <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>China</small>
-                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>5 dias</small>
-                                    <small class="m-0"><i class="fa fa-user text-primary mr-2"></i>1 Persona</small>
+                                    <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>China</small>
+                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>5 dias</small>
+                                    <small class="m-0"><i class="fa fa-user text-primary me-2"></i>1 Persona</small>
                                 </div>
                                 <a class="h5 text-decoration-none" href="">Explora la fascinante diversidad y cultura - China</a>
                                 <div class="border-top mt-4 pt-4">
@@ -336,9 +337,9 @@
                             <img class="img-fluid" src="imagenes/Japon.jpg" alt="Imagen">
                             <div class="p-4">
                                 <div class="d-flex justify-content-between mb-3">
-                                    <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>Japón</small>
-                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>6 dias</small>
-                                    <small class="m-0"><i class="fa fa-user text-primary mr-2"></i>2 Personas</small>
+                                    <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>Japón</small>
+                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>6 dias</small>
+                                    <small class="m-0"><i class="fa fa-user text-primary me-2"></i>2 Personas</small>
                                 </div>
                                 <a class="h5 text-decoration-none" href="">Donde la tradición se entrelaza con la vanguardia - Japón</a>
                                 <div class="border-top mt-4 pt-4">
@@ -357,9 +358,9 @@
                             <img class="img-fluid" src="imagenes/Tailandia.jpg" alt="Imagen">
                             <div class="p-4">
                                 <div class="d-flex justify-content-between mb-3">
-                                    <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>Tailandia</small>
-                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>6 dias</small>
-                                    <small class="m-0"><i class="fa fa-user text-primary mr-2"></i>1 Personas</small>
+                                    <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>Tailandia</small>
+                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>6 dias</small>
+                                    <small class="m-0"><i class="fa fa-user text-primary me-2"></i>1 Personas</small>
                                 </div>
                                 <a class="h5 text-decoration-none" href="">Tierra de templos sagrados y playas exóticas - Tailandia</a>
                                 <div class="border-top mt-4 pt-4">
@@ -377,9 +378,9 @@
                             <img class="img-fluid" src="imagenes/Malta.jpg" alt="Imagen">
                             <div class="p-4">
                                 <div class="d-flex justify-content-between mb-3">
-                                    <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>Malta</small>
-                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>4 dias</small>
-                                    <small class="m-0"><i class="fa fa-user text-primary mr-2"></i>2 Personas</small>
+                                    <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>Malta</small>
+                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>4 dias</small>
+                                    <small class="m-0"><i class="fa fa-user text-primary me-2"></i>2 Personas</small>
                                 </div>
                                 <a class="h5 text-decoration-none" href="">Un crisol de culturas bajo el sol del Mediterráneo - Malta</a>
                                 <div class="border-top mt-4 pt-4">
@@ -398,9 +399,9 @@
                             <img class="img-fluid" src="imagenes/Grecia.jpg" alt="Imagen">
                             <div class="p-4">
                                 <div class="d-flex justify-content-between mb-3">
-                                    <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>Grecia</small>
-                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>5 dias</small>
-                                    <small class="m-0"><i class="fa fa-user text-primary mr-2"></i>1 Personas</small>
+                                    <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>Grecia</small>
+                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>5 dias</small>
+                                    <small class="m-0"><i class="fa fa-user text-primary me-2"></i>1 Personas</small>
                                 </div>
                                 <a class="h5 text-decoration-none" href="">Los mitos cobran vida en paisajes de ensueño - Grecia</a>
                                 <div class="border-top mt-4 pt-4">
@@ -446,27 +447,30 @@
                         Descubre destinos fascinantes y crea recuerdos inolvidables con nosotros. 
                         ¡Prepárate para una aventura inolvidable con GoTravel!</p>
                 </div>
+                
                 <div class="col-lg-3 col-md-6 mb-5">
                     <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Nuestros Servicios</h5>
                     <div class="d-flex flex-column justify-content-start">
-                        <a class="text-white-50 mb-2" href="#home"><i class="fa fa-home mr-2"></i>Home</a>
-                        <a class="text-white-50 mb-2" href="#about-us"><i class="fa fa-info-circle mr-2"></i>Sobre Nosotros</a>
-                        <a class="text-white-50 mb-2" href="#packs"><i class="fa fa-box mr-2"></i>Packs</a>
-                        <a class="text-white-50 mb-2" href="#contact"><i class="fa fa-envelope mr-2"></i>Contacto</a>
-                        <a class="text-white-50 mb-2" href="vuelo_hotel/Vuelo_hotel.php"><i class="fa fa-plane mr-2"></i>Vuelo + Hotel</a>
+                        <a class="text-white-50 mb-2" href="#home"><i class="fa fa-home me-2"></i>Home</a>
+                        <a class="text-white-50 mb-2" href="#about-us"><i class="fa fa-info-circle me-2"></i>Sobre Nosotros</a>
+                        <a class="text-white-50 mb-2" href="#packs"><i class="fa fa-box me-2"></i>Packs</a>
+                        <a class="text-white-50 mb-2" href="#contact"><i class="fa fa-envelope me-2"></i>Contacto</a>
+                        <a class="text-white-50 mb-2" href="vuelo_hotel/Vuelo_hotel.php"><i class="fa fa-plane me-2"></i>Vuelo + Hotel</a>
                     </div>
                 </div>
+                
                 <div class="col-lg-3 col-md-6 mb-5">
-                    <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Contactanos</h5>
-                    <p><i class="fa fa-map-marker-alt mr-2"></i><a href="https://www.google.com/maps/place/C.+Viento,+1,+28220+Majadahonda,+Madrid/@40.4728071,-3.8782723,17z/data=!3m1!4b1!4m6!3m5!1s0xd41848df8092f4f:0x9994f047ccc25eac!8m2!3d40.4728071!4d-3.8756974!16s%2Fg%2F11csmg05nw?entry=ttu&g_ep=EgoyMDI0MTAwOS4wIKXMDSoASAFQAw%3D%3D" class="text-white" target="_blank">Calle Viento nº1 ,28220, Majadahonda</a></p>
-                    <p><i class="fa fa-phone-alt mr-2"></i><a href="tel:+0123456789" class="text-white">+0123 456 789</a></p>
-                    <p><i class="fa fa-envelope mr-2"></i><a href="mailto:GoTravel@gmail.com" class="text-white">GoTravel@gmail.com</a></p>
+                    <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Contáctanos</h5>
+                    <p><i class="fa fa-map-marker-alt me-2"></i><a href="https://www.google.com/maps/place/C.+Viento,+1,+28220+Majadahonda,+Madrid/@40.4728071,-3.8782723,17z/data=!3m1!4b1!4m6!3m5!1s0xd41848df8092f4f:0x9994f047ccc25eac!8m2!3d40.4728071!4d-3.8756974!16s%2Fg%2F11csmg05nw?entry=ttu&g_ep=EgoyMDI0MTAwOS4wIKXMDSoASAFQAw%3D%3D" class="text-white" target="_blank">Calle Viento nº1 ,28220, Majadahonda</a></p>
+                    <p><i class="fa fa-phone-alt me-2"></i><a href="tel:+0123456789" class="text-white">+0123 456 789</a></p>
+                    <p><i class="fa fa-envelope me-2"></i><a href="mailto:GoTravel@gmail.com" class="text-white" target="_blank">GoTravel@gmail.com</a></p>
                 </div>
+                
                 <div class="col-lg-3 col-md-6 mb-5">
                     <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Transparencia</h5>
-                    <p><i class="fa fa-file-alt mr-2"></i><a href="info_legal/Derechos.php" class="text-white">Información Legal</a></p>
-                    <p><i class="fa fa-user-check mr-2"></i><a href="info_legal/Derechos.php" class="text-white">Derechos del pasajero</a></p>
-                    <p><i class="fa fa-undo-alt mr-2"></i><a href="info_legal/Derechos.php" class="text-white">Política de Devoluciones</a></p>
+                    <p><i class="fa fa-file-alt me-2"></i><a href="info_legal/Derechos.php" class="text-white">Información Legal</a></p>
+                    <p><i class="fa fa-user-check me-2"></i><a href="info_legal/Derechos.php" class="text-white">Derechos del pasajero</a></p>
+                    <p><i class="fa fa-undo-alt me-2"></i><a href="info_legal/Derechos.php" class="text-white">Política de Devoluciones</a></p>
                 </div>
             </div>
         </div>
@@ -476,5 +480,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script src="index/Index.js"></script>
+    
 </body>
 </html>

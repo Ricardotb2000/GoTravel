@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transparencia - Políticas</title>
+    <title>GoTravel - Políticas</title>
     <link rel="icon" href="../imagenes/Gotravel_logo.PNG" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
@@ -197,41 +197,41 @@
         </div>
 
         <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-white-50 py-5 px-sm-3 px-lg-5" id="contact" style="margin-top: 90px; text-align: center;">
-        <div class="row pt-5">
-            <div class="col-lg-3 col-md-6 mb-5">
-                <a href="" class="navbar-brand">
-                    <h1 class="text-primary"><span class="text-white">GO</span>TRAVEL</h1>
-                </a>
-                <p>GoTravel ofrece experiencias de viaje auténticas y memorables. 
-                    Descubre destinos fascinantes y crea recuerdos inolvidables con nosotros. 
-                    ¡Prepárate para una aventura inolvidable con GoTravel</p>
-            </div>
-            <div class="col-lg-3 col-md-6 mb-5">
-                <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Nuestros Servicios</h5>
-                <div class="d-flex flex-column justify-content-start">
-                    <a class="text-white-50 mb-2" href="../Index.php#home"><i class="fa fa-home mr-2"></i>Home</a>
-                    <a class="text-white-50 mb-2" href="../Index.php#about-us"><i class="fa fa-info-circle mr-2"></i>Sobre Nosotros</a>
-                    <a class="text-white-50 mb-2" href="../Index.php#packs"><i class="fa fa-box mr-2"></i>Packs</a>
-                    <a class="text-white-50 mb-2" href="../Index.php#contact"><i class="fa fa-envelope mr-2"></i>Contacto</a>
-                    <a class="text-white-50 mb-2" href="../vuelo_hotel/Vuelo_hotel.php"><i class="fa fa-plane mr-2"></i>Vuelo + Hotel</a>
+        <div class="container-fluid bg-dark text-white-50 py-5 px-sm-3 px-lg-5" id="contact" style="margin-top: 90px; text-align: center;">
+            <div class="row pt-5">
+                <div class="col-lg-3 col-md-6 mb-5">
+                    <a href="" class="navbar-brand">
+                        <h1 class="text-primary"><span class="text-white">GO</span>TRAVEL</h1>
+                    </a>
+                    <p>GoTravel ofrece experiencias de viaje auténticas y memorables. 
+                        Descubre destinos fascinantes y crea recuerdos inolvidables con nosotros. 
+                        ¡Prepárate para una aventura inolvidable con GoTravel</p>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-5">
+                    <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Nuestros Servicios</h5>
+                    <div class="d-flex flex-column justify-content-start">
+                        <a class="text-white-50 mb-2" href="../Index.php#home"><i class="fa fa-home me-2"></i>Home</a>
+                        <a class="text-white-50 mb-2" href="../Index.php#about-us"><i class="fa fa-info-circle me-2"></i>Sobre Nosotros</a>
+                        <a class="text-white-50 mb-2" href="../Index.php#packs"><i class="fa fa-box me-2"></i>Packs</a>
+                        <a class="text-white-50 mb-2" href="../Index.php#contact"><i class="fa fa-envelope me-2"></i>Contacto</a>
+                        <a class="text-white-50 mb-2" href="../vuelo_hotel/Vuelo_hotel.php"><i class="fa fa-plane me-2"></i>Vuelo + Hotel</a>
 
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-5">
+                    <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Contactanos</h5>
+                    <p><i class="fa fa-map-marker-alt me-2"></i><a href="https://www.google.com/maps/place/C.+Viento,+1,+28220+Majadahonda,+Madrid/@40.4728071,-3.8782723,17z/data=!3m1!4b1!4m6!3m5!1s0xd41848df8092f4f:0x9994f047ccc25eac!8m2!3d40.4728071!4d-3.8756974!16s%2Fg%2F11csmg05nw?entry=ttu&g_ep=EgoyMDI0MTAwOS4wIKXMDSoASAFQAw%3D%3D" class="text-white" target="_blank">Calle Viento nº1 ,28220, Majadahonda</a></p>
+                    <p><i class="fa fa-phone-alt me-2"></i><a href="tel:+0123456789" class="text-white">+0123 456 789</a></p>
+                    <p><i class="fa fa-envelope me-2"></i><a href="mailto:GoTravel@gmail.com" class="text-white">GoTravel@gmail.com</a></p>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-5">
+                    <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Transparencia</h5>
+                    <p><i class="fa fa-file-alt me-2"></i><a href="#" class="text-white">Información Legal</a></p>
+                    <p><i class="fa fa-user-check me-2"></i><a href="#" class="text-white">Derechos del pasajero</a></p>
+                    <p><i class="fa fa-undo-alt me-2"></i><a href="#" class="text-white">Política de Devoluciones</a></p>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 mb-5">
-                <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Contactanos</h5>
-                <p><i class="fa fa-map-marker-alt mr-2"></i><a href="https://www.google.com/maps/place/C.+Viento,+1,+28220+Majadahonda,+Madrid/@40.4728071,-3.8782723,17z/data=!3m1!4b1!4m6!3m5!1s0xd41848df8092f4f:0x9994f047ccc25eac!8m2!3d40.4728071!4d-3.8756974!16s%2Fg%2F11csmg05nw?entry=ttu&g_ep=EgoyMDI0MTAwOS4wIKXMDSoASAFQAw%3D%3D" class="text-white" target="_blank">Calle Viento nº1 ,28220, Majadahonda</a></p>
-                <p><i class="fa fa-phone-alt mr-2"></i><a href="tel:+0123456789" class="text-white">+0123 456 789</a></p>
-                <p><i class="fa fa-envelope mr-2"></i><a href="mailto:GoTravel@gmail.com" class="text-white">GoTravel@gmail.com</a></p>
-            </div>
-            <div class="col-lg-3 col-md-6 mb-5">
-                <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Transparencia</h5>
-                <p><i class="fa fa-file-alt mr-2"></i><a href="#" class="text-white">Información Legal</a></p>
-                <p><i class="fa fa-user-check mr-2"></i><a href="#" class="text-white">Derechos del pasajero</a></p>
-                <p><i class="fa fa-undo-alt mr-2"></i><a href="#" class="text-white">Política de Devoluciones</a></p>
-            </div>
-        </div>
-    </div>  
+        </div>  
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
