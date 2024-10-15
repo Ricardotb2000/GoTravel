@@ -1,0 +1,166 @@
+body, h1, h2, h3, p, figure, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 2000px; 
+    padding-top: 56px;
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f8f8;
+}
+
+.header-container {
+    background-color: #2040C4;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container_logo img {
+    width: 100px;
+    height: 100px;
+}
+
+.header-nav {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.header-nav__Ul {
+    list-style: none;
+    display: flex;
+}
+
+.header-nav__Menu {
+    margin-right: 20px;
+    color: #fff;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.header-nav__Menu a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.header-nav__Menu:hover {
+    color: #ffc107;
+}
+
+.header-nav__Button {
+    display: none;
+}
+
+.cart-icon {
+    position: relative;
+    display: inline-block;
+}
+
+#cart-count {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 3px 7px;
+    font-size: 12px;
+}
+
+.package-item {
+    transition: transform 0.3s ease; /* Transición suave para la transformación */
+}
+
+.package-item:hover {
+    transform: scale(1.05); /* Ampliar la card un 5% al hacer hover */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra para un efecto más destacado */
+}
+
+.chatbot-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.chatbot-popup {
+    display: none;
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    background-color: white;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+}
+
+.chatbot-header {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.close {
+    cursor: pointer;
+}
+
+.chatbot-body {
+    padding: 15px;
+    background-color: #ffffff;
+}
+
+.text-white-50 a {
+    text-decoration: none; /* Sin subrayado por defecto */
+    color: rgba(255, 255, 255, 0.5); /* Color de texto */
+  }
+  
+  .text-white-50 a:hover {
+    text-decoration: underline; /* Subrayado al pasar el ratón */
+    color: white; /* Cambiar el color si es necesario */
+  }
+
+
+@media (max-width: 700px) {
+    .header-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .header-nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .header-nav__Ul {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .header-nav__Menu {
+        margin: 10px 0;
+    }
+
+    .header-nav__Button {
+        display: block;
+    }
+}
