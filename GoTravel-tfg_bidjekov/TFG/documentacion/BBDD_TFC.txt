@@ -1,0 +1,59 @@
+CLIENT
+- Client_ID (PK)
+- First_Name
+- Last_Name
+- Email
+- Password
+- Phone
+
+INVOICE
+- Invoice_ID (PK)
+- Client_ID (FK)
+- Date
+- Total
+- Payment_Status
+- Tax
+- Details
+
+FLIGHT
+- Flight_ID (PK)
+- Origin_ID (FK)
+- Destination_ID (FK)
+- Price
+- Departure_Date
+- Arrival_Date
+
+HOTEL
+- Hotel_ID (PK)
+- Destination_ID (FK)
+- Name
+- Description
+- Price_Per_Night
+- Rating
+- Address
+- Phone
+- Email
+
+DESTINATION
+- Destination_ID (PK)
+- Name
+- Description
+- City
+
+INVOICE_FLIGHT
+- Invoice_Flight_ID (PK)
+- Invoice_ID (FK)
+- Flight_ID (FK)
+
+INVOICE_HOTEL
+- Invoice_Hotel_ID (PK)
+- Invoice_ID (FK)
+- Hotel_ID (FK)
+
+--------------------------------------------------------
+
+El tipo general de IVA es el 21%. 
+Los tipos reducidos vigentes son el 10% y el 4% 
+(también se aplican el 5% y el 0% a determinadas operaciones).
+
+
