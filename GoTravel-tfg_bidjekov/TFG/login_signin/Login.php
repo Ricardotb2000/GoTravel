@@ -1,3 +1,71 @@
+<?php 
+session_start(); // Inicia la sesión
+include '../database/config.php'; // Incluye el archivo de conexión a la base de datos
+
+$message = ''; // Inicializa la variable para mensajes
+
+// Manejar el registro
+if (isset($_POST['register'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    
+    // Verificar si el email ya existe
+    $stmt = $conn->prepare("SELECT * FROM user WHERE Email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $message = "<p style='color:red;'>El email ya está en uso.</p>";
+    } else {
+        // Insertar el nuevo usuario sin hash
+        $stmt = $conn->prepare("INSERT INTO user (Email, Password) VALUES (?, ?)");
+        $stmt->bind_param("ss", $email, $password); // Usa la contraseña sin hash
+        
+        if ($stmt->execute()) {
+            $_SESSION['loggedin'] = true;
+            $_SESSION['username'] = $email; // Usar el email para la sesión
+            $message = "<p style='color:green;'>Registro exitoso. Redirigiendo...</p>";
+            header('Refresh: 2; url=index.php'); // Redirige a la página principal después de 2 segundos
+            exit;
+        } else {
+            $message = "<p style='color:red;'>Error al registrar el usuario: " . $stmt->error . "</p>"; // Muestra el error
+        }
+    }
+}
+
+// Manejar el inicio de sesión
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
+    $email = $_POST['email']; // Cambiado a 'email' según tu tabla
+    $password = $_POST['password'];
+
+    // Preparar la consulta para evitar inyecciones SQL
+    $stmt = $conn->prepare("SELECT User_ID, Password FROM user WHERE Email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+
+        // Verifica la contraseña sin hash
+        if ($password === $user['Password']) {
+            // Establecer la sesión
+            $_SESSION['loggedin'] = true;
+            $_SESSION['username'] = $email; // Usar el email para la sesión
+            $message = "<p style='color:green;'>Inicio de sesión exitoso. Redirigiendo...</p>";
+            header('Refresh: 2; url=index.php'); // Redirige a la página principal después de 2 segundos
+            exit;
+        } else {
+            $message = "<p style='color:red;'>Contraseña incorrecta.</p>";
+        }
+    } else {
+        $message = "<p style='color:red;'>No se encontró un usuario con ese email.</p>";
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -77,40 +145,46 @@
     </nav>
 
     <div class="container right-panel-active">
-        <!-- Formulario de Registrarse -->
-        <div class="container__form container--signup">
-            <form action="#" class="form" id="form1">
-                <h2 class="form__title">Registrarse</h2>
-                <input type="text" placeholder="Nombre" class="input"  id="firstname" required/>
-                <input type="text" placeholder="Apellidos" class="input"  id="secondname" required />
-                <input type="email" placeholder="Email" class="input"  id="email" required /> 
-                <input type="password" placeholder="Contraseña" class="input"  id="password"required />
-                <button class="btn_switch">Registrarse</button>
-            </form>
-        </div>
+    <!-- Formulario de Registrarse -->
+    <div class="container__form container--signup">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="form" id="form1">
+            <h2 class="form__title">Registrarse</h2>
+            <input type="email" name="email" placeholder="Email" class="input" id="email" required /> 
+            <input type="password" name="password" placeholder="Contraseña" class="input" id="password" required />
+            <button type="submit" name="register" class="btn_switch">Registrarse</button>
+            <!-- Mensaje de registro -->
+            <?php if (isset($message) && strpos($message, 'Registro') !== false): ?>
+                <?php echo $message; ?>
+            <?php endif; ?>
+        </form>
+    </div>
 
-        <!-- Formulario de Iniciar Sesión -->
-        <div class="container__form container--signin">
-            <form action="#" class="form" id="form2">
-                <h2 class="form__title">Iniciar Sesión</h2>
-                <input type="email" placeholder="Email" class="input" required /> 
-                <input type="password" placeholder="Contraseña" class="input" required />
-                <button class="btn_switch">Iniciar Sesión</button>
-            </form>
-        </div>
+    <!-- Formulario de Iniciar Sesión -->
+    <div class="container__form container--signin">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="form" id="form2">
+            <h2 class="form__title">Iniciar Sesión</h2>
+            <input type="email" name="email" placeholder="Email" class="input" required />
+            <input type="password" name="password" placeholder="Contraseña" class="input" required />
+            <button type="submit" name="login" class="btn_switch">Iniciar Sesión</button>
+            <!-- Mensaje de inicio de sesión -->
+            <?php if (isset($message) && strpos($message, 'Inicio de sesión') !== false): ?>
+                <?php echo $message; ?>
+            <?php endif; ?>
+        </form>
+    </div>
 
-        <!-- Overlay -->
-        <div class="container__overlay">
-            <div class="overlay">
-                <div class="overlay__panel overlay--left">
-                    <button class="btn_switch" id="signIn">Iniciar Sesión</button>
-                </div>
-                <div class="overlay__panel overlay--right">
-                    <button class="btn_switch" id="signUp">Registrarse</button>
-                </div>
+    <!-- Overlay -->
+    <div class="container__overlay">
+        <div class="overlay">
+            <div class="overlay__panel overlay--left">
+                <button class="btn_switch" id="signIn">Iniciar Sesión</button>
+            </div>
+            <div class="overlay__panel overlay--right">
+                <button class="btn_switch" id="signUp">Registrarse</button>
             </div>
         </div>
     </div>
+</div>
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-white-50 py-5 px-sm-3 px-lg-5" id="contact" style="margin-top: 90px; text-align: center;">

@@ -33,12 +33,12 @@
             <!-- Menú principal a la izquierda -->
             <ul class="navbar-nav me-auto ms-4">
                 <li class="nav-item">
-                    <a class="nav-link" href="#home2">
+                    <a class="nav-link" href="../Index.php">
                         <i class="fas fa-home"></i> Home
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#slider">
+                    <a class="nav-link" href="#buscador">
                         <i class="fas fa-globe"></i> Destinos
                     </a>
                 </li>
@@ -73,14 +73,13 @@
 
 
     <!-- Carrusel -->
-    <div class="container-fluid p-0" id="home2">
+    <div class="container-fluid p-0" >
         <div id="header-carousel" class="carousel slide" data-bs-ride="carousel"> <!-- Cambia data-ride a data-bs-ride -->
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <img class="w-100" src="../imagenes/Carrusel-4.jpg" alt="Imagen">
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                        <div class="p-3" style="max-width: 900px; margin-bottom: 35%;">
-                            <h4 class="text-white text-uppercase mb-md-3">Explora el mundo</h4>
+                        <div class="p-3" style="max-width: 900px; margin-bottom: 5%;">
                             <h1 class="display-3 text-white mb-md-4">Pierdete en el viaje de tu Vida</h1>
                         </div>
                     </div>
@@ -88,17 +87,15 @@
                 <div class="carousel-item">
                     <img class="w-100" src="../imagenes/Carrusel-5.jpg" alt="Imagen">
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                        <div class="p-3" style="max-width: 900px; margin-bottom: 35%;">
-                            <h4 class="text-white text-uppercase mb-md-3">Destinos de ensueño</h4>
-                            <h1 class="display-3 text-white mb-md-4">Lugares increíbles</h1>
+                        <div class="p-3" style="max-width: 900px; margin-bottom: 5%;">
+                            <h1 class="display-3 text-white mb-md-4">Lugares increíbles por ver</h1>
                         </div>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <img class="w-100" src="../imagenes/Carrusel-7.jpg" alt="Imagen">
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                        <div class="p-3" style="max-width: 900px; margin-bottom: 35%;">
-                            <h4 class="text-white text-uppercase mb-md-3">Simplemente Inigualable</h4>
+                        <div class="p-3" style="max-width: 900px; margin-bottom: 5%;">
                             <h1 class="display-3 text-white mb-md-4">El paraíso en tus manos</h1>
                         </div>
                     </div>
@@ -170,7 +167,7 @@
     </div>
 
     <!-- Contenedor del slider -->
-    <div class="text-center mb-3 pb-3">
+    <div class="text-center mb-3 pb-3" id="buscador">
         <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Continentes por Descubrir</h6>
         <h3 class="text-dark">Principales destinos</h3>
     </div>
@@ -193,143 +190,193 @@
         </div>
     </div>
 
-  <div class="container-fluid py-5" id="hotelpacks">
-        <div class="container pt-5 pb-3">
-            <div class="text-center mb-3 pb-3">
-                <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Packs de Viaje</h6>
-                <h1 class="text-dark">Hoteles Recomendados</h1>
+    <div class="container-fluid py-5" id="hotelpacks">
+    <div class="container pt-5 pb-3">
+        <div class="text-center mb-3 pb-3">
+            <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Packs de Viaje</h6>
+            <h1 class="text-dark">Hoteles Recomendados</h1>
+        </div>
+
+        <div class="row">
+            <!-- Card 1 - Bulgaria -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="package-item bg-white mb-2">
+                    <img class="img-fluid" src="../imagenes/Hotel_imperial-resort_BG.jpg" alt="Imagen" >
+                    <div class="p-4">
+                        <div class="d-flex justify-content-between mb-3">
+                            <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>Bulgaria</small>
+                            <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>Por noche</small>
+                            <small class="m-0"><i class="fa fa-user text-primary me-2"></i>1 Persona</small>
+                        </div>
+                        <a class="h5 text-decoration-none" href="">Hotel Imperial Resort - Bulgaria</a>
+                        <div class="border-top mt-4 pt-4">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="m-0">117€</h5>
+                                <button class="btn btn-primary btn-sm" 
+                                    data-destination="Bulgaria"
+                                    data-description="Hotel de Lujo 5 estrellas en Sunny Beach" 
+                                    data-duration="1 Noche" 
+                                    data-people="1" 
+                                    data-price="117" 
+                                    onclick="addToCart(this)">
+                                    Reservar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="row">
-                <!-- Card 1 -->
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="package-item bg-white mb-2">
-                        <img class="img-fluid" src="../imagenes/Hotel_imperial-resort_BG.jpg" alt="Imagen" >
-                        <div class="p-4">
-                            <div class="d-flex justify-content-between mb-3">
-                                <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>Bulgaria</small>
-                                <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>3D/2N</small>
-                                <small class="m-0"><i class="fa fa-user text-primary me-2"></i>1 Persona</small>
-                            </div>
-                            <a class="h5 text-decoration-none" href="">Hotel Imperial Resort - Bulgaria</a>
-                            <div class="border-top mt-4 pt-4">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <h5 class="m-0">450€</h5>
-                                    <button onclick="incrementCounter(event)" class="btn btn-primary btn-sm">Reservar</button>
-                                </div>
+            <!-- Card 2 - Italia -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="package-item bg-white mb-2">
+                    <img class="img-fluid" src="../imagenes/Hotel_GrandHotel_IT.jpg" alt="Imagen">
+                    <div class="p-4">
+                        <div class="d-flex justify-content-between mb-3">
+                            <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>Italia</small>
+                            <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>Por noche</small>
+                            <small class="m-0"><i class="fa fa-user text-primary me-2"></i>1 Persona</small>
+                        </div>
+                        <a class="h5 text-decoration-none" href="">Hotel GrandHotel & Resort - Italia</a>
+                        <div class="border-top mt-4 pt-4">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="m-0">135€</h5>
+                                <button class="btn btn-primary btn-sm" 
+                                    data-destination="Italia"
+                                    data-description="Hotel de Lujo 5 estrellas en Cluj-Napoca" 
+                                    data-duration="1 Noche" 
+                                    data-people="1" 
+                                    data-price="135" 
+                                    onclick="addToCart(this)">
+                                    Reservar
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
-    
-                <!-- Card 2 -->
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="package-item bg-white mb-2">
-                        <img class="img-fluid" src="../imagenes/Hotel_GrandHotel_IT.jpg" alt="Imagen">
-                        <div class="p-4">
-                            <div class="d-flex justify-content-between mb-3">
-                                <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>Italia</small>
-                                <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>2D/1N</small>
-                                <small class="m-0"><i class="fa fa-user text-primary me-2"></i>1 Persona</small>
-                            </div>
-                            <a class="h5 text-decoration-none" href="">Hotel GrandHotel & Resort - Italia</a>
-                            <div class="border-top mt-4 pt-4">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <h5 class="m-0">345€</h5>
-                                    <a href="#" class="btn btn-primary btn-sm">Reservar</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-    
-                <!-- Card 3 -->
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="package-item bg-white mb-2">
-                        <img class="img-fluid" src="../imagenes/Hotel_Riad_dar_MA.jpg" alt="Imagen">
-                        <div class="p-4">
-                            <div class="d-flex justify-content-between mb-3">
-                                <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>Marruecos</small>
-                                <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>5D/4N</small>
-                                <small class="m-0"><i class="fa fa-user text-primary me-2"></i>1 Persona</small>
-                            </div>
-                            <a class="h5 text-decoration-none" href="">Hotel Riad Dar - Marruecos</a>
-                            <div class="border-top mt-4 pt-4">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <h5 class="m-0">699€</h5>
-                                    <a href="#" class="btn btn-primary btn-sm">Reservar</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-    
-                <!-- Card 4 -->
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="package-item bg-white mb-2">
-                        <img class="img-fluid" src="../imagenes/Hotel_concorde-Deluxe-resort_TR.jpg" alt="Imagen">
-                        <div class="p-4">
-                            <div class="d-flex justify-content-between mb-3">
-                                <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>Turquía</small>
-                                <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>7D/6N</small>
-                                <small class="m-0"><i class="fa fa-user text-primary me-2"></i>2 Personas</small>
-                            </div>
-                            <a class="h5 text-decoration-none" href="">Concorde Deluxe Resort - Turquía</a>
-                            <div class="border-top mt-4 pt-4">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <h5 class="m-0">1248€</h5>
-                                    <a href="#" class="btn btn-primary btn-sm">Reservar</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-    
-                <!-- Card 5 -->
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="package-item bg-white mb-2">
-                        <img class="img-fluid" src="../imagenes/Hotel_GrandBeijingHotel_CHN.jpg" alt="Imagen">
-                        <div class="p-4">
-                            <div class="d-flex justify-content-between mb-3">
-                                <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>China</small>
-                                <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>5D/4N</small>
-                                <small class="m-0"><i class="fa fa-user text-primary me-2"></i>2 Persona</small>
-                            </div>
-                            <a class="h5 text-decoration-none" href="">Hotel GrandBeijing - China</a>
-                            <div class="border-top mt-4 pt-4">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <h5 class="m-0">1099€</h5>
-                                    <a href="#" class="btn btn-primary btn-sm">Reservar</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-    
-                <!-- Card 6 -->
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="package-item bg-white mb-2">
-                        <img class="img-fluid" src="../imagenes/Hotel_Villa_Fontaine_JP.jpg" alt="Imagen">
-                        <div class="p-4">
-                            <div class="d-flex justify-content-between mb-3">
-                                <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>Japón</small>
-                                <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>6D/5N</small>
-                                <small class="m-0"><i class="fa fa-user text-primary me-2"></i>2 Personas</small>
-                            </div>
-                            <a class="h5 text-decoration-none" href="">Hotel Villa Fontaine - Japón</a>
-                            <div class="border-top mt-4 pt-4">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <h5 class="m-0">1372€</h5>
-                                    <a href="#" class="btn btn-primary btn-sm">Reservar</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
+
+            <!-- Card 3 - Marruecos -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="package-item bg-white mb-2">
+                    <img class="img-fluid" src="../imagenes/Hotel_Riad_dar_MA.jpg" alt="Imagen">
+                    <div class="p-4">
+                        <div class="d-flex justify-content-between mb-3">
+                            <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>Marruecos</small>
+                            <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>Por noche</small>
+                            <small class="m-0"><i class="fa fa-user text-primary me-2"></i>1 Persona</small>
+                        </div>
+                        <a class="h5 text-decoration-none" href="">Hotel Riad Dar - Marruecos</a>
+                        <div class="border-top mt-4 pt-4">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="m-0">176€</h5>
+                                <button class="btn btn-primary btn-sm" 
+                                    data-destination="Marruecos"
+                                    data-description="Hotel de Lujo 4 estrellas en Marrakech"   
+                                    data-duration="1 Noche" 
+                                    data-people="1" 
+                                    data-price="176" 
+                                    onclick="addToCart(this)">
+                                    Reservar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4 - Turquía -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="package-item bg-white mb-2">
+                    <img class="img-fluid" src="../imagenes/Hotel_concorde-Deluxe-resort_TR.jpg" alt="Imagen">
+                    <div class="p-4">
+                        <div class="d-flex justify-content-between mb-3">
+                            <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>Turquía</small>
+                            <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>Por noche</small>
+                            <small class="m-0"><i class="fa fa-user text-primary me-2"></i>2 Personas</small>
+                        </div>
+                        <a class="h5 text-decoration-none" href="">Concorde Deluxe Resort - Turquía</a>
+                        <div class="border-top mt-4 pt-4">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="m-0">436€</h5>
+                                <button class="btn btn-primary btn-sm" 
+                                    data-destination="Turquía"
+                                    data-description="Hotel de Lujo 5 estrellas en Antalya"   
+                                    data-duration="1 Noche" 
+                                    data-people="2" 
+                                    data-price="436" 
+                                    onclick="addToCart(this)">
+                                    Reservar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 5 - China -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="package-item bg-white mb-2">
+                    <img class="img-fluid" src="../imagenes/Hotel_GrandBeijingHotel_CHN.jpg" alt="Imagen">
+                    <div class="p-4">
+                        <div class="d-flex justify-content-between mb-3">
+                            <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>China</small>
+                            <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>Por Noche</small>
+                            <small class="m-0"><i class="fa fa-user text-primary me-2"></i>2 Personas</small>
+                        </div>
+                        <a class="h5 text-decoration-none" href="">Hotel GrandBeijing - China</a>
+                        <div class="border-top mt-4 pt-4">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="m-0">191€</h5>
+                                <button class="btn btn-primary btn-sm" 
+                                    data-destination="China" 
+                                    data-description="Hotel de Lujo 4 estrellas en Pekín"  
+                                    data-duration="1 Noche" 
+                                    data-people="2" 
+                                    data-price="191" 
+                                    onclick="addToCart(this)">
+                                    Reservar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 6 - Japón -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="package-item bg-white mb-2">
+                    <img class="img-fluid" src="../imagenes/Hotel_Villa_Fontaine_JP.jpg" alt="Imagen">
+                    <div class="p-4">
+                        <div class="d-flex justify-content-between mb-3">
+                            <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>Japón</small>
+                            <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>Por noche</small>
+                            <small class="m-0"><i class="fa fa-user text-primary me-2"></i>2 Personas</small>
+                        </div>
+                        <a class="h5 text-decoration-none" href="">Hotel Villa Fontaine - Japón</a>
+                        <div class="border-top mt-4 pt-4">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="m-0">268€</h5>
+                                <button class="btn btn-primary btn-sm" 
+                                    data-destination="Japón"
+                                    data-description="Hotel de Lujo 4 estrellas en Tokio"  
+                                    data-duration="1 Noche" 
+                                    data-people="2" 
+                                    data-price="268" 
+                                    onclick="addToCart(this)">
+                                    Reservar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
+</div>
+
+
 
     <!-- Aerolíneas -->
     <div class="text-center mb-3 pb-3">

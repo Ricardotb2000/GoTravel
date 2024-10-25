@@ -5,12 +5,17 @@ body, h1, h2, h3, p, figure, ul, li {
 
 body {
     min-height: 2000px; 
-    padding-top: 56px;
+    padding-top: 57px;
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
     color: #333;
     background-color: #f8f8f8;
 }
+
+.p-3 { 
+    margin-top: 20% !important;
+}
+
 
 .header-container {
     background-color: #2040C4;
@@ -81,54 +86,6 @@ body {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra para un efecto más destacado */
 }
 
-.chatbot-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #007bff;
-    color: white;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-    z-index: 1000;
-}
-
-.chatbot-popup {
-    display: none;
-    position: fixed;
-    bottom: 80px;
-    right: 20px;
-    background-color: white;
-    border-radius: 10px;
-    width: 300px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    z-index: 999;
-}
-
-.chatbot-header {
-    background-color: #007bff;
-    color: white;
-    padding: 10px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.close {
-    cursor: pointer;
-}
-
-.chatbot-body {
-    padding: 15px;
-    background-color: #ffffff;
-}
-
 .text-white-50 a {
     text-decoration: none; /* Sin subrayado por defecto */
     color: rgba(255, 255, 255, 0.5); /* Color de texto */
@@ -141,10 +98,14 @@ body {
 
 
 @media (max-width: 700px) {
+    .mostrarmovil{
+        display: block;
+    }
     .header-container {
         flex-direction: column;
         align-items: center;
     }
+    
 
     .header-nav {
         flex-direction: column;

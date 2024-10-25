@@ -52,7 +52,7 @@ body {
 	overflow: hidden;
 	position: relative;
 	width: 100%;
-	margin-top: -1100px;
+	margin-top: -800px;
 }
 
 .container__form {
@@ -208,6 +208,8 @@ body {
 	text-decoration: underline; /* Subrayado al pasar el ratón */
 	color: white; /* Cambiar el color si es necesario */
   }
+
+
 
 @keyframes show {
 	0%,

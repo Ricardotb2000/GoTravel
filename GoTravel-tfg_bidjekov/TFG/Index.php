@@ -1,3 +1,8 @@
+<?php 
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -76,58 +81,53 @@
         </div>
     </nav>
 
-        <!-- Contador de reservas -->
-        <a class="nav-link" id="cartIcon" href="#" onclick="incrementCounter(event)">
-            <i class="fas fa-shopping-cart"></i> 
-            <span id="cartCount" class="badge badge-light">0</span>
-        </a>
-
-        <!-- Carousel -->
-        <div class="container-fluid p-0" id="home">
-            <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img class="w-100" src="imagenes/Carrusel-1.jpg" alt="Imagen">
-                        <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                            <div class="p-3" style="max-width: 900px; margin-bottom: 35%; text-decoration: solid;">
-                                <h4 class="text-white text-uppercase mb-md-3">Prueba y descubre</h4>
-                                <h1 class="display-3 text-white mb-md-4">¿Vamos de paseo por el mundo?</h1>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img class="w-100" src="imagenes/Carrusel-2.jpg" alt="Imagen">
-                        <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                            <div class="p-3" style="max-width: 900px; margin-bottom: 35%; text-decoration: solid;">
-                                <h4 class="text-white text-uppercase mb-md-3">Viajes increíbles</h4>
-                                <h1 class="display-3 text-white mb-md-4">Destinos Turísticos para recordar</h1>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img class="w-100" src="imagenes/Carrusel-3.jpg" alt="Imagen">
-                        <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                            <div class="p-3" style="max-width: 900px; margin-bottom: 35%; text-decoration: solid;">
-                                <h4 class="text-white text-uppercase mb-md-3">Experiencias Inolvidables</h4>
-                                <h1 class="display-3 text-white mb-md-4">Disfruta de la aventura</h1>
-                            </div>
-                        </div>
+<!-- Carousel -->
+<div class="container-fluid p-0" id="home">
+    <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="w-100" src="imagenes/Carrusel-1.jpg" alt="Imagen">
+                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                    <div class="p-3" style="max-width: 900px; margin-bottom: 15%;">
+                        <h4 class="text-white text-uppercase mb-3">Prueba y descubre</h4>
+                        <h1 class="display-3 text-white mb-4">¿Vamos de paseo por el mundo?</h1>
                     </div>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel" data-bs-slide="prev">
-                    <div class="btn btn-dark" style="width: 45px; height: 45px;">
-                        <span class="carousel-control-prev-icon mb-n2" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
+            </div>
+            <div class="carousel-item">
+                <img class="w-100" src="imagenes/Carrusel-2.jpg" alt="Imagen">
+                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                    <div class="p-3" style="max-width: 900px; margin-bottom: 15%;">
+                        <h4 class="text-white text-uppercase mb-3">Viajes increíbles</h4>
+                        <h1 class="display-3 text-white mb-4">Destinos Turísticos para recordar</h1>
                     </div>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#header-carousel" data-bs-slide="next">
-                    <div class="btn btn-dark" style="width: 45px; height: 45px;">
-                        <span class="carousel-control-next-icon mb-n2" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img class="w-100" src="imagenes/Carrusel-3.jpg" alt="Imagen">
+                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                    <div class="p-3" style="max-width: 900px; margin-bottom: 15%;">
+                        <h4 class="text-white text-uppercase mb-3">Experiencias Inolvidables</h4>
+                        <h1 class="display-3 text-white mb-4">Disfruta de la aventura</h1>
                     </div>
-                </button>
+                </div>
             </div>
         </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel" data-bs-slide="prev">
+            <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                <span class="carousel-control-prev-icon mb-n2" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </div>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#header-carousel" data-bs-slide="next">
+            <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                <span class="carousel-control-next-icon mb-n2" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </div>
+        </button>
+    </div>
+</div>
+
 
         <!-- Iniciar Reserva -->
         <div class="container-fluid booking mt-5 pb-5" style="position: relative; z-index: 10;">
@@ -217,160 +217,242 @@
         </div>
 
 
-        <!-- Packs de Viaje -->
-        <div class="container-fluid py-5" id="packs">
-            <div class="container pt-5 pb-3">
-                <div class="text-center mb-3 pb-3">
-                    <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Packs de Viaje</h6>
-                    <h1>Tours Recomendados</h1>
-                </div>
+    <!-- Packs de Viaje -->
+    <div class="container-fluid py-5" id="packs">
+        <div class="container pt-5 pb-3">
+            <div class="text-center mb-3 pb-3">
+                <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Packs de Viaje</h6>
+                <h1>Tours Recomendados</h1>
+            </div>
 
-                <div class="row">
-                    <!-- Card 1 -->
+            <div class="row">
+                            <!-- Card 1 - Bulgaria -->
                     <div class="col-lg-4 col-md-6 mb-4">
                         <div class="package-item bg-white mb-2">
                             <img class="img-fluid" src="imagenes/Bulgaria.jpg" alt="Imagen">
                             <div class="p-4">
                                 <div class="d-flex justify-content-between mb-3">
                                     <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>Bulgaria</small>
-                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>3 días</small>
+                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>2 Días</small>
                                     <small class="m-0"><i class="fa fa-user text-primary me-2"></i>2 Personas</small>
                                 </div>
                                 <a class="h5 text-decoration-none" href="">Descubre El país de los montañeros - Bulgaria</a>
                                 <div class="border-top mt-4 pt-4">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="m-0">600€</h5>
-                                        <button onclick="incrementCounter(event)" class="btn btn-primary btn-sm">Reservar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-        
-                    <!-- Card 2 -->
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="package-item bg-white mb-2">
-                            <img class="img-fluid" src="imagenes/Italia.jpg" alt="Imagen">
-                            <div class="p-4">
-                                <div class="d-flex justify-content-between mb-3">
-                                    <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>Italia</small>
-                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>2 dias</small>
-                                    <small class="m-0"><i class="fa fa-user text-primary me-2"></i>1 Persona</small>
-                                </div>
-                                <a class="h5 text-decoration-none" href="">Sumérgete en la belleza eterna de un Imperio- Italia</a>
-                                <div class="border-top mt-4 pt-4">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="m-0">345€</h5>
-                                        <a href="#" class="btn btn-primary btn-sm">Reservar</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-        
-                    <!-- Card 3 -->
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="package-item bg-white mb-2">
-                            <img class="img-fluid" src="imagenes/Marruecos.jpg" alt="Imagen">
-                            <div class="p-4">
-                                <div class="d-flex justify-content-between mb-3">
-                                    <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>Marruecos</small>
-                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>4 dias</small>
-                                    <small class="m-0"><i class="fa fa-user text-primary me-2"></i>2 Personas</small>
-                                </div>
-                                <a class="h5 text-decoration-none" href="">Vibrante mezcla de culturas, colores y sabores - Marruecos</a>
-                                <div class="border-top mt-4 pt-4">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="m-0">650€</h5>
-                                        <a href="#" class="btn btn-primary btn-sm">Reservar</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-        
-                    <!-- Card 4 -->
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="package-item bg-white mb-2">
-                            <img class="img-fluid" src="imagenes/Turquia.jpg" alt="Imagen">
-                            <div class="p-4">
-                                <div class="d-flex justify-content-between mb-3">
-                                    <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>Turquía</small>
-                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>7 dias</small>
-                                    <small class="m-0"><i class="fa fa-user text-primary me-2"></i>2 Personas</small>
-                                </div>
-                                <a class="h5 text-decoration-none" href="">Embárcate en un viaje a través de los siglos - Turquía</a>
-                                <div class="border-top mt-4 pt-4">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="m-0">1025€</h5>
-                                        <a href="#" class="btn btn-primary btn-sm">Reservar</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-        
-                    <!-- Card 5 -->
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="package-item bg-white mb-2">
-                            <img class="img-fluid" src="imagenes/China.jpg" alt="Imagen">
-                            <div class="p-4">
-                                <div class="d-flex justify-content-between mb-3">
-                                    <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>China</small>
-                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>5 dias</small>
-                                    <small class="m-0"><i class="fa fa-user text-primary me-2"></i>1 Persona</small>
-                                </div>
-                                <a class="h5 text-decoration-none" href="">Explora la fascinante diversidad y cultura - China</a>
-                                <div class="border-top mt-4 pt-4">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="m-0">569€</h5>
-                                        <a href="#" class="btn btn-primary btn-sm">Reservar</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-        
-                    <!-- Card 6 -->
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="package-item bg-white mb-2">
-                            <img class="img-fluid" src="imagenes/Japon.jpg" alt="Imagen">
-                            <div class="p-4">
-                                <div class="d-flex justify-content-between mb-3">
-                                    <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>Japón</small>
-                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>6 dias</small>
-                                    <small class="m-0"><i class="fa fa-user text-primary me-2"></i>2 Personas</small>
-                                </div>
-                                <a class="h5 text-decoration-none" href="">Donde la tradición se entrelaza con la vanguardia - Japón</a>
-                                <div class="border-top mt-4 pt-4">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="m-0">910€</h5>
-                                        <a href="#" class="btn btn-primary btn-sm">Reservar</a>
+                                        <h5 class="m-0">Ida + Vuelta</h5>
+                                        <div style="border-left: 2px solid #ccc; padding-left: 15px; display: flex; align-items: center;">
+                                            <h5 class="m-0 me-3">380€</h5>
+                                            <button class="btn btn-primary btn-sm" 
+                                            data-destination="Bulgaria" 
+                                            data-description="Vuelo Ida y Vuelta a Sofía" 
+                                            data-duration="3 días" 
+                                            data-people="2" 
+                                            data-price="380" 
+                                            onclick="addToCart(this)">
+                                            Reservar
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Card 7 -->
+                                    <!-- Card 2 - Italia -->
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="package-item bg-white mb-2">
+                            <img class="img-fluid" src="imagenes/Italia.jpg" alt="Imagen">
+                            <div class="p-4">
+                                <div class="d-flex justify-content-between mb-3">
+                                    <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>Italia</small>
+                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>2 Días</small>
+                                    <small class="m-0"><i class="fa fa-user text-primary me-2"></i>1 Persona</small>
+                                </div>
+                                <a class="h5 text-decoration-none" href="">Sumérgete en la belleza eterna de un Imperio - Italia</a>
+                                <div class="border-top mt-4 pt-4">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5 class="m-0">Ida + Vuelta</h5>
+                                        <div style="border-left: 2px solid rgba(0, 0, 0, 0.2); padding-left: 15px; display: flex; align-items: center;">
+                                            <h5 class="m-0 me-3">206€</h5>
+                                            <button class="btn btn-primary btn-sm" 
+                                            data-destination="Italia" 
+                                            data-description="Vuelo Ida y Vuelta a Roma" 
+                                            data-duration="2 días" 
+                                            data-people="1" 
+                                            data-price="206" 
+                                            onclick="addToCart(this)">
+                                            Reservar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 - Marruecos -->
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="package-item bg-white mb-2">
+                            <img class="img-fluid" src="imagenes/Marruecos.jpg" alt="Imagen">
+                            <div class="p-4">
+                                <div class="d-flex justify-content-between mb-3">
+                                    <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>Marruecos</small>
+                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>4 Días</small>
+                                    <small class="m-0"><i class="fa fa-user text-primary me-2"></i>2 Personas</small>
+                                </div>
+                                <a class="h5 text-decoration-none" href="">Vibrante mezcla de culturas, colores y sabores - Marruecos</a>
+                                <div class="border-top mt-4 pt-4">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5 class="m-0">Ida + Vuelta</h5>
+                                        <div style="border-left: 2px solid rgba(0, 0, 0, 0.2); padding-left: 15px; display: flex; align-items: center;">
+                                            <h5 class="m-0 me-3">374€</h5>
+                                            <button class="btn btn-primary btn-sm" 
+                                            data-destination="Marruecos" 
+                                            data-description="Vuelo Ida y Vuelta a Marrakech" 
+                                            data-duration="4 días" 
+                                            data-people="2" 
+                                            data-price="374" 
+                                            onclick="addToCart(this)">
+                                            Reservar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Card 4 - Turquía -->
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="package-item bg-white mb-2">
+                            <img class="img-fluid" src="imagenes/Turquia.jpg" alt="Imagen">
+                            <div class="p-4">
+                                <div class="d-flex justify-content-between mb-3">
+                                    <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>Turquía</small>
+                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>7 Días</small>
+                                    <small class="m-0"><i class="fa fa-user text-primary me-2"></i>2 Personas</small>
+                                </div>
+                                <a class="h5 text-decoration-none" href="">Embárcate en un viaje a través de los siglos - Turquía</a>
+                                <div class="border-top mt-4 pt-4">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5 class="m-0">Ida + Vuelta</h5>
+                                        <div style="border-left: 2px solid rgba(0, 0, 0, 0.2); padding-left: 15px; display: flex; align-items: center;">
+                                            <h5 class="m-0 me-3">1025€</h5>
+                                            <button class="btn btn-primary btn-sm" 
+                                                data-destination="Turquía"
+                                                data-description="Vuelo Ida y Vuelta a Estambul" 
+                                                data-duration="7 días" 
+                                                data-people="2" 
+                                                data-price="1025" 
+                                                onclick="addToCart(this)">
+                                                Reservar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Card 5 - China -->
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="package-item bg-white mb-2">
+                            <img class="img-fluid" src="imagenes/China.jpg" alt="Imagen">
+                            <div class="p-4">
+                                <div class="d-flex justify-content-between mb-3">
+                                    <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>China</small>
+                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>3 Días</small>
+                                    <small class="m-0"><i class="fa fa-user text-primary me-2"></i>1 Persona</small>
+                                </div>
+                                <a class="h5 text-decoration-none" href="">La cultura en constante expansión - China</a>
+                                <div class="border-top mt-4 pt-4">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5 class="m-0">Ida + Vuelta</h5>
+                                        <div style="border-left: 2px solid rgba(0, 0, 0, 0.2); padding-left: 15px; display: flex; align-items: center;">
+                                            <h5 class="m-0 me-3">838€</h5>
+                                            <button class="btn btn-primary btn-sm" 
+                                            data-destination="China" 
+                                            data-description="Vuelo Ida y Vuelta a Atenas" 
+                                            data-duration="3 días" 
+                                            data-people="1" 
+                                            data-price="838" 
+                                            onclick="addToCart(this)">
+                                            Reservar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                        
+                    <!-- Card 6 - Japón -->
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="package-item bg-white mb-2">
+                            <img class="img-fluid" src="imagenes/Japon.jpg" alt="Imagen">
+                            <div class="p-4">
+                                <div class="d-flex justify-content-between mb-3">
+                                    <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>Japón</small>
+                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>10 Días</small>
+                                    <small class="m-0"><i class="fa fa-user text-primary me-2"></i>1 Persona</small>
+                                </div>
+                                <a class="h5 text-decoration-none" href="">Sumérgete en la cultura ancestral y moderna - Japón</a>
+                                <div class="border-top mt-4 pt-4">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5 class="m-0">Ida + Vuelta</h5>
+                                        <div style="border-left: 2px solid rgba(0, 0, 0, 0.2); padding-left: 15px; display: flex; align-items: center;">
+                                            <h5 class="m-0 me-3">1002€</h5>
+                                            <button class="btn btn-primary btn-sm" 
+                                            data-destination="Japón" 
+                                            data-description="Vuelo Ida y Vuelta a Tokio" 
+                                            data-duration="10 días" 
+                                            data-people="1" 
+                                            data-price="1002" 
+                                            onclick="addToCart(this)">
+                                            Reservar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 7 - Tailandia -->
                     <div class="col-lg-4 col-md-6 mb-4">
                         <div class="package-item bg-white mb-2">
                             <img class="img-fluid" src="imagenes/Tailandia.jpg" alt="Imagen">
                             <div class="p-4">
                                 <div class="d-flex justify-content-between mb-3">
                                     <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>Tailandia</small>
-                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>6 dias</small>
-                                    <small class="m-0"><i class="fa fa-user text-primary me-2"></i>1 Personas</small>
+                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>6 Días</small>
+                                    <small class="m-0"><i class="fa fa-user text-primary me-2"></i>1 Persona</small>
                                 </div>
                                 <a class="h5 text-decoration-none" href="">Tierra de templos sagrados y playas exóticas - Tailandia</a>
                                 <div class="border-top mt-4 pt-4">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="m-0">515€</h5>
-                                        <a href="#" class="btn btn-primary btn-sm">Reservar</a>
+                                        <h5 class="m-0">Ida + Vuelta</h5>
+                                        <div style="border-left: 2px solid rgba(0, 0, 0, 0.2); padding-left: 15px; display: flex; align-items: center;">
+                                            <h5 class="m-0 me-3">702€</h5>
+                                            <button class="btn btn-primary btn-sm" 
+                                            data-destination="Tailandia" 
+                                            data-description="Vuelo Ida y Vuelta a Bangkok" 
+                                            data-duration="6 días" 
+                                            data-people="1" 
+                                            data-price="702" 
+                                            onclick="addToCart(this)">
+                                            Reservar
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>                </div>
+                        </div>
+                    </div>
+
 
                     <!-- Card 8 -->
                     <div class="col-lg-4 col-md-6 mb-4">
@@ -379,14 +461,25 @@
                             <div class="p-4">
                                 <div class="d-flex justify-content-between mb-3">
                                     <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>Malta</small>
-                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>4 dias</small>
+                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>4 Días</small>
                                     <small class="m-0"><i class="fa fa-user text-primary me-2"></i>2 Personas</small>
                                 </div>
                                 <a class="h5 text-decoration-none" href="">Un crisol de culturas bajo el sol del Mediterráneo - Malta</a>
                                 <div class="border-top mt-4 pt-4">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="m-0">885€</h5>
-                                        <a href="#" class="btn btn-primary btn-sm">Reservar</a>
+                                        <h5 class="m-0">Ida + Vuelta</h5>
+                                        <div style="border-left: 2px solid rgba(0, 0, 0, 0.2); padding-left: 15px; display: flex; align-items: center;">
+                                            <h5 class="m-0 me-3">420€</h5>
+                                            <button class="btn btn-primary btn-sm" 
+                                            data-destination="Malta" 
+                                            data-description="Vuelo Ida y Vuelta a La Valeta" 
+                                            data-duration="4 días" 
+                                            data-people="2" 
+                                            data-price="420" 
+                                            onclick="addToCart(this)">
+                                            Reservar
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -400,41 +493,36 @@
                             <div class="p-4">
                                 <div class="d-flex justify-content-between mb-3">
                                     <small class="m-0"><i class="fa fa-map-marker-alt text-primary me-2"></i>Grecia</small>
-                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>5 dias</small>
-                                    <small class="m-0"><i class="fa fa-user text-primary me-2"></i>1 Personas</small>
+                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary me-2"></i>5 Días</small>
+                                    <small class="m-0"><i class="fa fa-user text-primary me-2"></i>1 Persona</small>
                                 </div>
                                 <a class="h5 text-decoration-none" href="">Los mitos cobran vida en paisajes de ensueño - Grecia</a>
                                 <div class="border-top mt-4 pt-4">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="m-0">499€</h5>
-                                        <a href="#" class="btn btn-primary btn-sm">Reservar</a>
+                                        <h5 class="m-0">Ida + Vuelta</h5>
+                                        <div style="border-left: 2px solid rgba(0, 0, 0, 0.2); padding-left: 15px; display: flex; align-items: center;">
+                                            <h5 class="m-0 me-3">499€</h5>
+                                            <button class="btn btn-primary btn-sm" 
+                                            data-destination="Grecia" 
+                                            data-description="Vuelo + Hotel en Atenas" 
+                                            data-duration="5 días" 
+                                            data-people="1" 
+                                            data-price="499" 
+                                            onclick="addToCart(this)">
+                                            Reservar
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                </div>
             </div>
         </div>
+    </div>
 
-        <!-- chatbot -->
-        <div class="chatbot-button" id="chatbotButton">
-            <i class="fa fa-comments"></i>
-        </div>
 
-        <div class="chatbot-popup" id="chatbotPopup">
-            <div class="chatbot-header">
-                <h5>
-                    <i class="fa fa-robot" style="color: #ffffff;"></i> Asistente Go-Bot
-                    <span id="closeChatbot" style="float: right; cursor: pointer;">&times;</span>
-                </h5>
-            </div>
-            <div class="chatbot-body">
-                <p>Hola, ¿en qué puedo ayudarte hoy?</p>
-                <input type="text" placeholder="Escribe tu mensaje..." />
-            </div>
-        </div>
+        
 
         <!-- Footer Start -->
         <div class="container-fluid bg-dark text-white-50 py-5 px-sm-3 px-lg-5" id="contact" style="margin-top: 90px; text-align: center;">
@@ -463,9 +551,8 @@
                     <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Contáctanos</h5>
                     <p><i class="fa fa-map-marker-alt me-2"></i><a href="https://www.google.com/maps/place/C.+Viento,+1,+28220+Majadahonda,+Madrid/@40.4728071,-3.8782723,17z/data=!3m1!4b1!4m6!3m5!1s0xd41848df8092f4f:0x9994f047ccc25eac!8m2!3d40.4728071!4d-3.8756974!16s%2Fg%2F11csmg05nw?entry=ttu&g_ep=EgoyMDI0MTAwOS4wIKXMDSoASAFQAw%3D%3D" class="text-white" target="_blank">Calle Viento nº1 ,28220, Majadahonda</a></p>
                     <p><i class="fa fa-phone-alt me-2"></i><a href="tel:+0123456789" class="text-white">+0123 456 789</a></p>
-                    <p><i class="fa fa-envelope me-2"></i><a href="mailto:GoTravel@gmail.com" class="text-white" target="_blank">GoTravel@gmail.com</a></p>
+                    <p><i class="fa fa-envelope me-2"></i><a href="mailto:GoTravel@gmail.com" class="text-white">GoTravel@gmail.com</a></p>                
                 </div>
-                
                 <div class="col-lg-3 col-md-6 mb-5">
                     <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Transparencia</h5>
                     <p><i class="fa fa-file-alt me-2"></i><a href="info_legal/Derechos.php" class="text-white">Información Legal</a></p>

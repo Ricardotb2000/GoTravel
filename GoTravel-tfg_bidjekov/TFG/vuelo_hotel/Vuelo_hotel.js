@@ -53,3 +53,37 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+
+
+function addToCart(button) {
+    const destination = button.getAttribute('data-destination');
+    const duration = button.getAttribute('data-duration');
+    const people = button.getAttribute('data-people');
+    const price = button.getAttribute('data-price');
+
+    // Crear un objeto con los datos del paquete
+    const packageData = {
+      destination: destination,
+      duration: duration,
+      people: people,
+      price: price
+    };
+
+    // Enviar los datos mediante una petición POST a carrito.php
+    fetch('../carrito/Carrito.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(packageData)
+    })
+    .then(response => response.text())
+    .then(data => {
+      console.log('Paquete añadido al carrito:', data);
+      // Aquí podrías mostrar una alerta o actualizar la interfaz de usuario
+    })
+    .catch(error => {
+      console.error('Error al añadir al carrito:', error);
+    });
+  }
