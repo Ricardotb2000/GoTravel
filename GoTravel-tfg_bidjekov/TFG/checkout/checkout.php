@@ -1,6 +1,6 @@
 <?php
 session_start();
-require('fpdf/fpdf.php'); // Asegúrate de que la ruta es correcta
+require('fpdf/fpdf.php'); 
 
 // Verifica que el usuario está logueado
 if (!isset($_SESSION['user_id'])) {
@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 // Conectar a la base de datos
-include('db_connection.php'); // Cambia esto según tu conexión
+include('db_connection.php'); 
 
 // Recoger datos del usuario
 $user_id = $_SESSION['user_id'];
@@ -54,7 +54,7 @@ foreach ($cart as $item) {
 }
 
 // Guardar o enviar el PDF
-$pdf->Output('D', 'factura.pdf'); // 'D' para descargar
+$pdf->Output('D', 'factura.pdf'); 
 
 exit();
 ?>

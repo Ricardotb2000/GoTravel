@@ -27,22 +27,6 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('cartCount').innerText = count;
     }
 
-    // Manejo del chatbot
-    const chatbotButton = document.getElementById('chatbotButton');
-    const chatbotPopup = document.getElementById('chatbotPopup');
-
-    if (chatbotButton && chatbotPopup) {
-        chatbotButton.onclick = function () {
-            chatbotPopup.style.display = chatbotPopup.style.display === 'block' ? 'none' : 'block';
-        };
-
-        window.onclick = function (event) {
-            if (event.target === chatbotPopup) {
-                chatbotPopup.style.display = 'none';
-            }
-        };
-    }
-
     // Inicializa el datepicker
     $('#date1 input').datepicker({
         format: 'dd/mm/yyyy',

@@ -78,22 +78,22 @@ body {
 }
 
 .package-item {
-    transition: transform 0.3s ease; /* Transición suave para la transformación */
+    transition: transform 0.3s ease; 
 }
 
 .package-item:hover {
-    transform: scale(1.05); /* Ampliar la card un 5% al hacer hover */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra para un efecto más destacado */
+    transform: scale(1.05); 
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); 
 }
 
 .text-white-50 a {
-    text-decoration: none; /* Sin subrayado por defecto */
-    color: rgba(255, 255, 255, 0.5); /* Color de texto */
+    text-decoration: none; 
+    color: rgba(255, 255, 255, 0.5); 
   }
   
   .text-white-50 a:hover {
-    text-decoration: underline; /* Subrayado al pasar el ratón */
-    color: white; /* Cambiar el color si es necesario */
+    text-decoration: underline; 
+    color: white; 
   }
 
 

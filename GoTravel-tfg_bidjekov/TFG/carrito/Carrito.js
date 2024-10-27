@@ -8,7 +8,7 @@ document.querySelectorAll('a.nav-link[href^="#"]').forEach(anchor => {
 });
 
 // Simulación de la lógica del carrito
-const itemsEnCarrito = []; // Aquí se manejarán los items
+const itemsEnCarrito = []; 
 const carritoVacio = document.getElementById('carrito-vacio');
 const carritoConItems = document.getElementById('carrito-con-items');
 
@@ -59,7 +59,7 @@ document.querySelectorAll('.btn-primary').forEach(button => {
             description: this.getAttribute('data-description'),
             duration: this.getAttribute('data-duration'),
             people: this.getAttribute('data-people'),
-            price: parseFloat(this.getAttribute('data-price')) // Asegúrate de que sea un número
+            price: parseFloat(this.getAttribute('data-price')) 
         };
 
         // Enviar packageData a Carrito.php
@@ -72,8 +72,8 @@ document.querySelectorAll('.btn-primary').forEach(button => {
         })
         .then(response => response.text())
         .then(data => {
-            console.log(data); // Para ver si se agregó correctamente
-            // Aquí podrías actualizar el carrito o mostrar un mensaje de éxito
+            console.log(data); 
+            
         })
         .catch(error => console.error('Error:', error));
     });
@@ -95,10 +95,10 @@ function changeQuantity(index, change) {
     quantityInput.value = currentQuantity;
 
     // Calcular el nuevo precio total para este item (con IVA)
-    const itemPrice = parseFloat(priceCell.textContent) / currentQuantity; // Obtener precio unitario
-    const newPrice = (itemPrice * currentQuantity).toFixed(2); // Calcular nuevo precio total
+    const itemPrice = parseFloat(priceCell.textContent) / currentQuantity; 
+    const newPrice = (itemPrice * currentQuantity).toFixed(2); 
 
-    priceCell.textContent = `${newPrice}€`; // Actualizar precio en la celda
+    priceCell.textContent = `${newPrice}€`; 
 
     // Actualizar el total general del carrito
     updateCartTotal();
@@ -136,16 +136,14 @@ function changeQuantity(index, change) {
 
     // Actualizar cantidad solo si el cambio es positivo o la cantidad actual es mayor que 1
     if (change === -1 && currentQuantity <= 1) {
-        return; // No permitir que la cantidad baje de 1
+        return; 
     }
-
     currentQuantity += change;
-
     quantityInput.value = currentQuantity;
 
     // Calcular el nuevo precio total para este item (con IVA)
-    const itemPrice = parseFloat(priceCell.textContent) / (currentQuantity - change); // Obtener precio unitario
-    const newPrice = (itemPrice * currentQuantity).toFixed(2); // Calcular nuevo precio total
+    const itemPrice = parseFloat(priceCell.textContent) / (currentQuantity - change); 
+    const newPrice = (itemPrice * currentQuantity).toFixed(2); 
 
     priceCell.textContent = `${newPrice}€`; // Actualizar precio en la celda
 
@@ -160,7 +158,7 @@ function changeQuantity(index, change) {
 
     // Actualizar cantidad solo si el cambio es positivo o la cantidad actual es mayor que 1
     if (change === -1 && currentQuantity <= 1) {
-        return; // No permitir que la cantidad baje de 1
+        return; 
     }
 
     currentQuantity += change;
@@ -168,8 +166,8 @@ function changeQuantity(index, change) {
     quantityInput.value = currentQuantity;
 
     // Calcular el nuevo precio total para este item (con IVA)
-    const itemPrice = parseFloat(priceCell.textContent) / (currentQuantity - change); // Obtener precio unitario
-    const newPrice = (itemPrice * currentQuantity).toFixed(2); // Calcular nuevo precio total
+    const itemPrice = parseFloat(priceCell.textContent) / (currentQuantity - change); 
+    const newPrice = (itemPrice * currentQuantity).toFixed(2); 
 
     priceCell.textContent = `${newPrice}€`; // Actualizar precio en la celda
 
@@ -189,16 +187,16 @@ function updateCartTotal() {
     });
 
     const iva_percentage = 21;
-    const subtotal = total / (1 + (iva_percentage / 100)); // Precio sin IVA
-    const iva_amount = total - subtotal; // Cantidad de IVA
+    const subtotal = total / (1 + (iva_percentage / 100)); 
+    const iva_amount = total - subtotal; 
 
-    // Crear el HTML para el total sin perder estilos
+    // mostrar el html con los estilos
     const totalHTML = `
         <div style='margin-bottom: 5px;'><div style='font-weight: bold;'>Subtotal: </div><span>${subtotal.toFixed(2)}€</span></div>
         <div style='margin-bottom: 5px;'><div style='font-weight: bold;'>IVA (${iva_percentage}%): </div><span>${iva_amount.toFixed(2)}€</span></div>
         <div style='margin-bottom: 5px;'><div style='font-weight: bold; color: gold;'>Total: </div><span style='font-size: 1.1em; color: gold;'>${total.toFixed(2)}€</span></div>
     `;
 
-    // Actualizar solo el contenido interior del contenedor de total
+    // Actualizar el contenido 
     document.getElementById('cart-total').innerHTML = totalHTML;
 }

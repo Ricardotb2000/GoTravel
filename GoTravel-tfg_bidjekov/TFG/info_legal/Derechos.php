@@ -21,13 +21,13 @@
         }
 
         .text-white-50 a {
-        text-decoration: none; /* Sin subrayado por defecto */
-        color: rgba(255, 255, 255, 0.5); /* Color de texto */
+        text-decoration: none; 
+        color: rgba(255, 255, 255, 0.5); 
         }
 
         .text-white-50 a:hover {
-        text-decoration: underline; /* Subrayado al pasar el ratón */
-        color: white; /* Cambiar el color si es necesario */
+        text-decoration: underline; 
+        color: white; 
         }
     </style>
 </head>

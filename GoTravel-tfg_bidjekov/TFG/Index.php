@@ -149,14 +149,14 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4"> <!-- Tamaño uniforme -->
+                                <div class="col-md-4"> 
                                     <div class="mb-3 mb-md-0">
                                         <div class="input-group date" id="date1" data-target-input="nearest">
                                             <input type="text" class="form-control p-4 datetimepicker-input" placeholder="Fecha ida" data-target="#date2" data-toggle="datetimepicker" style="height: 47px;" />
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4"> <!-- Tamaño uniforme -->
+                                <div class="col-md-4"> 
                                     <div class="mb-3 mb-md-0">
                                         <div class="input-group date" id="date2" data-target-input="nearest">
                                             <input type="text" class="form-control p-4 datetimepicker-input" placeholder="Fecha vuelta" data-target="#date2" data-toggle="datetimepicker" style="height: 47px;" />
@@ -454,7 +454,7 @@
                     </div>
 
 
-                    <!-- Card 8 -->
+                    <!-- Card 8 Malta -->
                     <div class="col-lg-4 col-md-6 mb-4">
                         <div class="package-item bg-white mb-2">
                             <img class="img-fluid" src="imagenes/Malta.jpg" alt="Imagen">
@@ -486,7 +486,7 @@
                         </div>
                     </div>
 
-                    <!-- Card 9 -->
+                    <!-- Card 9 Grecia-->
                     <div class="col-lg-4 col-md-6 mb-4">
                         <div class="package-item bg-white mb-2">
                             <img class="img-fluid" src="imagenes/Grecia.jpg" alt="Imagen">

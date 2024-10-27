@@ -3,4 +3,3 @@
 3.- Crear cada tabla en funcion de las necesidades del proyecto
 4.- Crear un Index.php con el menu principal del proyecto
 5.- Crear certificado de seguridad HTTPS
-6.-

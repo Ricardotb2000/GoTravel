@@ -29,13 +29,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 progressBar.style.width = width + '%';
                 progressBar.setAttribute('aria-valuenow', width);
             }
-        }, 300);  // Incremento de la barra cada 300ms para simular el proceso de carga
+        }, 300);  
     });
 
     // Inicializa el datepicker en los inputs correspondientes
     $('#date1 input').datepicker({
         format: 'dd/mm/yyyy',
-        autoclose: true,  // Cierra automáticamente al seleccionar una fecha
+        autoclose: true,  // Cierra automáticamente 
         todayHighlight: true,  // Resalta la fecha actual
         templates: {
             leftArrow: '&laquo;',  // Flecha de navegación izquierda
@@ -81,7 +81,7 @@ function addToCart(button) {
     .then(response => response.text())
     .then(data => {
       console.log('Paquete añadido al carrito:', data);
-      // Aquí podrías mostrar una alerta o actualizar la interfaz de usuario
+      
     })
     .catch(error => {
       console.error('Error al añadir al carrito:', error);
