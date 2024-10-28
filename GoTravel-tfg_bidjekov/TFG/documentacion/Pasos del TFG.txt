@@ -1,6 +1,0 @@
-1.- Crear una MV en AWS e instalar PHP Myadmin
-2.- Crear una base de datos en la nube para acceder dinamicamente
-3.- Crear cada tabla en funcion de las necesidades del proyecto
-4.- Crear un Index.php con el menu principal del proyecto
-5.- Crear certificado de seguridad HTTPS
-6.-
