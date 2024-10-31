@@ -23,10 +23,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         'people' => $people,
         'price' => $price
     ];
-
-    echo 'Paquete añadido al carrito con éxito';
+    
+    var_dump($_SESSION['cart']);
 }
+
+// Lógica para validar el código promocional
+if (isset($_POST['promo_code'])) {
+    $promo_code = trim($_POST['promo_code']);
+    $discount = 0;
+
+    if ($promo_code === 'gotravel2024') {
+        $discount = 0.20; // 20% de descuento
+    } else {
+        echo json_encode(['error' => 'El código no existe']);
+        exit();
+    }
+
+    // Calcular el nuevo total
+    $total = 0;
+    foreach ($_SESSION['cart'] as $item) {
+        $total += $item['price'];
+    }
+
+    $discounted_total = $total * (1 - $discount);
+    echo json_encode(['total' => number_format($discounted_total, 2)]);
+    exit();
+}
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -163,9 +188,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     echo "<div style='margin-bottom: 5px;'><div style='font-weight: bold;'>Subtotal: </div><span>" . number_format($subtotal, 2) . "€</span></div>";
     echo "<div style='margin-bottom: 5px;'><div style='font-weight: bold;'>IVA ({$iva_percentage}%): </div><span>" . number_format($iva_amount, 2) . "€</span></div>";
-    echo "<div style='margin-bottom: 5px;'><div style='font-weight: bold; color: gold;'>Total: </div><span style='font-size: 1.1em; color: gold;'>" . number_format($total, 2) . "€</span></div>";
+    echo "<div style='margin-bottom: 5px;'><div style='font-weight: bold; color: #27a7ff;'>Total: </div><span style='font-size: 1.1em; color: #27a7ff;'>" . number_format($total, 2) . "€</span></div>";
     ?>
+    
+    <!-- Formulario para el código promocional -->
+    <div class="text-end mb-4">
+        <input type="text" id="promo_code" placeholder="Introduce tu código promocional" class="form-control d-inline" style="width: 250px; display: inline-block;">
+        <button class="btn btn-primary" id="apply_code">Aplicar Código</button>
+    </div>
 </div>
+
 
     <!-- Botón de checkout -->
     <div class="text-end mb-4">

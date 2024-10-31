@@ -1,6 +1,79 @@
-<?php 
+<?php
+session_start();
+require_once 'database/Config.php'; // Asegúrate de tener la configuración de conexión aquí
 
+// Inicializa los resultados como un array vacío
+$results = [];
 
+// Procesar la solicitud
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $origin_id = $_POST['destination']; // Se considera 'destination' como origen
+    $stay_type = $_POST['stay_type'];
+
+    // Consulta según el tipo de estancia
+    if ($stay_type == 'hotel') {
+        // Consulta para obtener hoteles
+        $query = "SELECT h.Name, h.Price_Per_Night AS Price, h.Description, d.City 
+                  FROM hotel h 
+                  JOIN destination d ON h.Destination_ID = d.Destination_ID 
+                  WHERE d.Destination_ID = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $origin_id);
+        $stmt->execute();
+        $results['hotels'] = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+    } elseif ($stay_type == 'vuelo') {
+        // Consulta para obtener vuelos desde el país de origen con el nombre de las ciudades
+        $query = "SELECT d_origin.City AS Origin_City, d_dest.City AS Destination_City, 
+                         f.Price, f.Departure_Date, f.Arrival_Date 
+                  FROM flight f 
+                  JOIN destination d_origin ON f.Origin_ID = d_origin.Destination_ID 
+                  JOIN destination d_dest ON f.Destination_ID = d_dest.Destination_ID 
+                  WHERE f.Origin_ID = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $origin_id);
+        $stmt->execute();
+        $results['flights'] = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+    } elseif ($stay_type == 'vuelo_hotel') {
+        // Consulta para obtener ambos
+        $hotel_query = "SELECT h.Name, h.Price_Per_Night AS Price, h.Description, d.City 
+                        FROM hotel h 
+                        JOIN destination d ON h.Destination_ID = d.Destination_ID 
+                        WHERE d.Destination_ID = ?";
+        $flight_query = "SELECT d_origin.City AS Origin_City, d_dest.City AS Destination_City, 
+                                f.Price, f.Departure_Date, f.Arrival_Date 
+                         FROM flight f 
+                         JOIN destination d_origin ON f.Origin_ID = d_origin.Destination_ID 
+                         JOIN destination d_dest ON f.Destination_ID = d_dest.Destination_ID 
+                         WHERE f.Origin_ID = ?";
+
+        // Obtener hoteles
+        $hotel_stmt = $conn->prepare($hotel_query);
+        $hotel_stmt->bind_param("i", $origin_id);
+        $hotel_stmt->execute();
+        $results['hotels'] = $hotel_stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+        // Obtener vuelos
+        $flight_stmt = $conn->prepare($flight_query);
+        $flight_stmt->bind_param("i", $origin_id);
+        $flight_stmt->execute();
+        $results['flights'] = $flight_stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    // Guardar resultados en la sesión para mostrarlos más adelante
+    $_SESSION['search_results'] = $results;
+
+    // Redirigir a la misma página para mostrar resultados
+    header('Location: ' . $_SERVER['PHP_SELF']);
+    exit();
+}
+
+// Comprobar si hay resultados en la sesión
+if (isset($_SESSION['search_results'])) {
+    $results = $_SESSION['search_results'];
+    unset($_SESSION['search_results']); // Limpiar los resultados de la sesión
+}
 ?>
 
 <!DOCTYPE html>
@@ -11,6 +84,7 @@
     <title>GoTravel - Inicio</title>
 
     <link rel="icon" href="imagenes/GoTravel.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
@@ -72,7 +146,7 @@
                         <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" style="position: relative;">
                     <a class="nav-link" href="carrito/Carrito.php">
                         <i class="fas fa-shopping-cart"></i> Carrito
                     </a>
@@ -129,68 +203,166 @@
 </div>
 
 
-        <!-- Iniciar Reserva -->
-        <div class="container-fluid booking mt-5 pb-5" style="position: relative; z-index: 10;">
-            <div class="container pb-5">
-                <div class="bg-light shadow" style="padding: 30px;">
-                    <div class="row align-items-center" style="min-height: 60px;">
-                        <div class="col-md-10">
-                            <div class="row justify-content-center">
-                                <div class="col-md-4"> <!-- Tamaño uniforme -->
-                                    <div class="mb-3 mb-md-0">
-                                        <select class="custom-select px-4" style="height: 47px; width: 100%;"> <!-- Ajuste de ancho -->
-                                            <option selected disabled>Destinos</option>
-                                            <option value="1">Bulgaria</option>
-                                            <option value="2">Italia</option>
-                                            <option value="3">Marruecos</option>
-                                            <option value="4">Turquía</option>
-                                            <option value="5">China</option>
-                                            <option value="6">Japón</option>
-                                        </select>
+<!-- Iniciar Reserva -->
+<div class="container-fluid booking mt-5 pb-5 mb-5" style="position: relative; z-index: 10;" id="about-us">
+    <div class="container pb-5">
+        <div class="bg-light shadow p-4 rounded-3">
+            <form method="POST" action="">
+                <div class="row align-items-center g-3">
+                    <div class="col-md-10">
+                        <div class="row justify-content-center g-2">
+                            <div class="col-md-3">
+                                <div class="mb-3 mb-md-0">
+                                    <select name="destination" class="custom-select form-select px-4" style="height: 47px; width: 100%;" required>
+                                        <option selected disabled>Origen</option>
+                                        <option value="1">España</option>
+                                        <option value="2">Brasil</option>
+                                        <option value="3">Italia</option>
+                                        <option value="4">Marruecos</option>
+                                        <option value="5">Bulgaria</option>
+                                        <option value="6">Turquía</option>
+                                        <option value="7">Japón</option>
+                                        <option value="8">China</option>
+                                        <option value="9">Tailandia</option>
+                                        <option value="10">Grecia</option>
+                                        <option value="11">Malta</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3 mb-md-0">
+                                    <select name="stay_type" class="custom-select form-select px-4" style="height: 47px; width: 100%;" required>
+                                        <option selected disabled>Estancia</option>
+                                        <option value="hotel">Hoteles</option>
+                                        <option value="vuelo">Vuelos</option>
+                                        <option value="vuelo_hotel">Vuelos+Hotel</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3"> 
+                                <div class="mb-3 mb-md-0">
+                                    <div class="input-group date" id="date1" data-target-input="nearest">
+                                        <input type="text" name="departure_date" class="form-control p-4 datetimepicker-input" placeholder="Fecha ida" data-target="#date2" data-toggle="datetimepicker" style="height: 47px;" required />
                                     </div>
                                 </div>
-                                <div class="col-md-4"> 
-                                    <div class="mb-3 mb-md-0">
-                                        <div class="input-group date" id="date1" data-target-input="nearest">
-                                            <input type="text" class="form-control p-4 datetimepicker-input" placeholder="Fecha ida" data-target="#date2" data-toggle="datetimepicker" style="height: 47px;" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4"> 
-                                    <div class="mb-3 mb-md-0">
-                                        <div class="input-group date" id="date2" data-target-input="nearest">
-                                            <input type="text" class="form-control p-4 datetimepicker-input" placeholder="Fecha vuelta" data-target="#date2" data-toggle="datetimepicker" style="height: 47px;" />
-                                        </div>
+                            </div>
+                            <div class="col-md-3"> 
+                                <div class="mb-3 mb-md-0">
+                                    <div class="input-group date" id="date2" data-target-input="nearest">
+                                        <input type="text" name="return_date" class="form-control p-4 datetimepicker-input" placeholder="Fecha vuelta" data-target="#date2" data-toggle="datetimepicker" style="height: 47px;" />
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-2">
-                            <button id="search-btn" class="btn btn-primary btn-block" type="submit" style="height: 47px; margin-top: -2px; width: 100%;">Buscar</button>
-                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button id="search-btn" class="btn btn-primary btn-block" type="submit" style="height: 47px; margin-top: -2px; width: 100%;">Buscar</button>
                     </div>
                 </div>
-            </div>
-        </div>
+            </form>
 
-        <!-- Pantalla de carga -->
-        <div id="loading-screen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255,255,255,0.9); z-index: 1000; text-align: center; padding-top: 20%;">
-            <div class="progress" style="width: 50%; margin: 0 auto;">
-                <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <p>Buscando...</p>
+            <!-- Mostrar resultados de búsqueda -->
+            <?php if (isset($results) && !empty($results)): ?>
+                <div class="table-responsive mt-4">
+                    <?php if (isset($results['hotels']) && !empty($results['hotels'])): ?>
+                        <h4 class="mt-4">Hoteles:</h4>
+                        <table class="table table-striped table-hover table-borderless align-middle">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Precio por Noche</th>
+                                    <th>Descripción</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($results['hotels'] as $hotel): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($hotel['Name']) ?></td>
+                                        <td><?= htmlspecialchars($hotel['Price']) ?>€</td>
+                                        <td><?= htmlspecialchars($hotel['Description']) ?></td>
+                                        <td>
+                                            <button class="btn btn-outline-primary btn-sm" 
+                                                    data-destination="<?= htmlspecialchars($hotel['Name']) ?>" 
+                                                    data-description="<?= htmlspecialchars($hotel['Description']) ?>" 
+                                                    data-price="<?= htmlspecialchars($hotel['Price']) ?>" 
+                                                    data-duration="1 noche" 
+                                                    data-people="1" 
+                                                    onclick="addToCart(this)">
+                                                Reservar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    <?php endif; ?>
+
+                    <?php if (isset($results['flights']) && !empty($results['flights'])): ?>
+                        <h4 class="mt-4">Vuelos:</h4>
+                        <table class="table table-striped table-hover table-borderless align-middle">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Origen</th>
+                                    <th>Destino</th>
+                                    <th>Precio</th>
+                                    <th>Fecha Salida</th>
+                                    <th>Fecha Llegada</th>
+                                    <th>Duración</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($results['flights'] as $flight): 
+                                    $departureDate = new DateTime($flight['Departure_Date']);
+                                    $arrivalDate = new DateTime($flight['Arrival_Date']);
+                                    $duration = $arrivalDate->diff($departureDate);
+                                    $durationFormatted = $duration->format('%h horas %i minutos');
+                                ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($flight['Origin_City']) ?></td>
+                                        <td><?= htmlspecialchars($flight['Destination_City']) ?></td>
+                                        <td><?= htmlspecialchars(number_format($flight['Price'], 2)) ?>€</td>
+                                        <td><?= htmlspecialchars($flight['Departure_Date']) ?></td>
+                                        <td><?= htmlspecialchars($flight['Arrival_Date']) ?></td>
+                                        <td><?= htmlspecialchars($durationFormatted) ?></td>
+                                        <td>
+                                            <button class="btn btn-outline-primary btn-sm" 
+                                                    data-destination="<?= htmlspecialchars($flight['Destination_City']) ?>" 
+                                                    data-description="Vuelo de <?= htmlspecialchars($flight['Origin_City']) ?> a <?= htmlspecialchars($flight['Destination_City']) ?>" 
+                                                    data-price="<?= htmlspecialchars($flight['Price']) ?>" 
+                                                    data-duration="<?= htmlspecialchars($durationFormatted) ?>" 
+                                                    data-people="1" 
+                                                    onclick="addToCart(this)">
+                                                Reservar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    <?php endif; ?>
+                </div>
+            <?php else: ?>
+            <?php endif; ?>
         </div>
+    </div>
+</div>
+
+
 
         <!-- About us -->
-        <div id="about-us" class="container-fluid wow fadeIn" id="about" data-wow-duration="1.5s" style="margin-top: -8%;">
+        <div class="container-fluid wow fadeIn" id="about" data-wow-duration="1.5s" style="margin-top: -8%;">
+    <div class="row justify-content-center">
+        <div class="col-lg-12"> 
             <div class="row">
-                <div class="col-lg-6 has-img-bg" style="display: flex; align-items: center;">
+                <div class="col-lg-6 has-img-bg d-flex align-items-center">
                     <img src="imagenes/pixelcut-export.png" alt="Descripción de la imagen" class="img-fluid" style="height: auto; width: auto;">
                 </div>
-                <div class="col-lg-6" style="display: flex; align-items: center;">
+                <div class="col-lg-6 d-flex align-items-center">
                     <div class="row justify-content-center">
-                        <div class="col-sm-8 py-5 my-5">
-                        <h2 class="text-primary"><span class="text-dark">GO</span>TRAVEL</h2>
+                        <div class="col-sm-10 py-5 my-5"> <!-- Ajusta el tamaño según sea necesario -->
+                            <h2 class="text-primary"><span class="text-dark">GO</span>TRAVEL</h2>
                             <p>En GoTravel, estamos dedicados a hacer realidad tus sueños de viaje más emocionantes y memorables. 
                                 Somos mucho más que una simple agencia de viajes; somos tus compañeros de aventura, 
                                 tus guías expertos y tus socios en la exploración del mundo.</p>
@@ -215,6 +387,9 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
 
 
     <!-- Packs de Viaje -->
@@ -244,9 +419,9 @@
                                             <h5 class="m-0 me-3">380€</h5>
                                             <button class="btn btn-primary btn-sm" 
                                             data-destination="Bulgaria" 
-                                            data-description="Vuelo Ida y Vuelta a Sofía" 
+                                            data-description="Pack Vuelo Ida y Vuelta a Sofía + Hotel 2 noches" 
                                             data-duration="3 días" 
-                                            data-people="2" 
+                                            data-people="1" 
                                             data-price="380" 
                                             onclick="addToCart(this)">
                                             Reservar
@@ -276,7 +451,7 @@
                                             <h5 class="m-0 me-3">206€</h5>
                                             <button class="btn btn-primary btn-sm" 
                                             data-destination="Italia" 
-                                            data-description="Vuelo Ida y Vuelta a Roma" 
+                                            data-description="Pack Vuelo Ida y Vuelta a Roma + Hotel 1 noche" 
                                             data-duration="2 días" 
                                             data-people="1" 
                                             data-price="206" 
@@ -308,9 +483,9 @@
                                             <h5 class="m-0 me-3">374€</h5>
                                             <button class="btn btn-primary btn-sm" 
                                             data-destination="Marruecos" 
-                                            data-description="Vuelo Ida y Vuelta a Marrakech" 
+                                            data-description="Pack Vuelo Ida y Vuelta a Marrakech + Hotel 3 noches" 
                                             data-duration="4 días" 
-                                            data-people="2" 
+                                            data-people="1" 
                                             data-price="374" 
                                             onclick="addToCart(this)">
                                             Reservar
@@ -341,9 +516,9 @@
                                             <h5 class="m-0 me-3">1025€</h5>
                                             <button class="btn btn-primary btn-sm" 
                                                 data-destination="Turquía"
-                                                data-description="Vuelo Ida y Vuelta a Estambul" 
+                                                data-description="Pack Vuelo Ida y Vuelta a Estambul + Hotel 6 noches" 
                                                 data-duration="7 días" 
-                                                data-people="2" 
+                                                data-people="1" 
                                                 data-price="1025" 
                                                 onclick="addToCart(this)">
                                                 Reservar
@@ -374,7 +549,7 @@
                                             <h5 class="m-0 me-3">838€</h5>
                                             <button class="btn btn-primary btn-sm" 
                                             data-destination="China" 
-                                            data-description="Vuelo Ida y Vuelta a Atenas" 
+                                            data-description="Pack Vuelo Ida y Vuelta a Atenas + Hotel 2 noches" 
                                             data-duration="3 días" 
                                             data-people="1" 
                                             data-price="838" 
@@ -407,7 +582,7 @@
                                             <h5 class="m-0 me-3">1002€</h5>
                                             <button class="btn btn-primary btn-sm" 
                                             data-destination="Japón" 
-                                            data-description="Vuelo Ida y Vuelta a Tokio" 
+                                            data-description="Pack Vuelo Ida y Vuelta a Tokio + Hotel 9 noches" 
                                             data-duration="10 días" 
                                             data-people="1" 
                                             data-price="1002" 
@@ -439,7 +614,7 @@
                                             <h5 class="m-0 me-3">702€</h5>
                                             <button class="btn btn-primary btn-sm" 
                                             data-destination="Tailandia" 
-                                            data-description="Vuelo Ida y Vuelta a Bangkok" 
+                                            data-description="Pack Vuelo Ida y Vuelta a Bangkok + Hotel 5 noches" 
                                             data-duration="6 días" 
                                             data-people="1" 
                                             data-price="702" 
@@ -472,9 +647,9 @@
                                             <h5 class="m-0 me-3">420€</h5>
                                             <button class="btn btn-primary btn-sm" 
                                             data-destination="Malta" 
-                                            data-description="Vuelo Ida y Vuelta a La Valeta" 
+                                            data-description="Pack Vuelo Ida y Vuelta a La Valeta + Hotel 3 noches" 
                                             data-duration="4 días" 
-                                            data-people="2" 
+                                            data-people="1" 
                                             data-price="420" 
                                             onclick="addToCart(this)">
                                             Reservar
@@ -504,7 +679,7 @@
                                             <h5 class="m-0 me-3">499€</h5>
                                             <button class="btn btn-primary btn-sm" 
                                             data-destination="Grecia" 
-                                            data-description="Vuelo + Hotel en Atenas" 
+                                            data-description="Pack Vuelo Ida y Vuelta + Hotel en Atenas 4 noches" 
                                             data-duration="5 días" 
                                             data-people="1" 
                                             data-price="499" 
@@ -566,6 +741,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="index/Index.js"></script>
     
 </body>

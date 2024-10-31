@@ -19,14 +19,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Contador del carrito
-    let count = 0;
-    function incrementCounter(event) {
-        event.preventDefault();
-        count++;
-        document.getElementById('cartCount').innerText = count;
-    }
-
     // Inicializa el datepicker
     $('#date1 input').datepicker({
         format: 'dd/mm/yyyy',
@@ -71,32 +63,45 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function addToCart(button) {
     const destination = button.getAttribute('data-destination');
+    const description = button.getAttribute('data-description');
     const duration = button.getAttribute('data-duration');
     const people = button.getAttribute('data-people');
     const price = button.getAttribute('data-price');
 
     // Crear un objeto con los datos del paquete
     const packageData = {
-      destination: destination,
-      duration: duration,
-      people: people,
-      price: price
+        destination: destination,
+        description: description,
+        duration: duration,
+        people: people,
+        price: price
     };
 
     // Enviar los datos mediante una petición POST a carrito.php
     fetch('carrito/Carrito.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(packageData)
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(packageData)
     })
     .then(response => response.text())
     .then(data => {
-      console.log('Paquete añadido al carrito:', data);
-      // Aquí podrías mostrar una alerta o actualizar la interfaz de usuario
+        // Mostrar el mensaje de confirmación usando Toastify
+        Toastify({
+            text: `Añadido al carrito:`,
+            duration: 2000, // Duración en milisegundos
+            gravity: "top", // `top` o `bottom`
+            position: 'right', // `left`, `center` o `right`
+            backgroundColor: "linear-gradient(to top right, #0d6efd, #1c1c1c)",
+            borderRadius: "30px",
+
+        }).showToast();
     })
     .catch(error => {
-      console.error('Error al añadir al carrito:', error);
+        console.error('Error al añadir al carrito:', error);
     });
-  }
+}
+
+
+

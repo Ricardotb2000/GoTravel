@@ -1,6 +1,9 @@
 <?php 
 session_start(); // Inicia la sesión
-include '../database/config.php'; // Incluye el archivo de conexión a la base de datos
+include '../database/Config.php'; // Incluye el archivo de conexión a la base de datos
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 $message = ''; // Inicializa la variable para mensajes
 
@@ -18,15 +21,16 @@ if (isset($_POST['register'])) {
     if ($result->num_rows > 0) {
         $message = "<p style='color:red;'>El email ya está en uso.</p>";
     } else {
-        // Insertar el nuevo usuario sin hash
+        // Insertar el nuevo usuario con la contraseña hash
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $stmt = $conn->prepare("INSERT INTO user (Email, Password) VALUES (?, ?)");
-        $stmt->bind_param("ss", $email, $password); // Usa la contraseña sin hash
+        $stmt->bind_param("ss", $email, $hashedPassword);
         
         if ($stmt->execute()) {
             $_SESSION['loggedin'] = true;
             $_SESSION['username'] = $email; // Usar el email para la sesión
             $message = "<p style='color:green;'>Registro exitoso. Redirigiendo...</p>";
-            header('Refresh: 2; url=index.php'); // Redirige a la página principal después de 2 segundos
+            header('Refresh: 2; url=../Index.php'); // Redirige a la página principal después de 2 segundos
             exit;
         } else {
             $message = "<p style='color:red;'>Error al registrar el usuario: " . $stmt->error . "</p>"; // Muestra el error
@@ -36,7 +40,7 @@ if (isset($_POST['register'])) {
 
 // Manejar el inicio de sesión
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
-    $email = $_POST['email']; // Cambiado a 'email' según tu tabla
+    $email = $_POST['email'];
     $password = $_POST['password'];
 
     // Preparar la consulta para evitar inyecciones SQL
@@ -48,8 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
 
-        // Verifica la contraseña sin hash
-        if ($password === $user['Password']) {
+        // Verifica la contraseña usando password_verify
+        if (password_verify($password, $user['Password'])) {
             // Establecer la sesión
             $_SESSION['loggedin'] = true;
             $_SESSION['username'] = $email; // Usar el email para la sesión
@@ -63,7 +67,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
         $message = "<p style='color:red;'>No se encontró un usuario con ese email.</p>";
     }
 }
-?>
+?>   
+
+
 
 
 <!DOCTYPE html>
@@ -153,8 +159,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
             <input type="password" name="password" placeholder="Contraseña" class="input" id="password" required />
             <button type="submit" name="register" class="btn_switch">Registrarse</button>
             <!-- Mensaje de registro -->
-            <?php if (isset($message) && strpos($message, 'Registro') !== false): ?>
-                <?php echo $message; ?>
+            <?php if (strpos($message, 'Registro') !== false || strpos($message, 'email') !== false): ?>
+                <div class="message-container"><?php echo $message; ?></div>
             <?php endif; ?>
         </form>
     </div>
@@ -167,8 +173,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
             <input type="password" name="password" placeholder="Contraseña" class="input" required />
             <button type="submit" name="login" class="btn_switch">Iniciar Sesión</button>
             <!-- Mensaje de inicio de sesión -->
-            <?php if (isset($message) && strpos($message, 'Inicio de sesión') !== false): ?>
-                <?php echo $message; ?>
+            <?php if (strpos($message, 'Inicio de sesión') !== false || strpos($message, 'incorrecta') !== false): ?>
+                <div class="message-container"><?php echo $message; ?></div>
             <?php endif; ?>
         </form>
     </div>

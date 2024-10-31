@@ -12,9 +12,6 @@ signUpBtn.addEventListener("click", () => {
 	container.classList.add("right-panel-active");
 });
 
-fistForm.addEventListener("submit", (e) => e.preventDefault());
-secondForm.addEventListener("submit", (e) => e.preventDefault());
-
 
 document.querySelectorAll('a.nav-link[href^="#"]').forEach(anchor => {
 	anchor.addEventListener('click', function(e) {

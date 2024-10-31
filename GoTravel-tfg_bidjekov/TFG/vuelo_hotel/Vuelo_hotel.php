@@ -1,3 +1,81 @@
+<?php
+session_start();
+require_once '../database/Config.php'; // Asegúrate de tener la configuración de conexión aquí
+
+// Inicializa los resultados como un array vacío
+$results = [];
+
+// Procesar la solicitud
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $origin_id = $_POST['destination']; // Se considera 'destination' como origen
+    $stay_type = $_POST['stay_type'];
+
+    // Consulta según el tipo de estancia
+    if ($stay_type == 'hotel') {
+        // Consulta para obtener hoteles
+        $query = "SELECT h.Name, h.Price_Per_Night AS Price, h.Description, d.City 
+                  FROM hotel h 
+                  JOIN destination d ON h.Destination_ID = d.Destination_ID 
+                  WHERE d.Destination_ID = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $origin_id);
+        $stmt->execute();
+        $results['hotels'] = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+    } elseif ($stay_type == 'vuelo') {
+        // Consulta para obtener vuelos desde el país de origen con el nombre de las ciudades
+        $query = "SELECT d_origin.City AS Origin_City, d_dest.City AS Destination_City, 
+                         f.Price, f.Departure_Date, f.Arrival_Date 
+                  FROM flight f 
+                  JOIN destination d_origin ON f.Origin_ID = d_origin.Destination_ID 
+                  JOIN destination d_dest ON f.Destination_ID = d_dest.Destination_ID 
+                  WHERE f.Origin_ID = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $origin_id);
+        $stmt->execute();
+        $results['flights'] = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+    } elseif ($stay_type == 'vuelo_hotel') {
+        // Consulta para obtener ambos
+        $hotel_query = "SELECT h.Name, h.Price_Per_Night AS Price, h.Description, d.City 
+                        FROM hotel h 
+                        JOIN destination d ON h.Destination_ID = d.Destination_ID 
+                        WHERE d.Destination_ID = ?";
+        $flight_query = "SELECT d_origin.City AS Origin_City, d_dest.City AS Destination_City, 
+                                f.Price, f.Departure_Date, f.Arrival_Date 
+                         FROM flight f 
+                         JOIN destination d_origin ON f.Origin_ID = d_origin.Destination_ID 
+                         JOIN destination d_dest ON f.Destination_ID = d_dest.Destination_ID 
+                         WHERE f.Origin_ID = ?";
+
+        // Obtener hoteles
+        $hotel_stmt = $conn->prepare($hotel_query);
+        $hotel_stmt->bind_param("i", $origin_id);
+        $hotel_stmt->execute();
+        $results['hotels'] = $hotel_stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+        // Obtener vuelos
+        $flight_stmt = $conn->prepare($flight_query);
+        $flight_stmt->bind_param("i", $origin_id);
+        $flight_stmt->execute();
+        $results['flights'] = $flight_stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    // Guardar resultados en la sesión para mostrarlos más adelante
+    $_SESSION['search_results'] = $results;
+
+    // Redirigir a la misma página para mostrar resultados
+    header('Location: ' . $_SERVER['PHP_SELF']);
+    exit();
+}
+
+// Comprobar si hay resultados en la sesión
+if (isset($_SESSION['search_results'])) {
+    $results = $_SESSION['search_results'];
+    unset($_SESSION['search_results']); // Limpiar los resultados de la sesión
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,6 +84,7 @@
     <title>Vuelos - Hotel</title>
 
 <link rel="icon" href="../imagenes/GoTravel.png" type="image/x-icon">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.css" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
@@ -115,36 +194,52 @@
     </div>
 
     <!-- Iniciar Reserva -->
-    <div class="container-fluid booking mt-5 pb-5" style="position: relative; z-index: 10;">
-        <div class="container pb-5">
-            <div class="bg-light shadow" style="padding: 30px;">
-                <div class="row align-items-center" style="min-height: 60px;">
+<div class="container-fluid booking mt-5 pb-5" style="position: relative; z-index: 10;">
+    <div class="container pb-5">
+        <div class="bg-light shadow p-4 rounded-3">
+            <form method="POST" action="">
+                <div class="row align-items-center g-3">
                     <div class="col-md-10">
-                        <div class="row justify-content-center">
-                            <div class="col-md-4"> <!-- Tamaño uniforme -->
+                        <div class="row justify-content-center g-2">
+                            <div class="col-md-3">
                                 <div class="mb-3 mb-md-0">
-                                    <select class="custom-select px-4" style="height: 47px; width: 100%;"> <!-- Ajuste de ancho -->
-                                        <option selected disabled>Destinos</option>
-                                        <option value="1">Bulgaria</option>
-                                        <option value="2">Italia</option>
-                                        <option value="3">Marruecos</option>
-                                        <option value="4">Turquía</option>
-                                        <option value="5">China</option>
-                                        <option value="6">Japón</option>
+                                    <select name="destination" class="custom-select form-select px-4" style="height: 47px; width: 100%;" required>
+                                        <option selected disabled>Origen</option>
+                                        <option value="1">España</option>
+                                        <option value="2">Brasil</option>
+                                        <option value="3">Italia</option>
+                                        <option value="4">Marruecos</option>
+                                        <option value="5">Bulgaria</option>
+                                        <option value="6">Turquía</option>
+                                        <option value="7">Japón</option>
+                                        <option value="8">China</option>
+                                        <option value="9">Tailandia</option>
+                                        <option value="10">Grecia</option>
+                                        <option value="11">Malta</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-4"> 
+                            <div class="col-md-3">
+                                <div class="mb-3 mb-md-0">
+                                    <select name="stay_type" class="custom-select form-select px-4" style="height: 47px; width: 100%;" required>
+                                        <option selected disabled>Estancia</option>
+                                        <option value="hotel">Hoteles</option>
+                                        <option value="vuelo">Vuelos</option>
+                                        <option value="vuelo_hotel">Vuelos+Hotel</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3"> 
                                 <div class="mb-3 mb-md-0">
                                     <div class="input-group date" id="date1" data-target-input="nearest">
-                                        <input type="text" class="form-control p-4 datetimepicker-input" placeholder="Fecha ida" data-target="#date2" data-toggle="datetimepicker" style="height: 47px;" />
+                                        <input type="text" name="departure_date" class="form-control p-4 datetimepicker-input" placeholder="Fecha ida" data-target="#date2" data-toggle="datetimepicker" style="height: 47px;" required />
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4"> 
+                            <div class="col-md-3"> 
                                 <div class="mb-3 mb-md-0">
                                     <div class="input-group date" id="date2" data-target-input="nearest">
-                                        <input type="text" class="form-control p-4 datetimepicker-input" placeholder="Fecha vuelta" data-target="#date2" data-toggle="datetimepicker" style="height: 47px;" />
+                                        <input type="text" name="return_date" class="form-control p-4 datetimepicker-input" placeholder="Fecha vuelta" data-target="#date2" data-toggle="datetimepicker" style="height: 47px;" />
                                     </div>
                                 </div>
                             </div>
@@ -154,17 +249,95 @@
                         <button id="search-btn" class="btn btn-primary btn-block" type="submit" style="height: 47px; margin-top: -2px; width: 100%;">Buscar</button>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
+            </form>
 
-    <!-- Pantalla de carga -->
-    <div id="loading-screen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255,255,255,0.9); z-index: 1000; text-align: center; padding-top: 20%;">
-        <div class="progress" style="width: 50%; margin: 0 auto;">
-            <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+            <!-- Mostrar resultados de búsqueda -->
+            <?php if (isset($results) && !empty($results)): ?>
+                <div class="table-responsive mt-4">
+                    <?php if (isset($results['hotels']) && !empty($results['hotels'])): ?>
+                        <h4 class="mt-4">Hoteles:</h4>
+                        <table class="table table-striped table-hover table-borderless align-middle">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Precio por Noche</th>
+                                    <th>Descripción</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($results['hotels'] as $hotel): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($hotel['Name']) ?></td>
+                                        <td><?= htmlspecialchars($hotel['Price']) ?>€</td>
+                                        <td><?= htmlspecialchars($hotel['Description']) ?></td>
+                                        <td>
+                                            <button class="btn btn-outline-primary btn-sm" 
+                                                    data-destination="<?= htmlspecialchars($hotel['Name']) ?>" 
+                                                    data-description="<?= htmlspecialchars($hotel['Description']) ?>" 
+                                                    data-price="<?= htmlspecialchars($hotel['Price']) ?>" 
+                                                    data-duration="1 noche" 
+                                                    data-people="1" 
+                                                    onclick="addToCart(this)">
+                                                Reservar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    <?php endif; ?>
+
+                    <?php if (isset($results['flights']) && !empty($results['flights'])): ?>
+                        <h4 class="mt-4">Vuelos:</h4>
+                        <table class="table table-striped table-hover table-borderless align-middle">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Origen</th>
+                                    <th>Destino</th>
+                                    <th>Precio</th>
+                                    <th>Fecha Salida</th>
+                                    <th>Fecha Llegada</th>
+                                    <th>Duración</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($results['flights'] as $flight): 
+                                    $departureDate = new DateTime($flight['Departure_Date']);
+                                    $arrivalDate = new DateTime($flight['Arrival_Date']);
+                                    $duration = $arrivalDate->diff($departureDate);
+                                    $durationFormatted = $duration->format('%h horas %i minutos');
+                                ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($flight['Origin_City']) ?></td>
+                                        <td><?= htmlspecialchars($flight['Destination_City']) ?></td>
+                                        <td><?= htmlspecialchars(number_format($flight['Price'], 2)) ?>€</td>
+                                        <td><?= htmlspecialchars($flight['Departure_Date']) ?></td>
+                                        <td><?= htmlspecialchars($flight['Arrival_Date']) ?></td>
+                                        <td><?= htmlspecialchars($durationFormatted) ?></td>
+                                        <td>
+                                            <button class="btn btn-outline-primary btn-sm" 
+                                                    data-destination="<?= htmlspecialchars($flight['Destination_City']) ?>" 
+                                                    data-description="Vuelo de <?= htmlspecialchars($flight['Origin_City']) ?> a <?= htmlspecialchars($flight['Destination_City']) ?>" 
+                                                    data-price="<?= htmlspecialchars($flight['Price']) ?>" 
+                                                    data-duration="<?= htmlspecialchars($durationFormatted) ?>" 
+                                                    data-people="1" 
+                                                    onclick="addToCart(this)">
+                                                Reservar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    <?php endif; ?>
+                </div>
+            <?php else: ?>
+            <?php endif; ?>
         </div>
-        <p>Buscando...</p>
     </div>
+</div>
 
     <!-- Contenedor del slider -->
     <div class="text-center mb-3 pb-3" id="buscador">
@@ -214,7 +387,7 @@
                                 <h5 class="m-0">117€</h5>
                                 <button class="btn btn-primary btn-sm" 
                                     data-destination="Bulgaria"
-                                    data-description="Hotel de Lujo 5 estrellas en Sunny Beach" 
+                                    data-description="Hotel de Lujo 5 estrellas Imperial Resort en Sunny Beach" 
                                     data-duration="1 Noche" 
                                     data-people="1" 
                                     data-price="117" 
@@ -243,7 +416,7 @@
                                 <h5 class="m-0">135€</h5>
                                 <button class="btn btn-primary btn-sm" 
                                     data-destination="Italia"
-                                    data-description="Hotel de Lujo 5 estrellas en Cluj-Napoca" 
+                                    data-description="Hotel de Lujo 5 estrellas GrandHotel & Resort en Cluj-Napoca" 
                                     data-duration="1 Noche" 
                                     data-people="1" 
                                     data-price="135" 
@@ -272,7 +445,7 @@
                                 <h5 class="m-0">176€</h5>
                                 <button class="btn btn-primary btn-sm" 
                                     data-destination="Marruecos"
-                                    data-description="Hotel de Lujo 4 estrellas en Marrakech"   
+                                    data-description="Hotel de Lujo 4 estrellas Riad Dar en Marrakech"   
                                     data-duration="1 Noche" 
                                     data-people="1" 
                                     data-price="176" 
@@ -301,7 +474,7 @@
                                 <h5 class="m-0">436€</h5>
                                 <button class="btn btn-primary btn-sm" 
                                     data-destination="Turquía"
-                                    data-description="Hotel de Lujo 5 estrellas en Antalya"   
+                                    data-description="Hotel de Lujo 5 estrellas Concorde Deluxe Resort en Antalya"   
                                     data-duration="1 Noche" 
                                     data-people="2" 
                                     data-price="436" 
@@ -330,7 +503,7 @@
                                 <h5 class="m-0">191€</h5>
                                 <button class="btn btn-primary btn-sm" 
                                     data-destination="China" 
-                                    data-description="Hotel de Lujo 4 estrellas en Pekín"  
+                                    data-description="Hotel de Lujo 4 estrellas GrandBeijing en Pekín"  
                                     data-duration="1 Noche" 
                                     data-people="2" 
                                     data-price="191" 
@@ -359,7 +532,7 @@
                                 <h5 class="m-0">268€</h5>
                                 <button class="btn btn-primary btn-sm" 
                                     data-destination="Japón"
-                                    data-description="Hotel de Lujo 4 estrellas en Tokio"  
+                                    data-description="Hotel de Lujo 4 estrellas Villa Fontaine en Tokio"  
                                     data-duration="1 Noche" 
                                     data-people="2" 
                                     data-price="268" 
@@ -473,6 +646,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="Vuelo_hotel.js"></script>
 
 </body>
