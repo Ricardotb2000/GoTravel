@@ -80,16 +80,39 @@ body {
     color: white; 
   }
 
+  
 
-@media (max-width: 700px) {
-    .mostrarmovil{
-        display: block;
+
+  @media (max-width: 700px) {
+    /* Ocultar todos los encabezados en móviles */
+    .carousel-caption h1,
+    .carousel-caption h2,
+    .carousel-caption h3,
+    .carousel-caption h4,
+    .carousel-caption h5,
+    .carousel-caption h6 {
+        display: none; /* No mostrar texto en móviles */
     }
+
+    /* Opcional: si deseas ocultar todo el texto dentro de .p-3 */
+    .p-3 {
+        display: none; /* No mostrar texto en móviles */
+    }
+
+    /* Ajustes de tamaño y margen para móviles */
+    .carousel-caption {
+        margin-bottom: 10%; /* Ajustar margen para móviles */
+    }
+
+    /* Otros estilos que ya tenías */
+    .carousel-caption {
+        margin-bottom: 10%; /* Ajustar margen para móviles */
+    }
+
     .header-container {
         flex-direction: column;
         align-items: center;
     }
-    
 
     .header-nav {
         flex-direction: column;
@@ -109,3 +132,4 @@ body {
         display: block;
     }
 }
+

@@ -44,6 +44,10 @@
             <img src="../imagenes/GoTravel.png" class="brand-img" alt="Gotravel_logo_transp" style="width: 75px; height: 75px; border-radius: 100px;">
             <span class="brand-txt"></span>
         </a>
+        <!-- Logo para la versión colapsada -->
+        <a class="navbar-brand d-lg-none " href="../Index.php#home">
+            <img src="../imagenes/GoTravel.png" class="brand-img" alt="Gotravel_logo_transp" style="width: 50px; height: 50px; border-radius: 100px;">
+        </a>
     
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 

@@ -1,6 +1,7 @@
 <?php
 session_start();
 require('fpdf/fpdf.php'); 
+require('phpqrcode/qrlib.php'); // Asegúrate de tener esta biblioteca para el QR
 
 // Verifica que el usuario está logueado
 if (!isset($_SESSION['user_id'])) {
@@ -19,6 +20,11 @@ $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
 $user = $result->fetch_assoc();
+
+// Verificar si el carrito está vacío
+if (empty($_SESSION['cart'])) {
+    die('El carrito está vacío.'); // Terminar el script si el carrito está vacío
+}
 
 // Recoger datos del carrito
 $cart = $_SESSION['cart'];
@@ -53,8 +59,19 @@ foreach ($cart as $item) {
     $pdf->Ln();
 }
 
+// Generar el QR Code (ejemplo de URL para el QR)
+$qrData = "https://tusitio.com/checkout?user_id=" . $user_id; // Ajusta la URL según tus necesidades
+$qrFile = 'qrcode.png';
+QRcode::png($qrData, $qrFile);
+
+// Agregar el código QR al PDF
+$pdf->Image($qrFile, 10, $pdf->GetY(), 30, 30); // Ajusta la posición y el tamaño según sea necesario
+
 // Guardar o enviar el PDF
-$pdf->Output('D', 'factura.pdf'); 
+$pdf->Output('D', 'factura_' . $user_id . '.pdf'); // Cambia el nombre para que sea único
+
+// Eliminar el archivo QR generado
+unlink($qrFile); // Borra el archivo QR después de agregarlo al PDF
 
 exit();
 ?>

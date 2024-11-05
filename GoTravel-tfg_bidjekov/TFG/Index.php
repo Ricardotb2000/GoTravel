@@ -96,64 +96,73 @@ if (isset($_SESSION['search_results'])) {
 </head>
 <body>
 
-    <!-- Barra de Navegación -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+<!-- Barra de Navegación -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <a class="navbar-brand mx-auto d-lg-block d-none" href="#">
-            <img src="imagenes/GoTravel.png" class="brand-img" alt="Gotravel_logo_transp" style="width: 75px; height: 75px; border-radius: 100px;">
-            <span class="brand-txt"></span>
-        </a>
+    <a class="navbar-brand mx-auto d-lg-block d-none" href="#">
+        <img src="imagenes/GoTravel.png" class="brand-img" alt="Gotravel_logo_transp" style="width: 75px; height: 75px; border-radius: 100px;">
+        <span class="brand-txt"></span>
+    </a>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- Menú principal a la izquierda -->
-            <ul class="navbar-nav me-auto ms-4">
-                <li class="nav-item">
-                    <a class="nav-link" href="#home">
-                        <i class="fas fa-home"></i> Home
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#about-us">
-                        <i class="fas fa-info-circle"></i> Sobre Nosotros
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#packs">
-                        <i class="fas fa-box"></i> Packs
-                        <span class="visually-hidden">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#contact">
-                        <i class="fas fa-envelope"></i> Contacto
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="vuelo_hotel/Vuelo_hotel.php">
-                        <i class="fas fa-plane"></i> Vuelo + Hotel
-                    </a>
-                </li>
-            </ul>
+    <!-- Logo para la versión colapsada -->
+    <a class="navbar-brand d-lg-none " href="#">
+        <img src="imagenes/GoTravel.png" class="brand-img" alt="Gotravel_logo_transp" style="width: 50px; height: 50px; border-radius: 100px;">
+    </a>
 
-            <!-- Enlaces de Sign In y Carrito -->
-            <ul class="navbar-nav ms-auto me-2">
-                <li class="nav-item">
-                    <a class="nav-link" href="login_signin/Login.php">
-                        <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
-                    </a>
-                </li>
-                <li class="nav-item" style="position: relative;">
-                    <a class="nav-link" href="carrito/Carrito.php">
-                        <i class="fas fa-shopping-cart"></i> Carrito
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!-- Menú principal a la izquierda -->
+        <ul class="navbar-nav me-auto ms-4">
+            <li class="nav-item">
+                <a class="nav-link" href="#home">
+                    <i class="fas fa-home"></i> Home
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#about-us">
+                    <i class="fas fa-info-circle"></i> Sobre Nosotros
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#packs">
+                    <i class="fas fa-box"></i> Packs
+                    <span class="visually-hidden">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#contact">
+                    <i class="fas fa-envelope"></i> Contacto
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="vuelo_hotel/Vuelo_hotel.php">
+                    <i class="fas fa-plane"></i> Vuelo + Hotel
+                </a>
+            </li>
+        </ul>
+
+        <!-- Enlaces de Sign In y Carrito -->
+        <ul class="navbar-nav ms-auto me-2">
+            <li class="nav-item">
+                <a class="nav-link" href="login_signin/Login.php">
+                    <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                </a>
+            </li>
+            <li class="nav-item" style="position: relative;">
+                <a class="nav-link" href="carrito/Carrito.php">
+                    <i class="fas fa-shopping-cart"></i> Carrito
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+
+
 
 <!-- Carousel -->
 <div class="container-fluid p-0" id="home">
@@ -695,9 +704,6 @@ if (isset($_SESSION['search_results'])) {
             </div>
         </div>
     </div>
-
-
-        
 
         <!-- Footer Start -->
         <div class="container-fluid bg-dark text-white-50 py-5 px-sm-3 px-lg-5" id="contact" style="margin-top: 90px; text-align: center;">

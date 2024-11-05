@@ -1,57 +1,74 @@
 <?php
 session_start();
 
+// Manejar la solicitud POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Leer los datos enviados como JSON
     $packageData = json_decode(file_get_contents('php://input'), true);
 
-    // Extraer los valores asegurando que existen
-    $destination = $packageData['destination'] ?? null;
-    $description = $packageData['description'] ?? null;
-    $duration = $packageData['duration'] ?? null;
-    $people = $packageData['people'] ?? null;
-    $price = $packageData['price'] ?? null;
+    // Verificar si se está intentando añadir un paquete al carrito
+    if (isset($packageData['destination'])) {
+        // Extraer los valores asegurando que existen
+        $destination = $packageData['destination'] ?? null;
+        $description = $packageData['description'] ?? null;
+        $duration = $packageData['duration'] ?? null;
+        $people = $packageData['people'] ?? null;
+        $price = $packageData['price'] ?? null;
 
-    // Añadir el paquete al carrito (guardar en la sesión)
-    if (!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = [];
-    }
-    $_SESSION['cart'][] = [
-        'destination' => $destination,
-        'description' => $description,
-        'duration' => $duration,
-        'people' => $people,
-        'price' => $price
-    ];
-    
-    var_dump($_SESSION['cart']);
-}
+        // Añadir el paquete al carrito (guardar en la sesión)
+        if (!isset($_SESSION['cart'])) {
+            $_SESSION['cart'] = [];
+        }
+        $_SESSION['cart'][] = [
+            'destination' => $destination,
+            'description' => $description,
+            'duration' => $duration,
+            'people' => $people,
+            'price' => $price
+        ];
 
-// Lógica para validar el código promocional
-if (isset($_POST['promo_code'])) {
-    $promo_code = trim($_POST['promo_code']);
-    $discount = 0;
-
-    if ($promo_code === 'gotravel2024') {
-        $discount = 0.20; // 20% de descuento
-    } else {
-        echo json_encode(['error' => 'El código no existe']);
+        // Responder con el estado del carrito
+        echo json_encode(['message' => 'Paquete añadido al carrito', 'cart' => $_SESSION['cart']]);
         exit();
     }
 
-    // Calcular el nuevo total
-    $total = 0;
+    // Lógica para validar el código promocional
+    if (isset($packageData['promo_code'])) {
+        $promo_code = trim($packageData['promo_code']);
+        $discount = 0;
+
+        // Verificar el código promocional
+        if ($promo_code === 'gotravel2024') {
+            $discount = 0.20; // 20% de descuento
+        } else {
+            echo json_encode(['error' => 'El código no existe']);
+            exit();
+        }
+
+        // Calcular el nuevo total con descuento
+        $total = 0;
+        foreach ($_SESSION['cart'] as $item) {
+            $total += $item['price'];
+        }
+
+        $discounted_total = $total * (1 - $discount);
+        echo json_encode(['total' => number_format($discounted_total, 2)]);
+        exit();
+    }
+}
+
+// Calcular el subtotal, IVA y total para mostrar en la interfaz
+$total = 0;
+if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
     foreach ($_SESSION['cart'] as $item) {
         $total += $item['price'];
     }
-
-    $discounted_total = $total * (1 - $discount);
-    echo json_encode(['total' => number_format($discounted_total, 2)]);
-    exit();
 }
 
+$iva_percentage = 21; // Porcentaje de IVA
+$subtotal = $total / (1 + ($iva_percentage / 100)); // Precio sin IVA
+$iva_amount = $total - $subtotal; // Cantidad de IVA
 ?>
-
 
 <!DOCTYPE html>
 <html lang="es">
@@ -61,6 +78,7 @@ if (isset($_POST['promo_code'])) {
     <title>GoTravel - Carrito</title>
 
     <link rel="icon" href="../imagenes/GoTravel.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
@@ -82,6 +100,10 @@ if (isset($_POST['promo_code'])) {
         <img src="../imagenes/GoTravel.png" class="brand-img" alt="Gotravel_logo_transp"
              style="width: 75px; height: 75px; border-radius: 100px;">
         <span class="brand-txt"></span>
+    </a>
+    <!-- Logo para la versión colapsada -->
+    <a class="navbar-brand d-lg-none " href="../Index.php#home">
+        <img src="../imagenes/GoTravel.png" class="brand-img" alt="Gotravel_logo_transp" style="width: 50px; height: 50px; border-radius: 100px;">
     </a>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -131,79 +153,76 @@ if (isset($_POST['promo_code'])) {
     </div>
 </nav>
 
-<!-- Contenido del Carrito -->
-<div class="container container-carrito mt-5 pt-5">
+<!-- Contenedor principal del carrito -->
+<div class="container mt-5 pt-5">
+
+    <!-- Título del carrito -->
     <h2 class="cart-title text-center my-4">Tus Reservas</h2>
 
     <!-- Tabla de productos en el carrito -->
-    <table class="table table-striped table-bordered">
-        <thead class="table-dark">
-            <tr>
-                <th>Destino</th>
-                <th>Descripción</th>
-                <th>Duración</th>
-                <th>Personas</th>
-                <th>Precio</th>
-                <th>Cantidad</th>
-            </tr>
-        </thead>
-        <tbody id="cart-items">
-            <?php
-            if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
-                echo "<tr><td colspan='6' class='text-center'>No hay productos en el carrito.</td></tr>";
-            } else {
-                foreach ($_SESSION['cart'] as $index => $item) {
-                    echo "<tr data-index='$index'>
-                            <td>{$item['destination']}</td>
-                            <td>{$item['description']}</td>
-                            <td>{$item['duration']}</td>
-                            <td>{$item['people']}</td>
-                            <td id='price-{$index}'>{$item['price']}€</td>
-                            <td>
-                                <div class='d-flex align-items-center'>
-                                    <button class='btn btn-secondary btn-sm' onclick='changeQuantity($index, -1)'>-</button>
-                                    <input type='number' class='form-control mx-2' value='1' min='1' id='quantity-{$index}' style='width: 50px;' readonly>
-                                    <button class='btn btn-secondary btn-sm' onclick='changeQuantity($index, 1)'>+</button>
-                                    <button class='btn btn-danger btn-sm mx-2' onclick='removeItem($index)'>Eliminar</button>
-                                </div>
-                            </td>
-                          </tr>";
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Destino</th>
+                    <th>Descripción</th>
+                    <th>Duración</th>
+                    <th>Personas</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                </tr>
+            </thead>
+            <tbody id="cart-items">
+                <?php
+                if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
+                    echo "<tr><td colspan='6' class='text-center'>No hay productos en el carrito.</td></tr>";
+                } else {
+                    foreach ($_SESSION['cart'] as $index => $item) {
+                        echo "<tr data-index='$index'>
+                                <td>{$item['destination']}</td>
+                                <td>{$item['description']}</td>
+                                <td>{$item['duration']}</td>
+                                <td>{$item['people']}</td>
+                                <td id='price-{$index}'>{$item['price']}€</td>
+                                <td>
+                                    <div class='d-flex align-items-center'>
+                                        <input type='number' class='form-control mx-2' value='1' min='1' id='quantity-{$index}' style='width: 50px;' readonly>
+                                        <button class='btn btn-danger btn-sm mx-2' onclick='removeItem($index)'>Eliminar</button>
+                                    </div>
+                                </td>
+                              </tr>";
+                    }
                 }
-            }
-            ?>
-        </tbody>
-    </table>
-
-<!-- Cálculo del subtotal, IVA y total -->
-<div id="cart-total" class="cart-total text-end mb-4" style="color: white; font-size: 0.9em; font-family: Arial, sans-serif; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 5px; padding: 15px; background: #1a1a1a; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);">
-    <?php
-    $total = 0;
-    foreach ($_SESSION['cart'] as $item) {
-        $total += $item['price']; // Total con IVA
-    }
-
-    $iva_percentage = 21; // Porcentaje de IVA
-    $subtotal = $total / (1 + ($iva_percentage / 100)); // Precio sin IVA
-    $iva_amount = $total - $subtotal; // Cantidad de IVA
-
-    echo "<div style='margin-bottom: 5px;'><div style='font-weight: bold;'>Subtotal: </div><span>" . number_format($subtotal, 2) . "€</span></div>";
-    echo "<div style='margin-bottom: 5px;'><div style='font-weight: bold;'>IVA ({$iva_percentage}%): </div><span>" . number_format($iva_amount, 2) . "€</span></div>";
-    echo "<div style='margin-bottom: 5px;'><div style='font-weight: bold; color: #27a7ff;'>Total: </div><span style='font-size: 1.1em; color: #27a7ff;'>" . number_format($total, 2) . "€</span></div>";
-    ?>
-    
-    <!-- Formulario para el código promocional -->
-    <div class="text-end mb-4">
-        <input type="text" id="promo_code" placeholder="Introduce tu código promocional" class="form-control d-inline" style="width: 250px; display: inline-block;">
-        <button class="btn btn-primary" id="apply_code">Aplicar Código</button>
+                ?>
+            </tbody>
+        </table>
     </div>
-</div>
 
+    <!-- Código promocional y total del carrito -->
+    <div class="row mt-4">
+        <!-- Código promocional -->
+        <div class="col-md-6 mb-3">
+            <div class="bg-dark p-3 rounded">
+                <input type="text" id="promo_code" placeholder="Introduce tu código promocional" class="form-control mb-2">
+                <button class="btn btn-success w-100" id="apply_code">Aplicar Código</button>
+            </div>
+        </div>
+
+        <!-- Cálculo del subtotal, IVA y total -->
+        <div class="col-md-6 mb-3">
+            <div class="bg-dark p-3 rounded text-end text-white">
+                <?php
+                echo "<div><strong>Subtotal:</strong> " . number_format($subtotal, 2) . " €</div>";
+                echo "<div><strong>IVA ({$iva_percentage}%):</strong> " . number_format($iva_amount, 2) . " €</div>";
+                echo "<div class='text-primary'><strong>Total:</strong> " . number_format($total, 2) . " €</div>";
+                ?>
+            </div>
+        </div>
+    </div>
 
     <!-- Botón de checkout -->
-    <div class="text-end mb-4">
-        <a href="../checkout/checkout.php" class="btn btn-primary btn-lg px-5 py-3" style="border-radius: 30px; font-size: 18px; font-weight: 600; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); transition: all 0.3s ease;">
-            Proceder al Pago
-        </a>
+    <div class="text-end">
+        <a href="../checkout/checkout.php" class="btn btn-primary btn-lg px-5 py-3" style="border-radius: 30px;">Proceder al Pago</a>
     </div>
 </div>
 
