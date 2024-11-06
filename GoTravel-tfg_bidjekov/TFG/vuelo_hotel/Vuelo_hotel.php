@@ -163,23 +163,23 @@ if (isset($_SESSION['search_results'])) {
                 <div class="carousel-item active">
                     <img class="w-100" src="../imagenes/Carrusel-4.jpg" alt="Imagen">
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                        <div class="p-3" style="max-width: 900px; margin-bottom: 5%;">
-                            <h1 class="display-3 text-white mb-md-4">Pierdete en el viaje de tu Vida</h1>
+                        <div class="p-3 container-title" style="max-width: 900px; margin-bottom: 5%;">
+                            <h1 class="display-3 text-white mb-md-4">Viaja y vive el sueño</h1>
                         </div>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <img class="w-100" src="../imagenes/Carrusel-5.jpg" alt="Imagen">
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                        <div class="p-3" style="max-width: 900px; margin-bottom: 5%;">
-                            <h1 class="display-3 text-white mb-md-4">Lugares increíbles por ver</h1>
+                        <div class="p-3 container-title" style="max-width: 900px; margin-bottom: 5%;">
+                            <h1 class="display-3 text-white mb-md-4">Descubre con nosotros</h1>
                         </div>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <img class="w-100" src="../imagenes/Carrusel-7.jpg" alt="Imagen">
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                        <div class="p-3" style="max-width: 900px; margin-bottom: 5%;">
+                        <div class="p-3 container-title" style="max-width: 900px; margin-bottom: 5%;">
                             <h1 class="display-3 text-white mb-md-4">El paraíso en tus manos</h1>
                         </div>
                     </div>
@@ -561,37 +561,37 @@ if (isset($_SESSION['search_results'])) {
         <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Viaja seguro</h6>
         <h3 class="text-dark">Nuestras Aerolineas</h3>
     </div>
-    <div id="airlinesCarousel" class="carousel slide" data-bs-ride="carousel" style="width: 70%; margin: 0 auto;">
+    <div id="airlinesCarousel" class="carousel slide" data-bs-ride="carousel" style="width: 65%; margin: 0 auto;">
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <div class="d-flex justify-content-center">
                     <a href="https://www.ryanair.com" target="_blank">
-                        <img src="../imagenes/Ryanair.png" class="d-block airline-img" alt="Ryanair" style="margin: 0 5px;">
+                        <img src="../imagenes/Ryanair.png" class="d-block airline-img" alt="Ryanair" style="width:150px;height:100px;">
                     </a>
                     <a href="https://www.vueling.com" target="_blank">
-                        <img src="../imagenes/Vueling.png" class="d-block airline-img" alt="Vueling" style="margin: 0 5px;">
+                        <img src="../imagenes/Vueling.png" class="d-block airline-img" alt="Vueling" style="width:150px;height:100px;">
                     </a>
                     <a href="https://www.iberia.com" target="_blank">
-                        <img src="../imagenes/Iberia.png" class="d-block airline-img" alt="Iberia" style="margin: 0 5px;">
+                        <img src="../imagenes/Iberia.png" class="d-block airline-img" alt="Iberia" style="width:150px;height:100px;">
                     </a>
                     <a href="https://www.aireuropa.com" target="_blank">
-                        <img src="../imagenes/AirEuropa.png" class="d-block airline-img" alt="Air Europa" style="margin: 0 5px;">
+                        <img src="../imagenes/AirEuropa.png" class="d-block airline-img" alt="Air Europa" style="width:150px;height:100px;">
                     </a>
                 </div>
             </div>
             <div class="carousel-item">
                 <div class="d-flex justify-content-center">
                     <a href="https://www.easyjet.com" target="_blank">
-                        <img src="../imagenes/EasyJet.png" class="d-block airline-img" alt="EasyJet" style="margin: 0 5px;">
+                        <img src="../imagenes/EasyJet.png" class="d-block airline-img" alt="EasyJet" style="width:150px;height:100px;">
                     </a>
                     <a href="http://www.airnostrum.es/" target="_blank">
-                        <img src="../imagenes/AirNostrum.png" class="d-block airline-img" alt="Air Nostrum" style="margin: 0 5px;">
+                        <img src="../imagenes/AirNostrum.png" class="d-block airline-img" alt="Air Nostrum" style="width:150px;height:100px;">
                     </a>
                     <a href="https://www.eurowings.com" target="_blank">
-                        <img src="../imagenes/Eurowings.png" class="d-block airline-img" alt="Eurowings" style="margin: 0 5px;">
+                        <img src="../imagenes/Eurowings.png" class="d-block airline-img" alt="Eurowings" style="width:150px;height:100px;">
                     </a>
                     <a href="https://www.jet2.com" target="_blank">
-                        <img src="../imagenes/Jet2.png" class="d-block airline-img" alt="Jet2" style="margin: 0 5px;">
+                        <img src="../imagenes/Jet2.png" class="d-block airline-img" alt="Jet2" style="width:150px;height:100px;">
                     </a>
                 </div>
             </div>

@@ -171,7 +171,7 @@ if (isset($_SESSION['search_results'])) {
             <div class="carousel-item active">
                 <img class="w-100" src="imagenes/Carrusel-1.jpg" alt="Imagen">
                 <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                    <div class="p-3" style="max-width: 900px; margin-bottom: 15%;">
+                    <div class="p-3" style="max-width: 900px; margin-bottom: 20%;">
                         <h4 class="text-white text-uppercase mb-3">Prueba y descubre</h4>
                         <h1 class="display-3 text-white mb-4">¿Vamos de paseo por el mundo?</h1>
                     </div>
@@ -180,7 +180,7 @@ if (isset($_SESSION['search_results'])) {
             <div class="carousel-item">
                 <img class="w-100" src="imagenes/Carrusel-2.jpg" alt="Imagen">
                 <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                    <div class="p-3" style="max-width: 900px; margin-bottom: 15%;">
+                    <div class="p-3" style="max-width: 900px; margin-bottom: 20%;">
                         <h4 class="text-white text-uppercase mb-3">Viajes increíbles</h4>
                         <h1 class="display-3 text-white mb-4">Destinos Turísticos para recordar</h1>
                     </div>
@@ -189,9 +189,9 @@ if (isset($_SESSION['search_results'])) {
             <div class="carousel-item">
                 <img class="w-100" src="imagenes/Carrusel-3.jpg" alt="Imagen">
                 <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                    <div class="p-3" style="max-width: 900px; margin-bottom: 15%;">
+                    <div class="p-3" style="max-width: 900px; margin-bottom: 20%;">
                         <h4 class="text-white text-uppercase mb-3">Experiencias Inolvidables</h4>
-                        <h1 class="display-3 text-white mb-4">Disfruta de la aventura</h1>
+                        <h1 class="display-3 text-white mb-4">Disfruta de la aventura con Gotravel</h1>
                     </div>
                 </div>
             </div>
@@ -360,8 +360,8 @@ if (isset($_SESSION['search_results'])) {
 
 
 
-        <!-- About us -->
-        <div class="container-fluid wow fadeIn" id="about" data-wow-duration="1.5s" style="margin-top: -8%;">
+<!-- About us -->
+<div class="container-fluid wow fadeIn" id="about" data-wow-duration="1.5s" style="margin-top: -8%;">
     <div class="row justify-content-center">
         <div class="col-lg-12"> 
             <div class="row">
@@ -376,21 +376,21 @@ if (isset($_SESSION['search_results'])) {
                                 Somos mucho más que una simple agencia de viajes; somos tus compañeros de aventura, 
                                 tus guías expertos y tus socios en la exploración del mundo.</p>
                             
-                            <p><b>Nuestro objetivo es ofrecerte experiencias de viaje únicas y auténticas que te permitan 
+                            <p id="text-about-1"><b>Nuestro objetivo es ofrecerte experiencias de viaje únicas y auténticas que te permitan 
                                 descubrir destinos fascinantes, sumergirte en nuevas culturas y crear recuerdos inolvidables 
                                 que durarán toda la vida. Ya sea que estés buscando unas vacaciones relajantes en una playa paradisíaca, 
                                 una emocionante aventura en la naturaleza salvaje o una escapada urbana llena de cultura y gastronomía, 
                                 tenemos la escapada perfecta para ti.</b></p>
                             
-                            <p>Con una amplia gama de destinos, desde exóticos rincones del mundo hasta clásicos favoritos de vacaciones, 
+                            <p id="text-about-2">Con una amplia gama de destinos, desde exóticos rincones del mundo hasta clásicos favoritos de vacaciones, 
                                 y una variedad de opciones de viaje que van desde viajes en grupo organizados hasta itinerarios personalizados, 
                                 estamos aquí para ayudarte a planificar y disfrutar del viaje de tus sueños.</p>
                             
-                            <p><b>En GoTravel, creemos en el poder transformador del viaje para enriquecer nuestras vidas, ampliar nuestros horizontes 
+                            <p id="text-about-3"><b>En GoTravel, creemos en el poder transformador del viaje para enriquecer nuestras vidas, ampliar nuestros horizontes 
                                 y conectarnos con el mundo que nos rodea. Únete a nosotros en esta emocionante aventura y descubre todo lo que el mundo 
                                 tiene para ofrecer.</b></p>
                             
-                            <p>¡Prepárate para vivir la aventura de tu vida con GoTravel!</p>
+                            <p id="text-about-4">¡Prepárate para vivir la aventura de tu vida con GoTravel!</p>
                         </div>
                     </div>
                 </div>
