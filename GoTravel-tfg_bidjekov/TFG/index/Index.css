@@ -12,6 +12,14 @@ body {
     background-color: #f8f8f8;
 }
 
+h3 {
+    font-size: 2rem;
+    color: white;
+    margin-bottom: 20px;
+    text-align: center;
+    
+  }
+
 .p-3 { 
     margin-top: 20% !important;
 }

@@ -198,27 +198,27 @@ $iva_amount = $total - $subtotal; // Cantidad de IVA
         </table>
     </div>
 
-    <!-- Código promocional y total del carrito -->
-    <div class="row mt-4">
-        <!-- Código promocional -->
-        <div class="col-md-6 mb-3">
-            <div class="bg-dark p-3 rounded">
-                <input type="text" id="promo_code" placeholder="Introduce tu código promocional" class="form-control mb-2">
-                <button class="btn btn-success w-100" id="apply_code">Aplicar Código</button>
-            </div>
-        </div>
-
-        <!-- Cálculo del subtotal, IVA y total -->
-        <div class="col-md-6 mb-3">
-            <div class="bg-dark p-3 rounded text-end text-white">
-                <?php
-                echo "<div><strong>Subtotal:</strong> " . number_format($subtotal, 2) . " €</div>";
-                echo "<div><strong>IVA ({$iva_percentage}%):</strong> " . number_format($iva_amount, 2) . " €</div>";
-                echo "<div class='text-primary'><strong>Total:</strong> " . number_format($total, 2) . " €</div>";
-                ?>
-            </div>
+<!-- Código promocional y total del carrito -->
+<div class="row mt-4">
+    <!-- Código promocional -->
+    <div class="col-md-6 mb-3">
+        <div class="bg-dark p-3 rounded">
+            <input type="text" id="promo_code" placeholder="Introduce tu código promocional" class="form-control mb-2">
+            <button class="btn btn-success w-100" id="apply_code">Aplicar Código</button>
         </div>
     </div>
+
+    <!-- Cálculo del subtotal, IVA y total -->
+    <div class="col-md-6 mb-3">
+        <div class="bg-dark p-3 rounded text-end text-white" id="cart-total">
+            <?php
+            echo "<div><strong>Subtotal:</strong> " . number_format($subtotal, 2) . " €</div>";
+            echo "<div><strong>IVA ({$iva_percentage}%):</strong> " . number_format($iva_amount, 2) . " €</div>";
+            echo "<div class='text-primary'><strong>Total:</strong> " . number_format($total, 2) . " €</div>";
+            ?>
+        </div>
+    </div>
+</div>
 
     <!-- Botón de checkout -->
     <div class="text-end">

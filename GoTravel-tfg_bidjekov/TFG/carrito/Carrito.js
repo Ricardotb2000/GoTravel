@@ -136,20 +136,20 @@ function updateCartTotal() {
         <div style='margin-bottom: 5px;'><div style='font-weight: bold; color: #27a7ff;'>Total: </div><span style='font-size: 1.1em; color: #27a7ff;'>${total.toFixed(2)} €</span></div>
     `;
 
-    document.getElementById('cart-total').innerHTML = totalHTML;
+    const totalElement = document.getElementById('cart-total');
+    if (totalElement) {
+        totalElement.innerHTML = totalHTML;
+    } else {
+        console.error('Error: Elemento "cart-total" no encontrado.');
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Llama a esta función al cargar la página para garantizar que el carrito se muestre correctamente
-    mostrarEstadoCarrito();
-
-    // Aplicar código promocional
-    const applyPromoButton = document.getElementById('apply_code'); // Asegúrate de que este ID coincide
+    const applyPromoButton = document.getElementById('apply_code');
 
     if (applyPromoButton) {
         applyPromoButton.addEventListener('click', function () {
             const promoCode = document.getElementById('promo_code').value;
-            console.log('Código promocional ingresado:', promoCode); // Mostrar el código ingresado
 
             fetch('carrito.php', {
                 method: 'POST',
@@ -159,24 +159,44 @@ document.addEventListener('DOMContentLoaded', function () {
                 body: JSON.stringify({ promo_code: promoCode })
             })
             .then(response => {
-                console.log('Response Status:', response.status); // Para verificar el código de respuesta
-                if (!response.ok) {
-                    throw new Error('Error en la respuesta del servidor');
-                }
+                if (!response.ok) throw new Error('Error en la respuesta del servidor');
                 return response.json();
             })
             .then(data => {
-                console.log('Response Data:', data); // Para ver qué devuelve el servidor
+                console.log('Datos recibidos:', data);
+
                 if (data.error) {
-                    // Mostrar mensaje de error usando alert
                     alert(data.error);
                 } else {
-                    // Mostrar mensaje de confirmación usando alert
                     alert(`Código promocional aplicado. Nuevo total: ${data.total}€`);
 
-                    // Actualizar el total con el nuevo precio
+                    // Quita separadores de miles y convierte los valores a float
+                    const formatValue = (value) => parseFloat(value.replace(/[^\d.-]/g, ''));
+
+                    // Configura el porcentaje de IVA si el servidor no lo devuelve
+                    const iva_percentage = data.iva_percentage ? formatValue(data.iva_percentage) : 21;
+
+                    // Calcula `subtotal` e `iva_amount` si faltan
+                    let subtotal, iva_amount;
+                    if (data.subtotal && data.iva_amount) {
+                        subtotal = formatValue(data.subtotal);
+                        iva_amount = formatValue(data.iva_amount);
+                    } else {
+                        const total = formatValue(data.total);
+                        subtotal = total / (1 + iva_percentage / 100);
+                        iva_amount = total - subtotal;
+                    }
+
                     const totalDisplay = document.getElementById('cart-total');
-                    totalDisplay.innerHTML = totalDisplay.innerHTML.replace(/Total: .*/, `Total: <span style='font-size: 1.1em; color: #27a7ff;'>${data.total}€</span>`);
+                    if (totalDisplay) {
+                        totalDisplay.innerHTML = `
+                            <div><strong>Subtotal:</strong> ${subtotal.toFixed(2)} €</div>
+                            <div><strong>IVA (${iva_percentage}%):</strong> ${iva_amount.toFixed(2)} €</div>
+                            <div class='text-primary'><strong>Total:</strong> ${formatValue(data.total).toFixed(2)} €</div>
+                        `;
+                    } else {
+                        console.error('Error: Elemento "cart-total" no encontrado.');
+                    }
                 }
             })
             .catch(error => console.error('Error:', error));
@@ -185,3 +205,4 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error('El botón de aplicar código no se encontró');
     }
 });
+

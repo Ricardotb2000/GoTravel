@@ -166,7 +166,7 @@ if (isset($_SESSION['search_results'])) {
 
 <!-- Carousel -->
 <div class="container-fluid p-0" id="home">
-    <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
+    <div id="header-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img class="w-100" src="imagenes/Carrusel-1.jpg" alt="Imagen">
@@ -196,24 +196,12 @@ if (isset($_SESSION['search_results'])) {
                 </div>
             </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel" data-bs-slide="prev">
-            <div class="btn btn-dark" style="width: 45px; height: 45px;">
-                <span class="carousel-control-prev-icon mb-n2" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </div>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#header-carousel" data-bs-slide="next">
-            <div class="btn btn-dark" style="width: 45px; height: 45px;">
-                <span class="carousel-control-next-icon mb-n2" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </div>
-        </button>
     </div>
 </div>
 
 
 <!-- Iniciar Reserva -->
-<div class="container-fluid booking mt-5 pb-5 mb-5" style="position: relative; z-index: 10;" id="about-us">
+<div class="container-fluid booking mt-3 pb-5 mb-5" style="position: relative; z-index: 10;" id="about-us">
     <div class="container pb-5">
         <div class="bg-light shadow p-4 rounded-3">
             <form method="POST" action="">

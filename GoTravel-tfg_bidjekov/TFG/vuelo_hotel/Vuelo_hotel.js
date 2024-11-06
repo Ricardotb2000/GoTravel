@@ -35,8 +35,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Inicializa el datepicker en los inputs correspondientes
     $('#date1 input').datepicker({
         format: 'dd/mm/yyyy',
-        autoclose: true,  // Cierra automáticamente 
-        todayHighlight: true,  // Resalta la fecha actual
+        autoclose: true,  
+        todayHighlight: true,  
         templates: {
             leftArrow: '&laquo;',  
             rightArrow: '&raquo;'  

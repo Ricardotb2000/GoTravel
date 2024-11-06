@@ -26,7 +26,7 @@ body {
   flex-direction: column;
 }
 
-h1 {
+h3 {
   font-size: 2rem;
   color: white;
   margin-bottom: 20px;
@@ -100,7 +100,7 @@ h1 {
 }
 
 .airline-img {
-  width: 200px;
+  width: 175px;
   height: 100px;
   object-fit: contain;
   transition: transform 0.3s;
@@ -160,5 +160,16 @@ h1 {
   }
   .carousel-control-prev,.carousel-control-next{
     display: none !important;
+  }
+  .airline-img {
+      width: 125px;
+      height: 100px;
+  }
+}
+
+@media (min-width: 701px) and (max-width: 1024px) {
+  .airline-img {
+    width: 130px;
+    height: 100px;
   }
 }

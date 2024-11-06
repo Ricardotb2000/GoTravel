@@ -90,9 +90,9 @@ function addToCart(button) {
         // Mostrar el mensaje de confirmación usando Toastify
         Toastify({
             text: `Añadido al carrito:`,
-            duration: 2000, // Duración en milisegundos
-            gravity: "top", // `top` o `bottom`
-            position: 'right', // `left`, `center` o `right`
+            duration: 2000, 
+            gravity: "top", 
+            position: 'right', 
             backgroundColor: "linear-gradient(to top right, #0d6efd, #1c1c1c)",
             borderRadius: "30px",
 

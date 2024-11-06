@@ -156,47 +156,42 @@ if (isset($_SESSION['search_results'])) {
     </nav>
 
 
-    <!-- Carrusel -->
-    <div class="container-fluid p-0" >
-        <div id="header-carousel" class="carousel slide" data-bs-ride="carousel"> <!-- Cambia data-ride a data-bs-ride -->
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img class="w-100" src="../imagenes/Carrusel-4.jpg" alt="Imagen">
-                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                        <div class="p-3 container-title" style="max-width: 900px; margin-bottom: 5%;">
-                            <h1 class="display-3 text-white mb-md-4">Viaja y vive el sueño</h1>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img class="w-100" src="../imagenes/Carrusel-5.jpg" alt="Imagen">
-                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                        <div class="p-3 container-title" style="max-width: 900px; margin-bottom: 5%;">
-                            <h1 class="display-3 text-white mb-md-4">Descubre con nosotros</h1>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img class="w-100" src="../imagenes/Carrusel-7.jpg" alt="Imagen">
-                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                        <div class="p-3 container-title" style="max-width: 900px; margin-bottom: 5%;">
-                            <h1 class="display-3 text-white mb-md-4">El paraíso en tus manos</h1>
-                        </div>
+<!-- Carrusel -->
+<div class="container-fluid p-0">
+    <div id="header-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="w-100" src="../imagenes/Carrusel-4.jpg" alt="Imagen">
+                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                    <div class="p-3 container-title" style="max-width: 900px; margin-bottom: 25%;">
+                        <h4 class="text-white text-uppercase mb-3">Descubre el mundo a tu manera</h4>
+                        <h3 class="display-3 text-white mb-md-4">Aventuras únicas en cada rincón del planeta</h3>
                     </div>
                 </div>
             </div>
-            <a class="carousel-control-prev" href="#header-carousel" data-bs-slide="prev"> <!-- Cambia data-slide a data-bs-slide -->
-                <div class="btn btn-dark" style="width: 45px; height: 45px;">
-                    <span class="carousel-control-prev-icon mb-n2"></span>
+            <div class="carousel-item">
+                <img class="w-100" src="../imagenes/Carrusel-5.jpg" alt="Imagen">
+                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                    <div class="p-3 container-title" style="max-width: 900px; margin-bottom: 25%;">
+                        <h4 class="text-white text-uppercase mb-3">Explora más allá de tus sueños</h4>
+                        <h3 class="display-3 text-white mb-md-4">Lugares inimaginables a tu alcance</h3>
+                    </div>
                 </div>
-            </a>
-            <a class="carousel-control-next" href="#header-carousel" data-bs-slide="next"> <!-- Cambia data-slide a data-bs-slide -->
-                <div class="btn btn-dark" style="width: 45px; height: 45px;">
-                    <span class="carousel-control-next-icon mb-n2"></span>
+            </div>
+            <div class="carousel-item">
+                <img class="w-100" src="../imagenes/Carrusel-7.jpg" alt="Imagen">
+                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                    <div class="p-3 container-title" style="max-width: 900px; margin-bottom: 25%;">
+                        <h4 class="text-white text-uppercase mb-3">Vive momentos inolvidables</h4>
+                        <h3 class="display-3 text-white mb-md-4">Viajes para conectar con lo extraordinario</h3>
+                    </div>
                 </div>
-            </a>
+            </div>
         </div>
+        <a class="carousel-control-prev" href="#header-carousel" data-bs-slide="prev"></a>
+        <a class="carousel-control-next" href="#header-carousel" data-bs-slide="next"></a>
     </div>
+</div>
 
     <!-- Iniciar Reserva -->
 <div class="container-fluid booking mt-5 pb-5" style="position: relative; z-index: 10;">
@@ -557,56 +552,46 @@ if (isset($_SESSION['search_results'])) {
 
 
     <!-- Aerolíneas -->
-    <div class="text-center mb-3 pb-3">
-        <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Viaja seguro</h6>
-        <h3 class="text-dark">Nuestras Aerolineas</h3>
-    </div>
-    <div id="airlinesCarousel" class="carousel slide" data-bs-ride="carousel" style="width: 65%; margin: 0 auto;">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <div class="d-flex justify-content-center">
-                    <a href="https://www.ryanair.com" target="_blank">
-                        <img src="../imagenes/Ryanair.png" class="d-block airline-img" alt="Ryanair" style="width:150px;height:100px;">
-                    </a>
-                    <a href="https://www.vueling.com" target="_blank">
-                        <img src="../imagenes/Vueling.png" class="d-block airline-img" alt="Vueling" style="width:150px;height:100px;">
-                    </a>
-                    <a href="https://www.iberia.com" target="_blank">
-                        <img src="../imagenes/Iberia.png" class="d-block airline-img" alt="Iberia" style="width:150px;height:100px;">
-                    </a>
-                    <a href="https://www.aireuropa.com" target="_blank">
-                        <img src="../imagenes/AirEuropa.png" class="d-block airline-img" alt="Air Europa" style="width:150px;height:100px;">
-                    </a>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <div class="d-flex justify-content-center">
-                    <a href="https://www.easyjet.com" target="_blank">
-                        <img src="../imagenes/EasyJet.png" class="d-block airline-img" alt="EasyJet" style="width:150px;height:100px;">
-                    </a>
-                    <a href="http://www.airnostrum.es/" target="_blank">
-                        <img src="../imagenes/AirNostrum.png" class="d-block airline-img" alt="Air Nostrum" style="width:150px;height:100px;">
-                    </a>
-                    <a href="https://www.eurowings.com" target="_blank">
-                        <img src="../imagenes/Eurowings.png" class="d-block airline-img" alt="Eurowings" style="width:150px;height:100px;">
-                    </a>
-                    <a href="https://www.jet2.com" target="_blank">
-                        <img src="../imagenes/Jet2.png" class="d-block airline-img" alt="Jet2" style="width:150px;height:100px;">
-                    </a>
-                </div>
+<div class="text-center mb-3 pb-3">
+    <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Viaja seguro</h6>
+    <h3 class="text-dark">Nuestras Aerolineas</h3>
+</div>
+<div id="airlinesCarousel" class="carousel slide" data-bs-ride="carousel" style="width: 65%; margin: 0 auto;">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <div class="d-flex justify-content-center">
+                <a href="https://www.ryanair.com" target="_blank">
+                    <img src="../imagenes/Ryanair.png" class="d-block airline-img" alt="Ryanair">
+                </a>
+                <a href="https://www.vueling.com" target="_blank">
+                    <img src="../imagenes/Vueling.png" class="d-block airline-img" alt="Vueling">
+                </a>
+                <a href="https://www.iberia.com" target="_blank">
+                    <img src="../imagenes/Iberia.png" class="d-block airline-img" alt="Iberia">
+                </a>
+                <a href="https://www.aireuropa.com" target="_blank">
+                    <img src="../imagenes/AirEuropa.png" class="d-block airline-img" alt="Air Europa">
+                </a>
             </div>
         </div>
-        <button class="carousel-control-prev bg-dark" type="button" data-bs-target="#airlinesCarousel" data-bs-slide="prev" 
-                style="position: absolute; top: 50%; left: 10px; transform: translateY(-50%); height: 30px; width: 30px;">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next bg-dark" type="button" data-bs-target="#airlinesCarousel" data-bs-slide="next" 
-                style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); height: 30px; width: 30px;">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
+        <div class="carousel-item">
+            <div class="d-flex justify-content-center">
+                <a href="https://www.easyjet.com" target="_blank">
+                    <img src="../imagenes/EasyJet.png" class="d-block airline-img" alt="EasyJet">
+                </a>
+                <a href="http://www.airnostrum.es/" target="_blank">
+                    <img src="../imagenes/AirNostrum.png" class="d-block airline-img" alt="Air Nostrum">
+                </a>
+                <a href="https://www.eurowings.com" target="_blank">
+                    <img src="../imagenes/Eurowings.png" class="d-block airline-img" alt="Eurowings">
+                </a>
+                <a href="https://www.jet2.com" target="_blank">
+                    <img src="../imagenes/Jet2.png" class="d-block airline-img" alt="Jet2">
+                </a>
+            </div>
+        </div>
     </div>
+</div>
 
 
 
