@@ -36,4 +36,4 @@ GoTravel está diseñado principalmente para **clientes** interesados en planifi
 ### Requisitos del Sistema
 
 - **Navegador Web**: Cualquier navegador moderno (Chrome, Firefox, Edge, Safari) para acceder a la aplicación.
-- **Servidor Local (Opcional)**: Si deseas probar la aplicación localmente, puedes utilizar servidores como **XAMPP** o **WAMP** para correr PHP y MySQL.
+- **Servidor Local (Opcional)**: Si deseas probar la aplicación localmente, puedes utilizar servidores como **XAMPP** o **WAMP** para correr PHP y MySQL
