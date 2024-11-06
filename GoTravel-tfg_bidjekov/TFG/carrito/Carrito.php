@@ -231,7 +231,7 @@ $iva_amount = $total - $subtotal; // Cantidad de IVA
 <div class="container-fluid bg-dark text-white-50 py-5 px-sm-3 px-lg-5" id="contact" style="margin-top: 90px; text-align: center;">
     <div class="row pt-5">
         <div class="col-lg-3 col-md-6 mb-5">
-            <a href="" class="navbar-brand">
+            <a href="../Index.php#home" class="navbar-brand">
                 <h1 class="text-primary"><span class="text-white">GO</span>TRAVEL</h1>
             </a>
             <p>GoTravel ofrece experiencias de viaje auténticas y memorables. 

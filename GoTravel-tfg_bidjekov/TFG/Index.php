@@ -109,7 +109,7 @@ if (isset($_SESSION['search_results'])) {
     </a>
 
     <!-- Logo para la versión colapsada -->
-    <a class="navbar-brand d-lg-none " href="#">
+    <a class="navbar-brand d-lg-none" href="#">
         <img src="imagenes/GoTravel.png" class="brand-img" alt="Gotravel_logo_transp" style="width: 50px; height: 50px; border-radius: 100px;">
     </a>
 
@@ -166,7 +166,7 @@ if (isset($_SESSION['search_results'])) {
 
 <!-- Carousel -->
 <div class="container-fluid p-0" id="home">
-    <div id="header-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+    <div id="header-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img class="w-100" src="imagenes/Carrusel-1.jpg" alt="Imagen">
@@ -196,6 +196,8 @@ if (isset($_SESSION['search_results'])) {
                 </div>
             </div>
         </div>
+        <a class="carousel-control-prev" href="#header-carousel" data-bs-slide="prev"></a>
+        <a class="carousel-control-next" href="#header-carousel" data-bs-slide="next"></a>
     </div>
 </div>
 
@@ -693,11 +695,119 @@ if (isset($_SESSION['search_results'])) {
         </div>
     </div>
 
+        <!-- Guias Turisticos -->
+        <div class="text-center mb-3 pb-3" id="guias">
+            <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Acompañado por expertos</h6>
+            <h3 class="text-dark">Conoce a nuestros Guías</h3>
+        </div>
+
+        <div class="container">
+    <div class="row">
+        <!-- Guia 1 -->
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+            <div class="card card-hover">
+                <img src="imagenes/Guia-1.jpg" class="card-img-top" alt="Jesús Díaz">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Jesús Díaz</h5>
+                    <hr class="border-top">
+                    <p class="card-text">Especialista en mitología y paisajes. Guía en Europa.</p>
+                </div>
+            </div>
+        </div>
+        <!-- Guia 2 -->
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+            <div class="card card-hover">
+                <img src="imagenes/Guia-2.jpg" class="card-img-top" alt="Paola Anderson">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Paola Anderson</h5>
+                    <hr class="border-top">
+                    <p class="card-text">Apasionada por la historia y la cultura asiática. Guía en Asia.</p>
+                </div>
+            </div>
+        </div>
+        <!-- Guia 3 -->
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+            <div class="card card-hover">
+                <img src="imagenes/Guia-3.jpg" class="card-img-top" alt="Rose Smith">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Rose Smith</h5>
+                    <hr class="border-top">
+                    <p class="card-text">Experta en aventuras y naturaleza. Guía en América.</p>
+                </div>
+            </div>
+        </div>
+        <!-- Guia 4 -->
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+            <div class="card card-hover">
+                <img src="imagenes/Guia-4.jpg" class="card-img-top" alt="Thiago Membibre">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Thiago Membibre</h5>
+                    <hr class="border-top">
+                    <p class="card-text">Experto en la belleza y cultura oceánica. Guía en Oceanía.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Opina de Gotravel -->
+<div class="text-center mt-3 pt-3" id="opina">
+    <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">¿Te gusta Gotravel?</h6>
+    <h3 class="text-dark">Dejanos tu opinión</h3>
+</div>
+
+<div class="container mt-5">
+    <form>
+        <fieldset class="fieldset-border">
+            <fieldset class="mb-3">
+                <legend>Información Personal</legend>
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" required>
+                </div>
+                <div class="mb-3">
+                    <label for="apellidos" class="form-label">Apellidos</label>
+                    <input type="text" class="form-control" id="apellidos" required>
+                </div>
+                <div class="mb-3">
+                    <label for="correo" class="form-label">Correo</label>
+                    <input type="email" class="form-control" id="correo" required>
+                </div>
+            </fieldset>
+            <fieldset class="mb-3">
+                <legend>Danos tu Opinión</legend>
+                <div class="mb-3">
+                    <label for="mensaje" class="form-label">Mensaje</label>
+                    <textarea class="form-control" id="mensaje" rows="4" required></textarea>
+                </div>
+            </fieldset>
+            <fieldset class="mb-3">
+                <legend>Puntúanos</legend>
+                <div class="rating">
+                    <input type="radio" name="rating" id="rating-5" value="5">
+                    <label for="rating-5" class="star">&#9733;</label>
+                    <input type="radio" name="rating" id="rating-4" value="4">
+                    <label for="rating-4" class="star">&#9733;</label>
+                    <input type="radio" name="rating" id="rating-3" value="3">
+                    <label for="rating-3" class="star">&#9733;</label>
+                    <input type="radio" name="rating" id="rating-2" value="2">
+                    <label for="rating-2" class="star">&#9733;</label>
+                    <input type="radio" name="rating" id="rating-1" value="1">
+                    <label for="rating-1" class="star">&#9733;</label>
+                </div>
+            </fieldset>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </fieldset>
+    </form>
+</div>
+
+
+
         <!-- Footer Start -->
         <div class="container-fluid bg-dark text-white-50 py-5 px-sm-3 px-lg-5" id="contact" style="margin-top: 90px; text-align: center;">
             <div class="row pt-5">
                 <div class="col-lg-3 col-md-6 mb-5">
-                    <a href="" class="navbar-brand">
+                    <a href="#home" class="navbar-brand">
                         <h1 class="text-primary"><span class="text-white">GO</span>TRAVEL</h1>
                     </a>
                     <p>GoTravel ofrece experiencias de viaje auténticas y memorables. 

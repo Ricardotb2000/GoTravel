@@ -89,6 +89,53 @@ h3 {
     color: white; 
   }
 
+  .card-hover {
+    transition: transform 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: scale(1.05);
+}
+
+  .fieldset-border {
+    border: 1px solid #ddd !important;
+    padding: 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    -webkit-box-shadow: 0px 0px 0px 0px #000;
+            box-shadow: 0px 0px 0px 0px #000;
+}
+
+.fieldset-border legend {
+    width: auto;
+    padding: 0 10px;
+    border-bottom: none;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: left;
+}
+
+.rating input {
+    display: none;
+}
+
+.rating label {
+    font-size: 2em;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.rating input:checked ~ label,
+.rating label:hover,
+.rating label:hover ~ label {
+    color: #ffc107;
+}
+
   
 
 
