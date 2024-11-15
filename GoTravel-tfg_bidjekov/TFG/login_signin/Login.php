@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start(); // Inicia la sesión
 include '../database/Config.php'; // Incluye el archivo de conexión a la base de datos
 
@@ -7,67 +7,95 @@ ini_set('display_errors', 1);
 
 $message = ''; // Inicializa la variable para mensajes
 
-// Manejar el registro
-if (isset($_POST['register'])) {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    
-    // Verificar si el email ya existe
-    $stmt = $conn->prepare("SELECT * FROM user WHERE Email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
+// Depuración: Verificar si la conexión es exitosa
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
 
-    if ($result->num_rows > 0) {
-        $message = "<p style='color:red;'>El email ya está en uso.</p>";
-    } else {
-        // Insertar el nuevo usuario con la contraseña hash
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $stmt = $conn->prepare("INSERT INTO user (Email, Password) VALUES (?, ?)");
-        $stmt->bind_param("ss", $email, $hashedPassword);
+// Manejar el registro
+if (isset($_POST['registro'])) {
+    // Verificar que los datos POST estén disponibles
+    if (isset($_POST['Email'], $_POST['Contraseña'])) {
+        $email = $_POST['Email'];  // Se obtiene el email
+        $contraseña = $_POST['Contraseña'];  // Se obtiene la contraseña
         
-        if ($stmt->execute()) {
-            $_SESSION['loggedin'] = true;
-            $_SESSION['username'] = $email; // Usar el email para la sesión
-            $message = "<p style='color:green;'>Registro exitoso. Redirigiendo...</p>";
-            header('Refresh: 2; url=../Index.php'); // Redirige a la página principal después de 2 segundos
-            exit;
+        // Depuración: Verificar los valores de las variables
+        echo "<pre>"; var_dump($email, $contraseña); echo "</pre>";  // Muestra los datos recibidos por el formulario
+
+        // Verificar si el email ya existe
+        $stmt = $conn->prepare("SELECT * FROM usuario WHERE Email = ?"); // Consultamos la tabla 'usuario'
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // Depuración: Verificar el resultado de la consulta
+        echo "<pre>"; var_dump($result); echo "</pre>";  // Muestra el resultado de la consulta para verificar que estamos obteniendo datos
+
+        if ($result->num_rows > 0) {
+            $message = "<script>alert('El email ya está en uso.');</script>";
         } else {
-            $message = "<p style='color:red;'>Error al registrar el usuario: " . $stmt->error . "</p>"; // Muestra el error
+            // Insertar el nuevo usuario con la contraseña hash
+            $hashedPassword = password_hash($contraseña, PASSWORD_DEFAULT);
+            $stmt = $conn->prepare("INSERT INTO usuario (Email, Contraseña) VALUES (?, ?)"); 
+            $stmt->bind_param("ss", $email, $hashedPassword); // Solo insertamos email y contraseña
+
+            // Depuración: Verificar si la consulta INSERT se ejecuta correctamente
+            if ($stmt->execute()) {
+                // Verificar si la inserción afectó filas
+                if ($stmt->affected_rows > 0) {
+                    $_SESSION['registrado'] = true;
+                    $_SESSION['Email'] = $email; // Usar el email para la sesión
+                    $message = "<script>alert('Registro exitoso. Redirigiendo...'); window.location.href='../Index.php';</script>";
+                } else {
+                    $message = "<script>alert('No se pudo registrar el usuario.');</script>";
+                }
+            } else {
+                // Mostrar el error específico de la inserción
+                $message = "<script>alert('Error al registrar el usuario: " . $stmt->error . "');</script>";
+            }
         }
+    } else {
+        $message = "<script>alert('Los datos del formulario no fueron enviados correctamente.');</script>";
     }
 }
 
 // Manejar el inicio de sesión
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $email = $_POST['Email'];
+    $password = $_POST['Contraseña'];
+
+    // Depuración: Verificar los valores de las variables de inicio de sesión
+    echo "<pre>"; var_dump($email, $password); echo "</pre>";  // Muestra los datos recibidos por el formulario
 
     // Preparar la consulta para evitar inyecciones SQL
-    $stmt = $conn->prepare("SELECT User_ID, Password FROM user WHERE Email = ?");
+    $stmt = $conn->prepare("SELECT Usuario_ID, Contraseña FROM usuario WHERE Email = ?"); 
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
 
+    // Depuración: Verificar el resultado de la consulta de inicio de sesión
+    echo "<pre>"; var_dump($result); echo "</pre>";  // Muestra el resultado de la consulta para verificar que se encuentra el usuario
+
     if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
+        $usuario = $result->fetch_assoc();
 
         // Verifica la contraseña usando password_verify
-        if (password_verify($password, $user['Password'])) {
+        if (password_verify($password, $usuario['Contraseña'])) { // Verificamos la contraseña
             // Establecer la sesión
-            $_SESSION['loggedin'] = true;
-            $_SESSION['username'] = $email; // Usar el email para la sesión
-            $message = "<p style='color:green;'>Inicio de sesión exitoso. Redirigiendo...</p>";
-            header('Refresh: 2; url=../Index.php'); // Redirige a la página principal después de 2 segundos
-            exit;
+            $_SESSION['registrado'] = true;
+            $_SESSION['Email'] = $email; // Usar el email para la sesión
+            $message = "<script>alert('Inicio de sesión exitoso. Redirigiendo...'); window.location.href='../Index.php';</script>";
         } else {
-            $message = "<p style='color:red;'>Contraseña incorrecta.</p>";
+            $message = "<script>alert('Contraseña incorrecta.');</script>";
         }
     } else {
-        $message = "<p style='color:red;'>No se encontró un usuario con ese email.</p>";
+        $message = "<script>alert('No se encontró un usuario con ese email.');</script>";
     }
 }
-?>   
+
+echo $message; // Imprime el mensaje de la alerta en la página
+?>
+
 
 
 
@@ -159,9 +187,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
     <div class="container__form container--signup">
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="form" id="form1">
             <h2 class="form__title">Registrarse</h2>
-            <input type="email" name="email" placeholder="Email" class="input" id="email" required /> 
-            <input type="password" name="password" placeholder="Contraseña" class="input" id="password" required />
-            <button type="submit" name="register" class="btn_switch">Registrarse</button>
+            <input type="email" name="Email" placeholder="Email" class="input" id="Email" required /> 
+            <input type="password" name="Contraseña" placeholder="Contraseña" class="input" id="Password" required />
+            <button type="submit" name="registro" class="btn_switch">Registrarse</button> <!-- Cambiar 'register' por 'registro' -->
             <!-- Mensaje de registro -->
             <?php if (strpos($message, 'Registro') !== false || strpos($message, 'email') !== false): ?>
                 <div class="message-container"><?php echo $message; ?></div>
@@ -173,8 +201,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
     <div class="container__form container--signin">
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="form" id="form2">
             <h2 class="form__title">Iniciar Sesión</h2>
-            <input type="email" name="email" placeholder="Email" class="input" required />
-            <input type="password" name="password" placeholder="Contraseña" class="input" required />
+            <input type="email" name="Email" placeholder="Email" class="input" required />
+            <input type="password" name="Contraseña" placeholder="Contraseña" class="input" required />
             <button type="submit" name="login" class="btn_switch">Iniciar Sesión</button>
             <!-- Mensaje de inicio de sesión -->
             <?php if (strpos($message, 'Inicio de sesión') !== false || strpos($message, 'incorrecta') !== false): ?>
@@ -195,6 +223,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
         </div>
     </div>
 </div>
+
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-white-50 py-5 px-sm-3 px-lg-5" id="contact" style="margin-top: 90px; text-align: center;">

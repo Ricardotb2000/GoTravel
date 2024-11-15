@@ -223,6 +223,8 @@ CREATE TABLE `usuario` (
   `Email` varchar(100) DEFAULT NULL,
   `Contraseña` varchar(255) DEFAULT NULL,
   `Telefono` varchar(20) DEFAULT NULL,
+  `Direccion` varchar(20) DEFAULT NULL,
+  `Opinion` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`Usuario_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

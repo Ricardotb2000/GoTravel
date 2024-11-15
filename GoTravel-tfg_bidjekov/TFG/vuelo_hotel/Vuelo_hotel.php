@@ -7,66 +7,94 @@ $results = [];
 
 // Procesar la solicitud
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $origin_id = $_POST['destination']; // Se considera 'destination' como origen
-    $stay_type = $_POST['stay_type'];
+    // Verificar si 'destino' y 'tipo_estancia' están definidos
+    if (isset($_POST['destino']) && isset($_POST['tipo_estancia'])) {
+        $id_origen = $_POST['destino']; 
+        $tipo_estancia = $_POST['tipo_estancia'];
 
-    // Consulta según el tipo de estancia
-    if ($stay_type == 'hotel') {
-        // Consulta para obtener hoteles
-        $query = "SELECT h.Name, h.Price_Per_Night AS Price, h.Description, d.City 
-                  FROM hotel h 
-                  JOIN destination d ON h.Destination_ID = d.Destination_ID 
-                  WHERE d.Destination_ID = ?";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param("i", $origin_id);
-        $stmt->execute();
-        $results['hotels'] = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        // Comprobar si 'id_origen' es un número válido
+        if (!is_numeric($id_origen) || $id_origen <= 0) {
+            echo "ID de destino no válido.";
+            exit();
+        }
 
-    } elseif ($stay_type == 'vuelo') {
-        // Consulta para obtener vuelos desde el país de origen con el nombre de las ciudades
-        $query = "SELECT d_origin.City AS Origin_City, d_dest.City AS Destination_City, 
-                         f.Price, f.Departure_Date, f.Arrival_Date 
-                  FROM flight f 
-                  JOIN destination d_origin ON f.Origin_ID = d_origin.Destination_ID 
-                  JOIN destination d_dest ON f.Destination_ID = d_dest.Destination_ID 
-                  WHERE f.Origin_ID = ?";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param("i", $origin_id);
-        $stmt->execute();
-        $results['flights'] = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        // Consulta según el tipo de estancia
+        if ($tipo_estancia == 'hotel') {
+            // Consulta para obtener hoteles
+            $query = "SELECT h.Nombre, h.Precio_Por_Noche AS Precio, h.Descripción, d.Ciudad
+                      FROM hotel h 
+                      JOIN destino d ON h.Destino_ID = d.Destino_ID 
+                      WHERE d.Destino_ID = ?";
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param("i", $id_origen);
+            if ($stmt->execute()) {
+                $results['hotel'] = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+            } else {
+                echo 'Error en la consulta de hoteles: ' . $stmt->error;
+                exit();
+            }
 
-    } elseif ($stay_type == 'vuelo_hotel') {
-        // Consulta para obtener ambos
-        $hotel_query = "SELECT h.Name, h.Price_Per_Night AS Price, h.Description, d.City 
-                        FROM hotel h 
-                        JOIN destination d ON h.Destination_ID = d.Destination_ID 
-                        WHERE d.Destination_ID = ?";
-        $flight_query = "SELECT d_origin.City AS Origin_City, d_dest.City AS Destination_City, 
-                                f.Price, f.Departure_Date, f.Arrival_Date 
-                         FROM flight f 
-                         JOIN destination d_origin ON f.Origin_ID = d_origin.Destination_ID 
-                         JOIN destination d_dest ON f.Destination_ID = d_dest.Destination_ID 
-                         WHERE f.Origin_ID = ?";
+        } elseif ($tipo_estancia == 'vuelo') {
+            // Consulta para obtener vuelos desde el país de origen con el nombre de las ciudades
+            $query = "SELECT d_origen.Ciudad AS Ciudad_Origen, d_destino.Ciudad AS Ciudad_Destino, 
+                             v.Precio, v.Fecha_Salida, v.Fecha_Llegada 
+                      FROM vuelo v 
+                      JOIN destino d_origen ON v.Origen_ID = d_origen.Destino_ID 
+                      JOIN destino d_destino ON v.Destino_ID = d_destino.Destino_ID 
+                      WHERE v.Origen_ID = ?";
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param("i", $id_origen);
+            if ($stmt->execute()) {
+                $results['vuelo'] = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+            } else {
+                echo 'Error en la consulta de vuelos: ' . $stmt->error;
+                exit();
+            }
 
-        // Obtener hoteles
-        $hotel_stmt = $conn->prepare($hotel_query);
-        $hotel_stmt->bind_param("i", $origin_id);
-        $hotel_stmt->execute();
-        $results['hotels'] = $hotel_stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        } elseif ($tipo_estancia == 'vuelo_hotel') {
+            // Consulta para obtener ambos (hoteles y vuelos)
+            $hotel_query = "SELECT h.Nombre, h.Precio_Por_Noche AS Precio, h.Descripción, d.Ciudad 
+                            FROM hotel h 
+                            JOIN destino d ON h.Destino_ID = d.Destino_ID 
+                            WHERE d.Destino_ID = ?";
+            $flight_query = "SELECT d_origen.Ciudad AS Ciudad_Origen, d_destino.Ciudad AS Ciudad_Destino, 
+                                        v.Precio, v.Fecha_Salida, v.Fecha_Llegada 
+                             FROM vuelo v 
+                             JOIN destino d_origen ON v.Origen_ID = d_origen.Destino_ID 
+                             JOIN destino d_destino ON v.Destino_ID = d_destino.Destino_ID 
+                             WHERE v.Origen_ID = ?";
 
-        // Obtener vuelos
-        $flight_stmt = $conn->prepare($flight_query);
-        $flight_stmt->bind_param("i", $origin_id);
-        $flight_stmt->execute();
-        $results['flights'] = $flight_stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+            // Obtener hoteles
+            $hotel_stmt = $conn->prepare($hotel_query);
+            $hotel_stmt->bind_param("i", $id_origen);
+            if ($hotel_stmt->execute()) {
+                $results['hotel'] = $hotel_stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+            } else {
+                echo 'Error en la consulta de hoteles: ' . $hotel_stmt->error;
+                exit();
+            }
+
+            // Obtener vuelos
+            $flight_stmt = $conn->prepare($flight_query);
+            $flight_stmt->bind_param("i", $id_origen);
+            if ($flight_stmt->execute()) {
+                $results['vuelo'] = $flight_stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+            } else {
+                echo 'Error en la consulta de vuelos: ' . $flight_stmt->error;
+                exit();
+            }
+        }
+
+        // Guardar resultados en la sesión para mostrarlos más adelante
+        $_SESSION['search_results'] = $results;
+
+        // Redirigir a la misma página para mostrar resultados
+        header('Location: ' . $_SERVER['PHP_SELF']);
+        exit();
+    } else {
+        echo 'Faltan parámetros en el formulario.';
+        exit();
     }
-
-    // Guardar resultados en la sesión para mostrarlos más adelante
-    $_SESSION['search_results'] = $results;
-
-    // Redirigir a la misma página para mostrar resultados
-    header('Location: ' . $_SERVER['PHP_SELF']);
-    exit();
 }
 
 // Comprobar si hay resultados en la sesión
@@ -81,7 +109,7 @@ if (isset($_SESSION['search_results'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vuelos - Hotel</title>
+    <title>GoTravel - Hotel</title>
 
 <link rel="icon" href="../imagenes/GoTravel.png" type="image/x-icon">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.css" />
@@ -194,7 +222,7 @@ if (isset($_SESSION['search_results'])) {
 </div>
 
     <!-- Iniciar Reserva -->
-<div class="container-fluid booking mt-5 pb-5" style="position: relative; z-index: 10;">
+<div class="container-fluid booking mt-3 pb-5" style="position: relative; z-index: 10;" id="about-us">
     <div class="container pb-5">
         <div class="bg-light shadow p-4 rounded-3">
             <form method="POST" action="">
@@ -203,7 +231,7 @@ if (isset($_SESSION['search_results'])) {
                         <div class="row justify-content-center g-2">
                             <div class="col-md-3">
                                 <div class="mb-3 mb-md-0">
-                                    <select name="destination" class="custom-select form-select px-4" style="height: 47px; width: 100%;" required>
+                                    <select name="destino" class="custom-select form-select px-4" style="height: 47px; width: 100%;" required>
                                         <option selected disabled>Origen</option>
                                         <option value="1">España</option>
                                         <option value="2">Brasil</option>
@@ -221,7 +249,7 @@ if (isset($_SESSION['search_results'])) {
                             </div>
                             <div class="col-md-3">
                                 <div class="mb-3 mb-md-0">
-                                    <select name="stay_type" class="custom-select form-select px-4" style="height: 47px; width: 100%;" required>
+                                    <select name="tipo_estancia" class="custom-select form-select px-4" style="height: 47px; width: 100%;" required>
                                         <option selected disabled>Estancia</option>
                                         <option value="hotel">Hoteles</option>
                                         <option value="vuelo">Vuelos</option>
@@ -252,91 +280,92 @@ if (isset($_SESSION['search_results'])) {
             </form>
 
             <!-- Mostrar resultados de búsqueda -->
-            <?php if (isset($results) && !empty($results)): ?>
-                <div class="table-responsive mt-4">
-                    <?php if (isset($results['hotels']) && !empty($results['hotels'])): ?>
-                        <h4 class="mt-4">Hoteles:</h4>
-                        <table class="table table-striped table-hover table-borderless align-middle">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th>Nombre</th>
-                                    <th>Precio por Noche</th>
-                                    <th>Descripción</th>
-                                    <th>Acción</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($results['hotels'] as $hotel): ?>
-                                    <tr>
-                                        <td><?= htmlspecialchars($hotel['Name']) ?></td>
-                                        <td><?= htmlspecialchars($hotel['Price']) ?>€</td>
-                                        <td><?= htmlspecialchars($hotel['Description']) ?></td>
-                                        <td>
-                                            <button class="btn btn-outline-primary btn-sm" 
-                                                    data-destination="<?= htmlspecialchars($hotel['Name']) ?>" 
-                                                    data-description="<?= htmlspecialchars($hotel['Description']) ?>" 
-                                                    data-price="<?= htmlspecialchars($hotel['Price']) ?>" 
-                                                    data-duration="1 noche" 
-                                                    data-people="1" 
-                                                    onclick="addToCart(this)">
-                                                Reservar
-                                            </button>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    <?php endif; ?>
+<?php if (isset($results) && !empty($results)): ?>
+    <div class="table-responsive mt-4">
+        <?php if (isset($results['hotel']) && !empty($results['hotel'])): ?>
+            <h4 class="mt-4">Hoteles:</h4>
+            <table class="table table-striped table-hover table-borderless align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Precio por Noche</th>
+                        <th>Descripción</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($results['hotel'] as $hotel): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($hotel['Nombre']) ?></td>
+                            <td><?= htmlspecialchars($hotel['Precio']) ?>€</td>
+                            <td><?= htmlspecialchars($hotel['Descripción']) ?></td>
+                            <td>
+                                <button class="btn btn-outline-primary btn-sm" 
+                                        data-destination="<?= htmlspecialchars($hotel['Nombre']) ?>" 
+                                        data-description="<?= htmlspecialchars($hotel['Descripción']) ?>" 
+                                        data-price="<?= htmlspecialchars($hotel['Precio']) ?>" 
+                                        data-duration="1 noche" 
+                                        data-people="1" 
+                                        onclick="addToCart(this)">
+                                    Reservar
+                                </button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php endif; ?>
 
-                    <?php if (isset($results['flights']) && !empty($results['flights'])): ?>
-                        <h4 class="mt-4">Vuelos:</h4>
-                        <table class="table table-striped table-hover table-borderless align-middle">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th>Origen</th>
-                                    <th>Destino</th>
-                                    <th>Precio</th>
-                                    <th>Fecha Salida</th>
-                                    <th>Fecha Llegada</th>
-                                    <th>Duración</th>
-                                    <th>Acción</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($results['flights'] as $flight): 
-                                    $departureDate = new DateTime($flight['Departure_Date']);
-                                    $arrivalDate = new DateTime($flight['Arrival_Date']);
-                                    $duration = $arrivalDate->diff($departureDate);
-                                    $durationFormatted = $duration->format('%h horas %i minutos');
-                                ?>
-                                    <tr>
-                                        <td><?= htmlspecialchars($flight['Origin_City']) ?></td>
-                                        <td><?= htmlspecialchars($flight['Destination_City']) ?></td>
-                                        <td><?= htmlspecialchars(number_format($flight['Price'], 2)) ?>€</td>
-                                        <td><?= htmlspecialchars($flight['Departure_Date']) ?></td>
-                                        <td><?= htmlspecialchars($flight['Arrival_Date']) ?></td>
-                                        <td><?= htmlspecialchars($durationFormatted) ?></td>
-                                        <td>
-                                            <button class="btn btn-outline-primary btn-sm" 
-                                                    data-destination="<?= htmlspecialchars($flight['Destination_City']) ?>" 
-                                                    data-description="Vuelo de <?= htmlspecialchars($flight['Origin_City']) ?> a <?= htmlspecialchars($flight['Destination_City']) ?>" 
-                                                    data-price="<?= htmlspecialchars($flight['Price']) ?>" 
-                                                    data-duration="<?= htmlspecialchars($durationFormatted) ?>" 
-                                                    data-people="1" 
-                                                    onclick="addToCart(this)">
-                                                Reservar
-                                            </button>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    <?php endif; ?>
-                </div>
-            <?php else: ?>
-            <?php endif; ?>
-        </div>
+        <?php if (isset($results['vuelo']) && !empty($results['vuelo'])): ?>
+            <h4 class="mt-4">Vuelos:</h4>
+            <table class="table table-striped table-hover table-borderless align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Origen</th>
+                        <th>Destino</th>
+                        <th>Precio</th>
+                        <th>Fecha Salida</th>
+                        <th>Fecha Llegada</th>
+                        <th>Duración</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($results['vuelo'] as $vuelo): 
+                        // Calculando la duración del vuelo
+                        $fechaSalida = new DateTime($vuelo['Fecha_Salida']);
+                        $fechaLlegada = new DateTime($vuelo['Fecha_Llegada']);
+                        $duracion = $fechaLlegada->diff($fechaSalida);
+                        $duracionFormateada = $duracion->format('%h horas %i minutos');
+                    ?>
+                        <tr>
+                            <td><?= htmlspecialchars($vuelo['Ciudad_Origen']) ?></td>
+                            <td><?= htmlspecialchars($vuelo['Ciudad_Destino']) ?></td>
+                            <td><?= htmlspecialchars(number_format($vuelo['Precio'], 2)) ?>€</td>
+                            <td><?= htmlspecialchars($vuelo['Fecha_Salida']) ?></td>
+                            <td><?= htmlspecialchars($vuelo['Fecha_Llegada']) ?></td>
+                            <td><?= htmlspecialchars($duracionFormateada) ?></td>
+                            <td>
+                                <button class="btn btn-outline-primary btn-sm" 
+                                        data-destination="<?= htmlspecialchars($vuelo['Ciudad_Destino']) ?>" 
+                                        data-description="Vuelo de <?= htmlspecialchars($vuelo['Ciudad_Origen']) ?> a <?= htmlspecialchars($vuelo['Ciudad_Destino']) ?>" 
+                                        data-price="<?= htmlspecialchars($vuelo['Precio']) ?>" 
+                                        data-duration="<?= htmlspecialchars($duracionFormateada) ?>" 
+                                        data-people="1" 
+                                        onclick="addToCart(this)">
+                                    Reservar
+                                </button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php endif; ?>
     </div>
+<?php else: ?>
+<?php endif; ?>
+</div>
+</div>
 </div>
 
     <!-- Contenedor del slider -->
