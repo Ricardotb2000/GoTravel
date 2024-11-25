@@ -45,7 +45,7 @@ if (isset($_POST['registro'])) {
                 if ($stmt->affected_rows > 0) {
                     $_SESSION['registrado'] = true;
                     $_SESSION['Email'] = $email; // Usar el email para la sesión
-                    $message = "<script>alert('Registro exitoso. Redirigiendo...'); window.location.href='../index.php';</script>";
+                    $message = "<script>alert('Registro exitoso. Redirigiendo...'); window.location.href='../perfil/perfil.php';</script>";
                 } else {
                     $message = "<script>alert('No se pudo registrar el usuario.');</script>";
                 }
