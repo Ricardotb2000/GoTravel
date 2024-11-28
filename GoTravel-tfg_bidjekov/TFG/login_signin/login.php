@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
             // Establecer la sesión
             $_SESSION['registrado'] = true;
             $_SESSION['Email'] = $email; // Usar el email para la sesión
-            $message = "<script>alert('Inicio de sesión exitoso. Redirigiendo...'); window.location.href='../index.php';</script>";
+            $message = "<script>alert('Inicio de sesión exitoso. Redirigiendo...'); window.location.href='../perfil/perfil.php';</script>";
         } else {
             $message = "<script>alert('Contraseña incorrecta.');</script>";
         }
@@ -119,68 +119,89 @@ echo $message; // Imprime el mensaje de la alerta en la página
 <body> 
 
     <!-- Barra de Navegación -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <a class="navbar-brand mx-auto d-lg-block d-none" href="../index.php#home">
-            <img src="../imagenes/GoTravel.png" class="brand-img" alt="Gotravel_logo_transp" style="width: 75px; height: 75px; border-radius: 100px;">
-            <span class="brand-txt visually-hidden">GoTravel</span>
+    <a class="navbar-brand mx-auto d-lg-block d-none" href="../index.php#home">
+        <img src="../imagenes/GoTravel.png" class="brand-img" alt="Gotravel_logo_transp" style="width: 75px; height: 75px; border-radius: 100px;">
+        <span class="brand-txt visually-hidden">GoTravel</span>
+    </a>
+
+    <!-- Logo y carrito para la versión colapsada -->
+    <div class="d-lg-none ms-auto d-flex align-items-center">
+        <a class="navbar-brand" href="login.php">
+            <i class="fas fa-sign-in-alt"></i>
         </a>
-
-        <!-- Logo para la versión colapsada -->
-        <a class="navbar-brand d-lg-none " href="../index.php#home">
-            <img src="../imagenes/GoTravel.png" class="brand-img" alt="Gotravel_logo_transp" style="width: 50px; height: 50px; border-radius: 100px;">
+        <a class="navbar-brand" href="../carrito/carrito.php">
+            <i class="fas fa-shopping-cart"></i>
         </a>
+        <a class="navbar-brand" href="../index.php">
+            <img src="../imagenes/Gotravel.png" class="brand-img" alt="Gotravel_logo_transp" style="width: 50px; height: 50px; border-radius: 100px;">
+        </a>
+    </div>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- Menú principal a la izquierda -->
-            <ul class="navbar-nav me-auto ms-4">
-                <li class="nav-item">
-                    <a class="nav-link" href="../index.php#home">
-                        <i class="fas fa-home"></i> Home
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="../index.php#about-us">
-                        <i class="fas fa-info-circle"></i> Sobre Nosotros
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="../index.php#packs">
-                        <i class="fas fa-box"></i> Packs
-                        <span class="visually-hidden">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="../index.php#contact">
-                        <i class="fas fa-envelope"></i> Contacto
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="../vuelo_hotel/vuelo_hotel.php">
-                        <i class="fas fa-plane"></i> Vuelo + Hotel
-                    </a>
-                </li>
-            </ul>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!-- Menú principal a la izquierda -->
+        <ul class="navbar-nav me-auto ms-4">
+            <li class="nav-item">
+                <a class="nav-link" href="../index.php#home">
+                    <i class="fas fa-home"></i> Home
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../index.php#about-us">
+                    <i class="fas fa-info-circle"></i> Sobre Nosotros
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../index.php#packs">
+                    <i class="fas fa-box"></i> Packs
+                    <span class="visually-hidden">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../index.php#contact">
+                    <i class="fas fa-envelope"></i> Contacto
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../vuelo_hotel/vuelo_hotel.php">
+                    <i class="fas fa-plane"></i> Vuelo + Hotel
+                </a>
+            </li>
+        </ul>
 
-            <!-- Enlaces de Sign In y Carrito a la derecha -->
-            <ul class="navbar-nav ms-auto me-2">
+        <!-- Enlaces de Sign In, Carrito y Perfil a la derecha -->
+        <ul class="navbar-nav ms-auto me-2">
+            <?php if (isset($_SESSION['registrado']) && $_SESSION['registrado']): ?>
                 <li class="nav-item">
-                    <a class="nav-link" href="../login_signin/login.php">
+                    <a class="nav-link" href="../perfil/perfil.php">
+                        <i class="fas fa-user"></i> Perfil
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="logout.php">
+                        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                    </a>
+                </li>
+            <?php else: ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="login.php">
                         <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="../carrito/carrito.php">
-                        <i class="fas fa-shopping-cart"></i> Carrito
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+            <?php endif; ?>
+            <li class="nav-item">
+                <a class="nav-link" href="../carrito/carrito.php">
+                    <i class="fas fa-shopping-cart"></i> Carrito
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
 
     <div class="container right-panel-active">
     <!-- Formulario de Registrarse -->

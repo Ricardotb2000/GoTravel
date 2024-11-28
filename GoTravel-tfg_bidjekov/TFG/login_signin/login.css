@@ -232,6 +232,10 @@ body {
 	.input{
 		width: 150%;
 	}
+	.btn_switch {
+		font-size: 0.6rem;
+		padding: 0.9rem 3rem;
+	}
   }
 
 @media (min-width: 701px) and (max-width: 1024px) {

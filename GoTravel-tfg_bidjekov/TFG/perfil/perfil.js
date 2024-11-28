@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() { 
     // Seleccionar el formulario y los campos de entrada
     const form = document.querySelector('form');
     const formControls = document.querySelectorAll('.form-control');
@@ -6,20 +6,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Añadir el evento para manejar el botón de guardar cambios
     form.addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevenir el envío del formulario para no recargar la página
-
-        // Recorrer los campos del formulario
+        // Asegurar que todos los campos estén habilitados antes del envío
         formControls.forEach(control => {
-            const currentValue = control.value;
-
-            // Guardar el valor ingresado y fijarlo en el campo
-            control.setAttribute('data-original', currentValue); // Guardar el valor en un atributo personalizado
-            control.disabled = true; // Deshabilitar el campo después de guardar el cambio
+            control.disabled = false; // Habilitar los campos deshabilitados
         });
 
-        // Cambiar el texto del botón a "Cambios Guardados"
-        saveButton.textContent = 'Cambios Guardados';
-        saveButton.disabled = true; // Deshabilitar el botón después de guardar los cambios
+        // Cambiar el texto del botón
+        saveButton.textContent = 'Procesando...';
+        saveButton.disabled = true; // Prevenir múltiples envíos
     });
 
     // Añadir iconos de edición a los campos
@@ -37,12 +31,6 @@ document.addEventListener('DOMContentLoaded', function() {
             saveButton.disabled = false; // Habilitar el botón de guardar
             saveButton.textContent = 'Guardar Cambios'; // Volver a cambiar el texto del botón
         });
-    });
-
-    // Añadir tooltips a los elementos estadísticos (si los hubiera)
-    const statItems = document.querySelectorAll('.stat-item');
-    statItems.forEach(item => {
-        item.setAttribute('data-tooltip', 'Click para ver más detalles');
     });
 
     // Animación de números en estadísticas

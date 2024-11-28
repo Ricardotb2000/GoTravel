@@ -136,10 +136,18 @@ if (isset($_SESSION['search_results'])) {
             <span class="brand-txt"></span>
         </a>
 
-        <!-- Logo para la versión colapsada -->
-        <a class="navbar-brand d-lg-none " href="../index.php#home">
-            <img src="../imagenes/GoTravel.png" class="brand-img" alt="Gotravel_logo_transp" style="width: 50px; height: 50px; border-radius: 100px;">
-        </a>
+        <!-- Logo y carrito para la versión colapsada -->
+        <div class="d-lg-none ms-auto d-flex align-items-center">
+            <a class="navbar-brand" href="../login_signin/login.php">
+                <i class="fas fa-sign-in-alt"></i>
+            </a>
+            <a class="navbar-brand" href="../carrito/carrito.php">
+                <i class="fas fa-shopping-cart"></i>
+            </a>
+            <a class="navbar-brand" href="../index.php">
+                <img src="../imagenes/Gotravel.png" class="brand-img" alt="Gotravel_logo_transp" style="width: 50px; height: 50px; border-radius: 100px;">
+            </a>
+        </div>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Menú principal a la izquierda -->
@@ -167,13 +175,26 @@ if (isset($_SESSION['search_results'])) {
                 </li>
             </ul>
 
-            <!-- Enlaces de Sign In y Carrito a la derecha -->
+            <!-- Enlaces de Sign In, Carrito y Perfil a la derecha -->
             <ul class="navbar-nav ms-auto me-2">
-                <li class="nav-item">
-                    <a class="nav-link" href="../login_signin/login.php">
-                        <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
-                    </a>
-                </li>
+                <?php if (isset($_SESSION['registrado']) && $_SESSION['registrado']): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../perfil/perfil.php">
+                            <i class="fas fa-user"></i> Perfil
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../login_signin/logout.php">
+                            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                        </a>
+                    </li>
+                <?php else: ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../login_signin/login.php">
+                            <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                        </a>
+                    </li>
+                <?php endif; ?>
                 <li class="nav-item">
                     <a class="nav-link" href="../carrito/carrito.php">
                         <i class="fas fa-shopping-cart"></i> Carrito

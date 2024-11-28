@@ -1,8 +1,70 @@
 <?php
-    session_start();
-    if (!isset($_SESSION['usuario'])) {
-        header('Location: ../login_signin/login.php');
+session_start();
+if (!isset($_SESSION['registrado'])) {
+    header('Location: ../login_signin/login.php');
+    exit();
+}
+
+include '../database/config.php'; // Incluye el archivo de conexión a la base de datos
+
+$email = $_SESSION['Email'];
+
+// Recuperar los datos del usuario desde la base de datos
+$stmt = $conn->prepare("SELECT Nombre, Apellido, Telefono, Direccion, Avatar FROM usuario WHERE Email = ?");
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+
+$direccion = isset($user['Direccion']) ? $user['Direccion'] : '';
+$direccion_partes = explode(', ', $direccion);
+$calle = isset($direccion_partes[0]) ? $direccion_partes[0] : '';
+$ciudad = isset($direccion_partes[1]) ? $direccion_partes[1] : '';
+$codigo_postal = isset($direccion_partes[2]) ? $direccion_partes[2] : '';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $nombre = isset($_POST['nombre']) ? $_POST['nombre'] : '';
+    $apellidos = isset($_POST['apellidos']) ? $_POST['apellidos'] : '';
+    $telefono = isset($_POST['telefono']) ? $_POST['telefono'] : '';
+    $calle = isset($_POST['calle']) ? $_POST['calle'] : '';
+    $ciudad = isset($_POST['ciudad']) ? $_POST['ciudad'] : '';
+    $codigo_postal = isset($_POST['codigo_postal']) ? $_POST['codigo_postal'] : '';
+    $direccion = $calle . ', ' . $ciudad . ', ' . $codigo_postal;
+
+    // Manejar la carga de la foto de perfil
+    $avatar = $user['Avatar']; // Mantener la URL actual si no se sube una nueva imagen
+    if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] == UPLOAD_ERR_OK) {
+        $uploadDir = '../uploads/';
+        $uploadFile = $uploadDir . basename($_FILES['avatar']['name']);
+        if (move_uploaded_file($_FILES['avatar']['tmp_name'], $uploadFile)) {
+            $avatar = $uploadFile; // Actualizar la URL de la foto de perfil
+        } else {
+            echo "<script>alert('Error al subir la foto de perfil.');</script>";
+        }
     }
+
+    // Verificar si el usuario ya tiene datos en la base de datos
+    $stmt = $conn->prepare("SELECT * FROM usuario WHERE Email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        // Si el usuario ya existe, realizar un UPDATE
+        $stmt = $conn->prepare("UPDATE usuario SET Nombre = ?, Apellido = ?, Telefono = ?, Direccion = ?, Avatar = ? WHERE Email = ?");
+        $stmt->bind_param("sssssss", $nombre, $apellidos, $telefono, $direccion, $avatar, $email);
+    } else {
+        // Si el usuario no existe, realizar un INSERT
+        $stmt = $conn->prepare("INSERT INTO usuario (Nombre, Apellido, Email, Telefono, Direccion, Avatar) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssss", $nombre, $apellidos, $email, $telefono, $direccion, $avatar);
+    }
+
+    if ($stmt->execute()) {
+        echo "<script>alert('Datos actualizados correctamente.');</script>";
+    } else {
+        echo "<script>alert('Error al actualizar los datos: " . $stmt->error . "');</script>";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -21,206 +83,232 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="perfil.css">
-
 </head>
 <body>
     <!-- Barra de Navegación -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top mb-5">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top mb-5">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <a class="navbar-brand mx-auto d-lg-block d-none" href="../index.php#home">
-        <img src="../imagenes/GoTravel.png" class="brand-img" alt="Gotravel_logo_transp"
-             style="width: 75px; height: 75px; border-radius: 100px;">
-        <span class="brand-txt"></span>
-    </a>
-    <!-- Logo para la versión colapsada -->
-    <a class="navbar-brand d-lg-none " href="../index.php#home">
-        <img src="../imagenes/GoTravel.png" class="brand-img" alt="Gotravel_logo_transp" style="width: 50px; height: 50px; border-radius: 100px;">
-    </a>
+        <a class="navbar-brand mx-auto d-lg-block d-none" href="../index.php#home">
+            <img src="../imagenes/GoTravel.png" class="brand-img" alt="Gotravel_logo_transp"
+                 style="width: 75px; height: 75px; border-radius: 100px;">
+            <span class="brand-txt"></span>
+        </a>
+        <!-- Logo y enlaces para la versión colapsada -->
+        <div class="d-lg-none ms-auto d-flex align-items-center">
+            <?php if (isset($_SESSION['registrado']) && $_SESSION['registrado']): ?>
+                <a class="navbar-brand" href="perfil.php">
+                    <i class="fas fa-user"></i>
+                </a>
+                <a class="navbar-brand" href="../login_signin/logout.php">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
+            <?php else: ?>
+                <a class="navbar-brand" href="../login_signin/login.php">
+                    <i class="fas fa-sign-in-alt"></i>
+                </a>
+            <?php endif; ?>
+            <a class="navbar-brand" href="../carrito/carrito.php">
+                <i class="fas fa-shopping-cart"></i>
+            </a>
+            <a class="navbar-brand" href="../index.php">
+                <img src="../imagenes/GoTravel.png" class="brand-img" alt="Gotravel_logo_transp" style="width: 50px; height: 50px; border-radius: 100px;">
+            </a>
+        </div>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <!-- Menú principal a la izquierda -->
-        <ul class="navbar-nav me-auto ms-4">
-            <li class="nav-item">
-                <a class="nav-link" href="../index.php#home">
-                    <i class="fas fa-home"></i> Home
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="../index.php#about-us">
-                    <i class="fas fa-info-circle"></i> Sobre Nosotros
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="../index.php#packs">
-                    <i class="fas fa-box"></i> Packs
-                    <span class="sr-only">(current)</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="../index.php#contact">
-                    <i class="fas fa-envelope"></i> Contacto
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="../vuelo_hotel/vuelo_hotel.php">
-                    <i class="fas fa-plane"></i> Vuelo + Hotel
-                </a>
-            </li>
-        </ul>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- Menú principal a la izquierda -->
+            <ul class="navbar-nav me-auto ms-4">
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.php#home">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.php#about-us">
+                        <i class="fas fa-info-circle"></i> Sobre Nosotros
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.php#packs">
+                        <i class="fas fa-box"></i> Packs
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.php#contact">
+                        <i class="fas fa-envelope"></i> Contacto
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../vuelo_hotel/vuelo_hotel.php">
+                        <i class="fas fa-plane"></i> Vuelo + Hotel
+                    </a>
+                </li>
+            </ul>
 
-        <!-- Enlaces de Login y Carrito -->
-        <ul class="navbar-nav ms-auto me-2">
-            <li class="nav-item">
-                <a class="nav-link" href="../login_signin/login.php">
-                    <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="../carrito/carrito.php">
-                    <i class="fas fa-shopping-cart"></i> Carrito
-                </a>
-            </li>
-        </ul>
-    </div>
-</nav>
+            <!-- Enlaces de Sign In, Carrito y Perfil a la derecha -->
+            <ul class="navbar-nav ms-auto me-2">
+                <?php if (isset($_SESSION['registrado']) && $_SESSION['registrado']): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="perfil.php">
+                            <i class="fas fa-user"></i> Perfil
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../login_signin/logout.php">
+                            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                        </a>
+                    </li>
+                <?php else: ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../login_signin/login.php">
+                            <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                        </a>
+                    </li>
+                <?php endif; ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="../carrito/carrito.php">
+                        <i class="fas fa-shopping-cart"></i> Carrito
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
     <div class="container mt-5 mb-5">
-        <!-- Encabezado del Perfil -->
-        <div class="profile-header">
-            <div class="row align-items-center">
-                <div class="col-md-3 text-center">
-                    <div class="profile-avatar">
-                        <img src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" 
-                             class="rounded-circle" alt="Profile">
-                        <div class="edit-icon">
-                            <i class="fas fa-camera"></i>
-                        </div>
+    <!-- Encabezado del Perfil -->
+    <div class="profile-header">
+        <div class="row align-items-center">
+            <div class="col-md-3 text-center">
+                <div class="profile-avatar">
+                    <img src="<?= htmlspecialchars($user['Avatar']) ?>" class="rounded-circle" alt="Profile">
+                    <div class="edit-icon">
+                        <i class="fas fa-camera"></i>
                     </div>
                 </div>
-                <div class="col-md-9">
-                    <h2>Bienvenido a tu Perfil</h2>
-                </div>
+            </div>
+            <div class="col-md-9">
+                <h2>Bienvenido a tu Perfil</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Formulario de Perfil -->
+    <div class="row">
+        <div class="col-md-8">
+            <div class="profile-section">
+                <h4 class="mb-4">Información Personal</h4>
+                <form action="perfil.php" method="POST" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" class="form-control" name="nombre" placeholder="Tu nombre" value="<?= htmlspecialchars($user['Nombre']) ?>" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Apellidos</label>
+                            <input type="text" class="form-control" name="apellidos" placeholder="Tus apellidos" value="<?= htmlspecialchars($user['Apellido']) ?>" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Teléfono</label>
+                        <input type="tel" class="form-control" name="telefono" placeholder="+34 600 000 000" value="<?= htmlspecialchars($user['Telefono']) ?>" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Calle</label>
+                        <input type="text" class="form-control mb-2" name="calle" placeholder="Calle y número" value="<?= htmlspecialchars($calle) ?>" required>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Ciudad</label>
+                            <input type="text" class="form-control" name="ciudad" placeholder="Tu ciudad" value="<?= htmlspecialchars($ciudad) ?>" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Código Postal</label>
+                            <input type="text" class="form-control" name="codigo_postal" placeholder="28XXX" value="<?= htmlspecialchars($codigo_postal) ?>" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">País</label>
+                            <select class="form-select" name="pais" required>
+                                <option selected>España</option>
+                                <option>Portugal</option>
+                                <option>Francia</option>
+                                <option>Italia</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Foto de Perfil</label>
+                        <input type="file" class="form-control" name="avatar">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-save">
+                        <i class="fas fa-save me-2"></i>Guardar Cambios
+                    </button>
+                </form>
             </div>
         </div>
 
-        
+        <div class="col-md-4">
+            <!-- Preferencias de Viaje -->
+            <div class="profile-section">
+                <h4 class="mb-4">Preferencias de Viaje</h4>
+                <div class="travel-preferences">
+                    <h6>Tipo de Viaje Favorito</h6>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="playa" checked>
+                        <label class="form-check-label" for="playa">Playa</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="montaña">
+                        <label class="form-check-label" for="montaña">Montaña</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="cultural">
+                        <label class="form-check-label" for="cultural">Cultural</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="aventura">
+                        <label class="form-check-label" for="aventura">Aventura</label>
+                    </div>
 
-        <!-- Formulario de Perfil -->
-        <div class="row">
-            <div class="col-md-8">
-                <div class="profile-section">
-                    <h4 class="mb-4">Información Personal</h4>
-                    <form>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Nombre</label>
-                                <input type="text" class="form-control" placeholder="Tu nombre">
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Apellidos</label>
-                                <input type="text" class="form-control" placeholder="Tus apellidos">
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Email</label>
-                            <input type="email" class="form-control" placeholder="tu@email.com">
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Teléfono</label>
-                            <input type="tel" class="form-control" placeholder="+34 600 000 000">
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Dirección</label>
-                            <input type="text" class="form-control mb-2" placeholder="Calle y número">
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label">Ciudad</label>
-                                <input type="text" class="form-control" placeholder="Tu ciudad">
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label">Código Postal</label>
-                                <input type="text" class="form-control" placeholder="28XXX">
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label">País</label>
-                                <select class="form-select">
-                                    <option selected>España</option>
-                                    <option>Portugal</option>
-                                    <option>Francia</option>
-                                    <option>Italia</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary btn-save">
-                            <i class="fas fa-save me-2"></i>Guardar Cambios
-                        </button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <!-- Preferencias de Viaje -->
-                <div class="profile-section">
-                    <h4 class="mb-4">Preferencias de Viaje</h4>
-                    <div class="travel-preferences">
-                        <h6>Tipo de Viaje Favorito</h6>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="playa" checked>
-                            <label class="form-check-label" for="playa">Playa</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="montaña">
-                            <label class="form-check-label" for="montaña">Montaña</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="cultural">
-                            <label class="form-check-label" for="cultural">Cultural</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="aventura">
-                            <label class="form-check-label" for="aventura">Aventura</label>
-                        </div>
-
-                        <h6 class="mt-4">Servicios Preferidos</h6>
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="checkbox" checked>
-                            <label class="form-check-label">Desayuno incluido</label>
-                        </div>
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="checkbox" checked>
-                            <label class="form-check-label">Almuerzo incluido</label>
-                        </div>
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="checkbox" checked>
-                            <label class="form-check-label">Cena incluida</label>
-                        </div>
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="checkbox" checked>
-                            <label class="form-check-label">Wi-Fi gratuito</label>
-                        </div>
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="checkbox">
-                            <label class="form-check-label">Parking</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox">
-                            <label class="form-check-label">Piscina</label>
-                        </div>
+                    <h6 class="mt-4">Servicios Preferidos</h6>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" checked>
+                        <label class="form-check-label">Desayuno incluido</label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" checked>
+                        <label class="form-check-label">Almuerzo incluido</label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" checked>
+                        <label class="form-check-label">Cena incluida</label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" checked>
+                        <label class="form-check-label">Wi-Fi gratuito</label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox">
+                        <label class="form-check-label">Parking</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox">
+                        <label class="form-check-label">Piscina</label>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
     <!-- Footer Start -->
 <div class="container-fluid bg-dark text-white-50 py-5 px-sm-3 px-lg-5" id="contact" style="margin-top: 90px; text-align: center;">
