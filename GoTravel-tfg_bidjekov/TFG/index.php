@@ -152,13 +152,22 @@ if (isset($_SESSION['search_results'])) {
 
     <!-- Logo y carrito para la versión colapsada -->
     <div class="d-lg-none ms-auto d-flex align-items-center">
-        <a class="navbar-brand" href="login_signin/login.php">
-            <i class="fas fa-sign-in-alt"></i>
-        </a>
+        <?php if (isset($_SESSION['registrado']) && $_SESSION['registrado']): ?>
+            <a class="navbar-brand" href="perfil/perfil.php">
+                <i class="fas fa-user"></i>
+            </a>
+            <a class="navbar-brand" href="login_signin/logout.php">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        <?php else: ?>
+            <a class="navbar-brand" href="login_signin/login.php">
+                <i class="fas fa-sign-in-alt"></i>
+            </a>
+        <?php endif; ?>
         <a class="navbar-brand" href="carrito/carrito.php">
             <i class="fas fa-shopping-cart"></i>
         </a>
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="index.php">
             <img src="imagenes/GoTravel.png" class="brand-img" alt="Gotravel_logo_transp" style="width: 50px; height: 50px; border-radius: 100px;">
         </a>
     </div>
@@ -812,14 +821,15 @@ if (isset($_SESSION['search_results'])) {
 </div>
 
 
-<?php 
-if (isset($successMessage)) { 
-    echo "<p style='color: green;'>$successMessage</p>"; 
-} 
-if (isset($errorMessage)) { 
-    echo "<p style='color: red;'>$errorMessage</p>"; 
-} 
-?>
+<?php if (isset($successMessage)): ?>
+        <script>
+            alert('<?= $successMessage ?>');
+        </script>
+    <?php elseif (isset($errorMessage)): ?>
+        <script>
+            alert('<?= $errorMessage ?>');
+        </script>
+    <?php endif; ?>
 
 <!-- Opina de Gotravel -->
 <div class="text-center mt-3 pt-3" id="opina">

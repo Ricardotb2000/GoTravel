@@ -52,7 +52,7 @@
         <!-- Logo y enlaces para la versión colapsada -->
     <div class="d-lg-none ms-auto d-flex align-items-center">
         <?php if (isset($_SESSION['registrado']) && $_SESSION['registrado']): ?>
-            <a class="navbar-brand" href="perfil.php">
+            <a class="navbar-brand" href="../perfil/perfil.php">
                 <i class="fas fa-user"></i>
             </a>
             <a class="navbar-brand" href="../login_signin/logout.php">

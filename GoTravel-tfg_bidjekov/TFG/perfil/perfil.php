@@ -22,6 +22,9 @@ $calle = isset($direccion_partes[0]) ? $direccion_partes[0] : '';
 $ciudad = isset($direccion_partes[1]) ? $direccion_partes[1] : '';
 $codigo_postal = isset($direccion_partes[2]) ? $direccion_partes[2] : '';
 
+// Establecer un avatar predeterminado si no hay uno
+$avatar = !empty($user['Avatar']) ? $user['Avatar'] : 'data:image/jpeg;base64,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';
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nombre = isset($_POST['nombre']) ? $_POST['nombre'] : '';
     $apellidos = isset($_POST['apellidos']) ? $_POST['apellidos'] : '';
@@ -32,7 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $direccion = $calle . ', ' . $ciudad . ', ' . $codigo_postal;
 
     // Manejar la carga de la foto de perfil
-    $avatar = $user['Avatar']; // Mantener la URL actual si no se sube una nueva imagen
     if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] == UPLOAD_ERR_OK) {
         $uploadDir = '../uploads/';
         $uploadFile = $uploadDir . basename($_FILES['avatar']['name']);
@@ -52,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($result->num_rows > 0) {
         // Si el usuario ya existe, realizar un UPDATE
         $stmt = $conn->prepare("UPDATE usuario SET Nombre = ?, Apellido = ?, Telefono = ?, Direccion = ?, Avatar = ? WHERE Email = ?");
-        $stmt->bind_param("sssssss", $nombre, $apellidos, $telefono, $direccion, $avatar, $email);
+        $stmt->bind_param("ssssss", $nombre, $apellidos, $telefono, $direccion, $avatar, $email);
     } else {
         // Si el usuario no existe, realizar un INSERT
         $stmt = $conn->prepare("INSERT INTO usuario (Nombre, Apellido, Email, Telefono, Direccion, Avatar) VALUES (?, ?, ?, ?, ?, ?)");
@@ -60,7 +62,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if ($stmt->execute()) {
-        echo "<script>alert('Datos actualizados correctamente.');</script>";
+        header('Location: perfil.php?updated=true');
+        exit();
     } else {
         echo "<script>alert('Error al actualizar los datos: " . $stmt->error . "');</script>";
     }
@@ -185,7 +188,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="row align-items-center">
             <div class="col-md-3 text-center">
                 <div class="profile-avatar">
-                    <img src="<?= htmlspecialchars($user['Avatar']) ?>" class="rounded-circle" alt="Profile">
+                    <img src="<?= htmlspecialchars($avatar) ?>" class="rounded-circle" alt="Profile">
                     <div class="edit-icon">
                         <i class="fas fa-camera"></i>
                     </div>
@@ -246,7 +249,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     <div class="mb-3">
                         <label class="form-label">Foto de Perfil</label>
-                        <input type="file" class="form-control" name="avatar">
+                        <input type="file" class="form-control" name="avatar" required>
                     </div>
 
                     <button type="submit" class="btn btn-primary btn-save">

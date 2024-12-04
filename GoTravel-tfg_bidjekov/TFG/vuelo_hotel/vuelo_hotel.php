@@ -138,14 +138,23 @@ if (isset($_SESSION['search_results'])) {
 
         <!-- Logo y carrito para la versión colapsada -->
         <div class="d-lg-none ms-auto d-flex align-items-center">
-            <a class="navbar-brand" href="../login_signin/login.php">
-                <i class="fas fa-sign-in-alt"></i>
-            </a>
+            <?php if (isset($_SESSION['registrado']) && $_SESSION['registrado']): ?>
+                <a class="navbar-brand" href="../perfil/perfil.php">
+                    <i class="fas fa-user"></i>
+                </a>
+                <a class="navbar-brand" href="../login_signin/logout.php">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
+            <?php else: ?>
+                <a class="navbar-brand" href="../login_signin/login.php">
+                    <i class="fas fa-sign-in-alt"></i>
+                </a>
+            <?php endif; ?>
             <a class="navbar-brand" href="../carrito/carrito.php">
                 <i class="fas fa-shopping-cart"></i>
             </a>
             <a class="navbar-brand" href="../index.php">
-                <img src="../imagenes/Gotravel.png" class="brand-img" alt="Gotravel_logo_transp" style="width: 50px; height: 50px; border-radius: 100px;">
+                <img src="../imagenes/GoTravel.png" class="brand-img" alt="Gotravel_logo_transp" 	style="width: 50px; height: 50px; border-radius: 100px;">
             </a>
         </div>
 
@@ -600,8 +609,7 @@ if (isset($_SESSION['search_results'])) {
 </div>
 
 
-
-    <!-- Aerolíneas -->
+<!-- Aerolíneas -->
 <div class="text-center mb-3 pb-3">
     <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Viaja seguro</h6>
     <h3 class="text-dark">Nuestras Aerolineas</h3>
@@ -609,7 +617,7 @@ if (isset($_SESSION['search_results'])) {
 <div id="airlinesCarousel" class="carousel slide" data-bs-ride="carousel" style="width: 65%; margin: 0 auto;">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-center flex-wrap">
                 <a href="https://www.ryanair.com" target="_blank">
                     <img src="../imagenes/Ryanair.png" class="d-block airline-img" alt="Ryanair">
                 </a>
@@ -625,7 +633,7 @@ if (isset($_SESSION['search_results'])) {
             </div>
         </div>
         <div class="carousel-item">
-            <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-center flex-wrap">
                 <a href="https://www.easyjet.com" target="_blank">
                     <img src="../imagenes/EasyJet.png" class="d-block airline-img" alt="EasyJet">
                 </a>

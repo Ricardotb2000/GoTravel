@@ -78,7 +78,7 @@ function addToCart(button) {
     };
 
     // Enviar los datos mediante una petición POST a carrito.php
-    fetch('carrito/Carrito.php', {
+    fetch('carrito/carrito.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -93,9 +93,10 @@ function addToCart(button) {
             duration: 2000, 
             gravity: "top", 
             position: 'right', 
-            backgroundColor: "linear-gradient(to top right, #0d6efd, #1c1c1c)",
-            borderRadius: "30px",
-
+            style: {
+                background: "linear-gradient(to top right, #0d6efd, #1c1c1c)",  // Cambiar 'backgroundColor' por 'style.background'
+                borderRadius: "30px",
+            }
         }).showToast();
     })
     .catch(error => {

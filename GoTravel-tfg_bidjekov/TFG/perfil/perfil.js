@@ -65,4 +65,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
         observer.observe(number);
     });
+
+    // Recargar la página después de mostrar el mensaje de alerta
+    window.addEventListener('load', function() {
+        if (window.location.search.includes('updated=true')) {
+            alert('Datos actualizados correctamente.');
+            setTimeout(function() {
+                window.location.href = window.location.pathname;
+            }, 1000); // Recargar la página después de 1 segundo
+        }
+    });
 });

@@ -86,6 +86,72 @@ document.querySelectorAll('.btn-primary').forEach(button => {
     });
 });
 
+// Función para proceder al pago
+document.querySelector('.btn-proceed').addEventListener('click', function (e) {
+    e.preventDefault(); // Prevenir la navegación predeterminada
+
+    fetch('../checkout/checkout.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ action: 'generate_invoice' })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error en la respuesta del servidor: ' + response.statusText);
+        }
+        return response.text(); // Obtener la respuesta como texto para depuración
+    })
+    .then(text => {
+        console.log('Respuesta del servidor:', text); // Depurar la respuesta del servidor
+        try {
+            const data = JSON.parse(text); // Intentar parsear la respuesta como JSON
+            if (data.success) {
+                // Mostrar mensaje de éxito
+                alert('Factura generada y enviada correctamente.');
+
+                // Limpiar el carrito
+                fetch('carrito.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ action: 'clear_cart' })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al limpiar el carrito: ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        // Redirigir a la página principal
+                        window.location.href = '../index.php';
+                    } else {
+                        alert('Error al limpiar el carrito: ' + (data.message || 'Error desconocido'));
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al limpiar el carrito:', error);
+                    alert('Hubo un problema al limpiar el carrito. Por favor, inténtelo de nuevo.');
+                });
+            } else {
+                // Mostrar mensaje de error
+                alert('Error al generar la factura: ' + (data.message || 'Error desconocido'));
+            }
+        } catch (error) {
+            console.error('Error al parsear la respuesta JSON:', error);
+            alert('Error al procesar la respuesta del servidor. Por favor, inténtelo de nuevo.');
+        }
+    })
+    .catch(error => {
+        console.error('Error en la solicitud fetch:', error);
+        alert('Hubo un problema al procesar su solicitud. Por favor, inténtelo de nuevo.');
+    });
+});
+
 // Función para cambiar la cantidad de un item
 function changeQuantity(index, change) {
     const quantityInput = document.getElementById(`quantity-${index}`);

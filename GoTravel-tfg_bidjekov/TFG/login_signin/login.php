@@ -18,18 +18,12 @@ if (isset($_POST['registro'])) {
     if (isset($_POST['Email'], $_POST['Contraseña'])) {
         $email = $_POST['Email'];  // Se obtiene el email
         $contraseña = $_POST['Contraseña'];  // Se obtiene la contraseña
-        
-        // Depuración: Verificar los valores de las variables
-        echo "<pre>"; var_dump($email, $contraseña); echo "</pre>";  // Muestra los datos recibidos por el formulario
 
         // Verificar si el email ya existe
         $stmt = $conn->prepare("SELECT * FROM usuario WHERE Email = ?"); // Consultamos la tabla 'usuario'
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $result = $stmt->get_result();
-
-        // Depuración: Verificar el resultado de la consulta
-        echo "<pre>"; var_dump($result); echo "</pre>";  // Muestra el resultado de la consulta para verificar que estamos obteniendo datos
 
         if ($result->num_rows > 0) {
             $message = "<script>alert('El email ya está en uso.');</script>";
@@ -64,17 +58,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
     $email = $_POST['Email'];
     $password = $_POST['Contraseña'];
 
-    // Depuración: Verificar los valores de las variables de inicio de sesión
-    echo "<pre>"; var_dump($email, $password); echo "</pre>";  // Muestra los datos recibidos por el formulario
-
     // Preparar la consulta para evitar inyecciones SQL
     $stmt = $conn->prepare("SELECT Usuario_ID, Contraseña FROM usuario WHERE Email = ?"); 
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
-
-    // Depuración: Verificar el resultado de la consulta de inicio de sesión
-    echo "<pre>"; var_dump($result); echo "</pre>";  // Muestra el resultado de la consulta para verificar que se encuentra el usuario
 
     if ($result->num_rows > 0) {
         $usuario = $result->fetch_assoc();
@@ -95,9 +83,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
 
 echo $message; // Imprime el mensaje de la alerta en la página
 ?>
-
-
-
 
 
 <!DOCTYPE html>
@@ -131,17 +116,26 @@ echo $message; // Imprime el mensaje de la alerta en la página
     </a>
 
     <!-- Logo y carrito para la versión colapsada -->
-    <div class="d-lg-none ms-auto d-flex align-items-center">
-        <a class="navbar-brand" href="login.php">
-            <i class="fas fa-sign-in-alt"></i>
-        </a>
-        <a class="navbar-brand" href="../carrito/carrito.php">
-            <i class="fas fa-shopping-cart"></i>
-        </a>
-        <a class="navbar-brand" href="../index.php">
-            <img src="../imagenes/Gotravel.png" class="brand-img" alt="Gotravel_logo_transp" style="width: 50px; height: 50px; border-radius: 100px;">
-        </a>
-    </div>
+     <div class="d-lg-none ms-auto d-flex align-items-center">
+            <?php if (isset($_SESSION['registrado']) && $_SESSION['registrado']): ?>
+                <a class="navbar-brand" href="../perfil/perfil.php">
+                    <i class="fas fa-user"></i>
+                </a>
+                <a class="navbar-brand" href="logout.php">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
+            <?php else: ?>
+                <a class="navbar-brand" href="login.php">
+                    <i class="fas fa-sign-in-alt"></i>
+                </a>
+            <?php endif; ?>
+            <a class="navbar-brand" href="../carrito/carrito.php">
+                <i class="fas fa-shopping-cart"></i>
+            </a>
+            <a class="navbar-brand" href="../index.php">
+                <img src="../imagenes/GoTravel.png" class="brand-img" alt="Gotravel_logo_transp" style="width: 50px; height: 50px; border-radius: 100px;">
+            </a>
+        </div>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <!-- Menú principal a la izquierda -->

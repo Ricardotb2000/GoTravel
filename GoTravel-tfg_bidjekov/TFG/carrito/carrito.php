@@ -55,6 +55,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo json_encode(['total' => number_format($discounted_total, 2)]);
         exit();
     }
+    
+    if (isset($packageData['action']) && $packageData['action'] === 'clear_cart') {
+        $_SESSION['cart'] = [];
+        echo json_encode(['success' => true]);
+        exit();
+    }
 }
 
 // Calcular el subtotal, IVA y total para mostrar en la interfaz
@@ -252,7 +258,7 @@ $iva_amount = $total - $subtotal; // Cantidad de IVA
 
     <!-- Botón de checkout -->
     <div class="text-end">
-        <a href="../checkout/checkout.php" class="btn btn-primary btn-lg px-5 py-3" style="border-radius: 30px;">Proceder al Pago</a>
+        <a href="../checkout/checkout.php" class="btn btn-success btn-proceed btn-lg px-5 py-3" style="border-radius: 30px;">Proceder al Pago</a>
     </div>
 </div>
 
